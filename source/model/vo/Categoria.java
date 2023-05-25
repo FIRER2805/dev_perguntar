@@ -2,7 +2,7 @@ package model.vo;
 
 public class Categoria {
 	private int id;
-	private String nome;
+	private String nome; 
 	
 	public int getId() {
 		return id;
