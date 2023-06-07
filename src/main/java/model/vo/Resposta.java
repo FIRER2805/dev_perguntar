@@ -5,7 +5,7 @@ public class Resposta {
 	private String conteudo;
 	private Pergunta pergunta;
 	private Usuario usuario;
-	private Resposta resposta;
+	private Resposta respostaPai;
 	
 	public int getId() {
 		return id;
@@ -32,9 +32,9 @@ public class Resposta {
 		this.usuario = usuario;
 	}
 	public Resposta getResposta() {
-		return resposta;
+		return respostaPai;
 	}
 	public void setResposta(Resposta resposta) {
-		this.resposta = resposta;
+		this.respostaPai = resposta;
 	}
 }
