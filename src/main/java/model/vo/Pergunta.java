@@ -7,7 +7,7 @@ public class Pergunta {
 	private String titulo;
 	private String conteudo;
 	private LocalDateTime data;
-	private LocalDateTime dataResolução;
+	private LocalDateTime dataResolucao;
 	private Usuario usuario;
 	private Categoria categoria;
 	
@@ -35,11 +35,11 @@ public class Pergunta {
 	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
-	public LocalDateTime getDataResolução() {
-		return dataResolução;
+	public LocalDateTime getDataResolucao() {
+		return dataResolucao;
 	}
 	public void setDataResolução(LocalDateTime dataResolução) {
-		this.dataResolução = dataResolução;
+		this.dataResolucao = dataResolução;
 	}
 	public Usuario getUsuario() {
 		return usuario;
