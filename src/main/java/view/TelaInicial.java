@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 public class TelaInicial {
 
@@ -21,6 +22,12 @@ public class TelaInicial {
 	private JMenu mnConfig;
 	private JMenuItem mntmSair;
 	private view.TelaCadastro telaCadastro;
+	private view.TelaLogin telaLogin;
+	private JTextField textField;
+	private JMenuItem mntmCadastrar;
+	private JMenuItem mntmLogin;
+	private TelaCriarPergunta telaCriacaoDePergunta;
+	private TelaPerfil telaPerfil;
 
 	/**
 	 * Launch the application.
@@ -53,10 +60,19 @@ public class TelaInicial {
 		frame.setBounds(100, 100, 633, 451);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		textField = new JTextField();
+		textField.setBounds(150, 235, 295, 20);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setBounds(251, 277, 89, 23);
+		frame.getContentPane().add(btnPesquisar);
 
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		menuBar.setVisible(false);
+		menuBar.setVisible(true);
 
 		mntmHome = new JMenuItem("Home");
 		menuBar.add(mntmHome);
@@ -65,50 +81,73 @@ public class TelaInicial {
 		menuBar.add(mntmPesquisa);
 
 		mntmCriarPesquisa = new JMenuItem("Criar pergunta");
+		mntmCriarPesquisa.setVisible(true);
+		mntmCriarPesquisa.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				
+				telaCriacaoDePergunta = new TelaCriarPergunta();
+				telaCriacaoDePergunta.setVisible(true);
+				frame.setContentPane(telaCriacaoDePergunta);
+				frame.revalidate();
+				
+			}
+		});
 		menuBar.add(mntmCriarPesquisa);
 
 		mnConfig = new JMenu("Config");
 		menuBar.add(mnConfig);
-
-		mntmSair = new JMenuItem("Sair");
-		mnConfig.add(mntmSair);
-
-		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(251, 155, 89, 23);
-		frame.getContentPane().add(btnLogin);
-
-		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(new ActionListener() {
+		
+		mntmLogin = new JMenuItem("Login");
+		mntmLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				telaLogin = new TelaLogin();
+				telaLogin.setVisible(true);
+				frame.setContentPane(telaLogin);
+				frame.revalidate();
+				
+			}
+		});
+		mnConfig.add(mntmLogin);
+		
+		JMenuItem mntmPerfil = new JMenuItem("Perfil");
+		mntmPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				telaPerfil = new TelaPerfil();
+				telaPerfil.setVisible(true);
+				frame.setContentPane(telaPerfil);
+				frame.revalidate();
+				
+			}
+		});
+		mnConfig.add(mntmPerfil);
+		
+		mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
 				telaCadastro = new TelaCadastro();
 				telaCadastro.setVisible(true);
 				frame.setContentPane(telaCadastro);
 				frame.revalidate();
 				
-				telaCadastro.getBtnVoltar().addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent e) {
-						
-					
-						
-					}
-				});
-
 			}
 		});
-		btnCadastrar.setBounds(251, 209, 89, 23);
-		frame.getContentPane().add(btnCadastrar);
+		mnConfig.add(mntmCadastrar);
 
-		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
+		mntmSair = new JMenuItem("Sair");
+		mntmSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				System.exit(0);
+				
 			}
 		});
-		btnSair.setBounds(251, 268, 89, 23);
-		frame.getContentPane().add(btnSair);
+		mnConfig.add(mntmSair);
+		
+		
 
 	}
 }
