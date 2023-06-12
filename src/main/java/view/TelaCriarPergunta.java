@@ -8,7 +8,7 @@ import javax.swing.JTextPane;
 import javax.swing.JButton;
 
 public class TelaCriarPergunta extends JPanel {
-	private JTextField textField;
+	private JTextField txtFTitulo;
 
 	/**
 	 * Create the panel.
@@ -16,34 +16,40 @@ public class TelaCriarPergunta extends JPanel {
 	public TelaCriarPergunta() {
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Criar Pergunta");
-		lblNewLabel.setBounds(267, 49, 70, 23);
-		add(lblNewLabel);
-		
-		textField = new JTextField();
-		textField.setBounds(202, 106, 86, 20);
-		add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("Titulo");
-		lblNewLabel_1.setBounds(133, 109, 59, 14);
-		add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Duvida");
-		lblNewLabel_1_1.setBounds(133, 168, 59, 14);
-		add(lblNewLabel_1_1);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(404, 105, 30, 22);
-		add(comboBox);
-		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(213, 168, 218, 186);
-		add(textPane);
-		
-		JButton btnNewButton = new JButton("Postar");
-		btnNewButton.setBounds(241, 376, 89, 23);
-		add(btnNewButton);
+		JLabel lblCriarPergunta = new JLabel("Criar Pergunta");
+		lblCriarPergunta.setBounds(267, 49, 70, 23);
+		add(lblCriarPergunta);
 
+		JLabel lblTitulo = new JLabel("Titulo");
+		lblTitulo.setBounds(133, 109, 59, 14);
+		add(lblTitulo);
+		
+		txtFTitulo = new JTextField();
+		txtFTitulo.setBounds(202, 106, 86, 20);
+		add(txtFTitulo);
+		txtFTitulo.setColumns(10);
+		
+		JLabel lblCategorias = new JLabel("Categorias");
+		lblCategorias.setBounds(366, 109, 70, 14);
+		add(lblCategorias);
+
+		JComboBox cbCategorias = new JComboBox();
+		cbCategorias.setToolTipText("");
+		cbCategorias.setBounds(446, 105, 95, 22);
+		add(cbCategorias);
+		
+		JLabel lblDuvida = new JLabel("Duvida");
+		lblDuvida.setBounds(133, 168, 59, 14);
+		add(lblDuvida);
+		
+		JTextPane txtPDuvida = new JTextPane();
+		txtPDuvida.setBounds(213, 168, 218, 186);
+		add(txtPDuvida);
+		
+		JButton btnPostarDuvida = new JButton("Postar");
+		btnPostarDuvida.setBounds(241, 376, 89, 23);
+		add(btnPostarDuvida);
+		
+		
 	}
 }

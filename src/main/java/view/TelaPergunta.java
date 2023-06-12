@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
 
 public class TelaPergunta extends JPanel {
 
@@ -27,6 +28,10 @@ public class TelaPergunta extends JPanel {
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(166, 110, 273, 169);
 		add(textArea);
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setBounds(636, 72, 17, 313);
+		add(scrollBar);
 
 	}
 }
