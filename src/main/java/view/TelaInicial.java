@@ -28,6 +28,7 @@ public class TelaInicial {
 	private JMenuItem mntmLogin;
 	private TelaCriarPergunta telaCriacaoDePergunta;
 	private TelaPerfil telaPerfil;
+	private TelaPesquisa telaPesquisa;
 
 	/**
 	 * Launch the application.
@@ -78,6 +79,16 @@ public class TelaInicial {
 		menuBar.add(mntmHome);
 
 		mntmPesquisa = new JMenuItem("Pesquisa");
+		mntmPesquisa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				telaPesquisa = new TelaPesquisa();
+				telaPesquisa.setVisible(true);
+				frame.setContentPane(telaPesquisa);
+				frame.revalidate();
+				
+			}
+		});
 		menuBar.add(mntmPesquisa);
 
 		mntmCriarPesquisa = new JMenuItem("Criar pergunta");
