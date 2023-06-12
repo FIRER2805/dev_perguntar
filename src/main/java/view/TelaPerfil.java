@@ -6,9 +6,9 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class TelaPerfil extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textSenhaAtual;
+	private JTextField textNovaSenha1;
+	private JTextField textNovaSenha2;
 
 	/**
 	 * Create the panel.
@@ -16,36 +16,36 @@ public class TelaPerfil extends JPanel {
 	public TelaPerfil() {
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(105, 72, 46, 14);
-		add(lblNewLabel);
+		JLabel lblSenharAtual = new JLabel("senha atual :");
+		lblSenharAtual.setBounds(88, 72, 76, 14);
+		add(lblSenharAtual);
 		
-		textField = new JTextField();
-		textField.setBounds(174, 69, 86, 20);
-		add(textField);
-		textField.setColumns(10);
+		textSenhaAtual = new JTextField();
+		textSenhaAtual.setBounds(174, 69, 86, 20);
+		add(textSenhaAtual);
+		textSenhaAtual.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(105, 108, 46, 14);
+		JLabel lblNewLabel_1 = new JLabel("nova Senha :");
+		lblNewLabel_1.setBounds(88, 108, 76, 14);
 		add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(174, 105, 86, 20);
-		add(textField_1);
+		textNovaSenha1 = new JTextField();
+		textNovaSenha1.setColumns(10);
+		textNovaSenha1.setBounds(174, 105, 86, 20);
+		add(textNovaSenha1);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(105, 148, 46, 14);
+		JLabel lblNewLabel_2 = new JLabel("nova Senha :");
+		lblNewLabel_2.setBounds(88, 148, 76, 14);
 		add(lblNewLabel_2);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(174, 145, 86, 20);
-		add(textField_2);
+		textNovaSenha2 = new JTextField();
+		textNovaSenha2.setColumns(10);
+		textNovaSenha2.setBounds(174, 145, 86, 20);
+		add(textNovaSenha2);
 		
-		JButton btnNewButton = new JButton("Trocar senha");
-		btnNewButton.setBounds(143, 202, 117, 23);
-		add(btnNewButton);
+		JButton btnTrocarSenha = new JButton("Trocar senha");
+		btnTrocarSenha.setBounds(143, 202, 117, 23);
+		add(btnTrocarSenha);
 
 	}
 }
