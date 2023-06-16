@@ -14,12 +14,6 @@ public class Banco {
 	public static final String URL = "jdbc:mysql://localhost:3306/" + NOME_BANCO;
 	
 	
-	/** 
-	 * este método estabelece uma conexão com o banco
-	 * 
-	 * @return objeto Connection
-	 * @author Gabriel Henrique
-	 * */
 	public static Connection getConnection()
 	{
 		Connection retorno = null;
@@ -36,13 +30,6 @@ public class Banco {
 	}
 	
 	
-	/** 
-	 * gera um statement para executar querys estaticas
-	 * 
-	 * @param conexão
-	 * @return objeto Statement
-	 * @author Gabriel Henrique
-	 */
 	public static Statement getStatement(Connection c) 
 	{
 		Statement stmt = null;
