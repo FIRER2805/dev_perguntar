@@ -3,10 +3,17 @@ package model.vo;
 public class Resposta {
 	private int id;
 	private String conteudo;
-	private Pergunta pergunta;
+	private int idPergunta;
 	private Usuario usuario;
+	private int idRespostaPai;
 	private Resposta respostaPai;
 	
+	public int getIdRespostaPai() {
+		return idRespostaPai;
+	}
+	public void setIdRespostaPai(int idRespostaPai) {
+		this.idRespostaPai = idRespostaPai;
+	}
 	public int getId() {
 		return id;
 	}
@@ -19,11 +26,11 @@ public class Resposta {
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
 	}
-	public Pergunta getPergunta() {
-		return pergunta;
+	public int getIdPergunta() {
+		return idPergunta;
 	}
-	public void setPergunta(Pergunta pergunta) {
-		this.pergunta = pergunta;
+	public void setIdPergunta(int idPergunta) {
+		this.idPergunta = idPergunta;
 	}
 	public Usuario getUsuario() {
 		return usuario;
@@ -31,10 +38,10 @@ public class Resposta {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Resposta getResposta() {
+	public Resposta getRespostaPai() {
 		return respostaPai;
 	}
-	public void setResposta(Resposta resposta) {
+	public void setRespostaPai(Resposta resposta) {
 		this.respostaPai = resposta;
 	}
 }

@@ -2,6 +2,8 @@ package model.vo;
 
 import java.time.LocalDateTime;
 
+import model.vo.Arvores.ArvoreRespostas;
+
 public class Pergunta {
 	private int id;
 	private String titulo;
@@ -10,6 +12,7 @@ public class Pergunta {
 	private LocalDateTime dataResolucao;
 	private Usuario usuario;
 	private Categoria categoria;
+	private ArvoreRespostas respostas;
 	
 	public int getId() {
 		return id;
