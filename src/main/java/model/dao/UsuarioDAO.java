@@ -47,6 +47,7 @@ public class UsuarioDAO {
 		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
 		ResultSet rs = null;
 		try {
+			pStmt.setInt(1, id);
 			rs = pStmt.executeQuery();
 			if(rs.next())
 			{
@@ -119,5 +120,66 @@ public class UsuarioDAO {
 			Banco.closeConnection(conn);
 		}
 		return registrosAfetados;
+	}
+	
+	public boolean eMailDisponivel(String eMail)
+	{
+		boolean retorno = true;
+		String sql =  "select e_mail from usuario where e_mail = ?";
+		Connection conn = Banco.getConnection();
+		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
+		ResultSet rs = null;
+		try {
+			pStmt.setString(1, eMail);
+			rs = pStmt.executeQuery();
+			if(rs.next())
+			{
+				retorno = false;
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método emailDisponivel da classe UsuarioDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeStatement(pStmt);
+			Banco.closeConnection(conn);
+		}
+		return retorno;
+	}
+	
+	public Usuario login(Usuario u)
+	{
+		Usuario retorno = null;
+		String sql =  "select * from usuario where e_mail = ? and senha = ?";
+		Connection conn = Banco.getConnection();
+		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
+		ResultSet rs = null;
+		try {
+			pStmt.setString(1, u.geteMail());
+			pStmt.setString(2, u.getSenha());
+			rs = pStmt.executeQuery();
+			if(rs.next())
+			{
+				u.setId(rs.getInt(1));
+				u.setNome(rs.getString(2));
+				u.seteMail(rs.getString(3));
+				u.setSenha(rs.getString(4));
+				retorno = u;
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método emailDisponivel da classe UsuarioDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeStatement(pStmt);
+			Banco.closeConnection(conn);
+		}
+		return retorno;
 	}
 }

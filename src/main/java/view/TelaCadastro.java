@@ -3,6 +3,10 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import controller.UsuarioController;
+import model.vo.Usuario;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -54,6 +58,52 @@ public class TelaCadastro extends JPanel {
 		 btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setBounds(205, 210, 89, 23);
 		add(btnCadastrar);
-
+		
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsuarioController controller = new UsuarioController();
+				Usuario usuario = new Usuario();
+				usuario.setNome(textNome.getText());
+				usuario.seteMail(textEmail.getText());
+				usuario.setSenha(textSenha.getText());
+				// quando exception for implementada isso estara num try/catch
+				validaCampos(usuario);
+				int cadastrados = controller.cadastrar(usuario);
+				if(cadastrados != -1)
+				{
+					// Lucas
+					// da um jeito de trocar para a tela incial enviando o objeto usuario para ela
+					// eu estava pensando em criar um construtor para a tela inicial e deixar o objeto usuario
+					// como atributo, para o controle de sessão, ai caso esteja null quer dizer q ele
+					// esta deslogado, ai ele não consegue fazer pergunta nem responder, ai tu
+					// fica redirecionando ele pra tela de login ou cadastro quando ele clicasse no botão
+					// de perguntas, respostas, ect...
+					System.out.println("cadastrado como: " + usuario.getNome());
+				}
+			}
+		});
+	}
+	
+	private void validaCampos(Usuario u)
+	{
+		String alerta = "";
+		if(u.getNome().trim().isEmpty())
+		{
+			alerta += "Campo nome é obrigatório\n";
+		}
+		if(u.geteMail().trim().isEmpty())
+		{
+			alerta += "Campo e-mail é obrigatório\n";
+		}
+		if(u.getSenha().trim().isEmpty())
+		{
+			alerta += "Campo senha é obrigatório";
+		}
+		
+		//lançar a exception
+		if(alerta.isEmpty())
+		{
+			//lança exception
+		}
 	}
 }

@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Banco {
+	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	public static final String NOME_BANCO = "db_dev_perguntar";
 	public static final String USUARIO = "root";
-	public static final String SENHA = "admin";
+	public static final String SENHA = "Lasanha2805g";
 	public static final String URL = "jdbc:mysql://localhost:3306/" + NOME_BANCO;
 	
 	
@@ -19,7 +20,7 @@ public class Banco {
 		Connection retorno = null;
 		try 
 		{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(DRIVER);
 			retorno = DriverManager.getConnection(URL,USUARIO,SENHA);	
 		} catch (ClassNotFoundException e) {
 			System.out.println("Erro ao buscar conexao com o banco");
