@@ -1,6 +1,7 @@
 package model.vo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import model.vo.Arvores.ArvoreRespostas;
 
@@ -12,8 +13,11 @@ public class Pergunta {
 	private LocalDateTime dataResolucao;
 	private Usuario usuario;
 	private Categoria categoria;
-	private ArvoreRespostas respostas;
+	private List<ArvoreRespostas> respostas;
 	
+	public void setDataResolucao(LocalDateTime dataResolucao) {
+		this.dataResolucao = dataResolucao;
+	}
 	public int getId() {
 		return id;
 	}
@@ -55,5 +59,11 @@ public class Pergunta {
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+	public List<ArvoreRespostas> getRespostas() {
+		return respostas;
+	}
+	public void setRespostas(List<ArvoreRespostas> respostas) {
+		this.respostas = respostas;
 	}
 }

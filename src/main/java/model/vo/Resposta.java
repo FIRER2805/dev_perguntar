@@ -5,15 +5,8 @@ public class Resposta {
 	private String conteudo;
 	private int idPergunta;
 	private Usuario usuario;
-	private int idRespostaPai;
 	private Resposta respostaPai;
 	
-	public int getIdRespostaPai() {
-		return idRespostaPai;
-	}
-	public void setIdRespostaPai(int idRespostaPai) {
-		this.idRespostaPai = idRespostaPai;
-	}
 	public int getId() {
 		return id;
 	}

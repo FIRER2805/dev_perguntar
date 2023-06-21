@@ -1,37 +1,35 @@
 package model.vo.Arvores;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.vo.Resposta;
 
 public class NodeResposta {
 	private Resposta resposta;
-	private ArrayList<NodeResposta> respostaFilhos;
+	private List<NodeResposta> filhos;
 	
-	public void inserir(Resposta r)
+	public NodeResposta(Resposta r)
 	{
-		if(r != null)
-		{
-			this.respostaFilhos = new ArrayList<NodeResposta>();
-			NodeResposta novoFilho = new NodeResposta();
-			novoFilho.setResposta(r);
-			respostaFilhos.add(novoFilho);
-		}
+		this.resposta = r;
+	}
+
+	public void inserir(Resposta r) {
+		if (r == null)
+			return;
+		
+		if (this.filhos == null)
+			this.filhos = new ArrayList<NodeResposta>();
+
+		NodeResposta novoFilho = new NodeResposta(r);
+		this.filhos.add(novoFilho);
 	}
 
 	public Resposta getResposta() {
 		return resposta;
 	}
 
-	public void setResposta(Resposta resposta) {
-		this.resposta = resposta;
-	}
-
-	public ArrayList<NodeResposta> getRespostaFilhos() {
-		return respostaFilhos;
-	}
-
-	public void setRespostaFilhos(ArrayList<NodeResposta> respostaFilhos) {
-		this.respostaFilhos = respostaFilhos;
+	public List<NodeResposta> getFilhos() {
+		return filhos;
 	}
 }

@@ -10,14 +10,6 @@ import model.vo.Pergunta;
 
 public class PerguntaDAO {
 	
-//	private int id;
-//	private String titulo;
-//	private String conteudo;
-//	private LocalDateTime data;
-//	private LocalDateTime dataResolucao;
-//	private Usuario usuario;
-//	private Categoria categoria;
-	
 	public int inserir(Pergunta p)
 	{
 		int chave = 0;
