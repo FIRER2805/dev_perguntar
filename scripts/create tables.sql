@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS db_dev_perguntar;
 CREATE DATABASE db_dev_perguntar;
 USE db_dev_perguntar;
 
+SET SQL_SAFE_UPDATES = 0;
+
 CREATE TABLE usuario
 (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -24,9 +26,11 @@ CREATE TABLE pergunta
     data_pergunta DATETIME NOT NULL,
     data_resolucao DATETIME NULL,
 	id_usuario INT NULL,
-    FOREIGN KEY(id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY(id_usuario) REFERENCES usuario(id)
+    ON DELETE SET NULL,
     id_categoria INT NULL,
     FOREIGN KEY(id_categoria) REFERENCES categoria(id)
+    ON DELETE SET NULL
 );
 
 CREATE TABLE resposta
