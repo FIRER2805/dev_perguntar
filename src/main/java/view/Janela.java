@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
+import model.vo.Usuario;
+
 public class Janela {
 
 	private JFrame frame;
@@ -22,7 +24,7 @@ public class Janela {
 	private JMenu mnConfig;
 	private JMenuItem mntmSair;
 	private view.TelaCadastro telaCadastro;
-	private view.TelaLogin telaLogin;
+	private view.TelaLogin telaLogin = new TelaLogin();
 	private JTextField textField;
 	private JMenuItem mntmCadastrar;
 	private JMenuItem mntmLogin;
@@ -30,6 +32,8 @@ public class Janela {
 	private TelaPerfil telaPerfil;
 	private TelaPesquisa telaPesquisa;
 	private TelaHome telaHome = new TelaHome();
+	private Usuario usuarioLogado;
+	private JMenuItem mntmPerfil;
 
 	/**
 	 * Launch the application.
@@ -95,7 +99,7 @@ public class Janela {
 		menuBar.add(mntmPesquisa);
 
 		mntmCriarPesquisa = new JMenuItem("Criar pergunta");
-		mntmCriarPesquisa.setVisible(true);
+		mntmCriarPesquisa.setVisible(false);
 		mntmCriarPesquisa.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -116,7 +120,7 @@ public class Janela {
 		mntmLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				telaLogin = new TelaLogin();
+				telaLogin.limparCampos();;
 				telaLogin.setVisible(true);
 				frame.setContentPane(telaLogin);
 				frame.revalidate();
@@ -124,8 +128,29 @@ public class Janela {
 			}
 		});
 		mnConfig.add(mntmLogin);
+		
+		telaLogin.getBtnLogin().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				usuarioLogado = telaLogin.logarUsuario();
+				mntmCriarPesquisa.setVisible(true);
+				mntmPerfil.setVisible(true);
+				mntmCadastrar.setVisible(false);
+				mntmLogin.setVisible(false);
+				
+				telaHome.setVisible(true);
+				frame.setContentPane(telaHome);
+				frame.revalidate();
+				
+			}
+		});
+		
+		
+		
 
-		JMenuItem mntmPerfil = new JMenuItem("Perfil");
+		 mntmPerfil = new JMenuItem("Perfil");
+		 mntmPerfil.setVisible(false);
 		mntmPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
