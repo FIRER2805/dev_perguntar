@@ -9,6 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import javax.swing.JTree;
+import javax.swing.ScrollPaneConstants;
+
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.JScrollPane;
+import java.awt.Font;
 
 public class TelaPergunta extends JPanel {
 
@@ -16,23 +24,54 @@ public class TelaPergunta extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaPergunta() {
-		setLayout(null);
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(150dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(150dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(75dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(166, 72, 46, 14);
-		add(lblNewLabel);
+		JLabel lblAutor = new JLabel("Autor");
+		lblAutor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblAutor, "4, 4, left, default");
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(177, 293, 46, 14);
-		add(lblNewLabel_1);
+		JLabel lblCategoria = new JLabel("Categoria");
+		add(lblCategoria, "6, 4, right, default");
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(166, 110, 273, 169);
-		add(textArea);
+		JLabel lblTitulo = new JLabel("Titulo");
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		add(lblTitulo, "4, 6");
 		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(636, 72, 17, 313);
-		add(scrollBar);
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "4, 8, 3, 1, fill, fill");
+		
+//		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		JTextArea textADescricao = new JTextArea();
+		textADescricao.setEnabled(false);
+		scrollPane.setViewportView(textADescricao);
+		
+		JLabel lblDtCriacao = new JLabel("Data cricaca");
+		add(lblDtCriacao, "4, 10");
+		
+		JLabel lblDtResolucao = new JLabel("data resolucao");
+		add(lblDtResolucao, "6, 10, right, default");
 
 	}
 }
