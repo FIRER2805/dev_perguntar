@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.UsuarioController;
@@ -23,7 +24,7 @@ public class Janela {
 	private JMenuItem mntmCriarPesquisa;
 	private JMenu mnConfig;
 	private JMenuItem mntmSair;
-	private view.TelaCadastro telaCadastro;
+	private view.TelaCadastro telaCadastro = new TelaCadastro();
 	private view.TelaLogin telaLogin = new TelaLogin();
 	private JTextField textField;
 	private JMenuItem mntmCadastrar;
@@ -80,14 +81,12 @@ public class Janela {
 				telaHome.setVisible(true);
 				frame.setContentPane(telaHome);
 				frame.revalidate();
-				telaHome.getBtnVizualizar().addActionListener(new ActionListener() 
-				{
-					public void actionPerformed(ActionEvent e)
-					{
+				telaHome.getBtnVizualizar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
 						int linhaSelecionada = telaHome.getTable().getSelectedRow();
-						if(linhaSelecionada == -1)
-						return;
-						Pergunta pergunta = (Pergunta)telaHome.getTable().getModel().getValueAt(linhaSelecionada, 1);
+						if (linhaSelecionada == -1)
+							return;
+						Pergunta pergunta = (Pergunta) telaHome.getTable().getModel().getValueAt(linhaSelecionada, 1);
 						TelaPergunta telaPergunta = new TelaPergunta(pergunta);
 						telaPergunta.setVisible(true);
 						frame.setContentPane(telaPergunta);
@@ -133,7 +132,8 @@ public class Janela {
 		mntmLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				telaLogin.limparCampos();;
+				telaLogin.limparCampos();
+				;
 				telaLogin.setVisible(true);
 				frame.setContentPane(telaLogin);
 				frame.revalidate();
@@ -141,29 +141,26 @@ public class Janela {
 			}
 		});
 		mnConfig.add(mntmLogin);
-		
+
 		telaLogin.getBtnLogin().addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
-				
+
 				usuarioLogado = telaLogin.logarUsuario();
 				mntmCriarPesquisa.setVisible(true);
 				mntmPerfil.setVisible(true);
 				mntmCadastrar.setVisible(false);
 				mntmLogin.setVisible(false);
-				
+
 				telaHome.setVisible(true);
 				frame.setContentPane(telaHome);
 				frame.revalidate();
-				
+
 			}
 		});
-		
-		
-		
 
-		 mntmPerfil = new JMenuItem("Perfil");
-		 mntmPerfil.setVisible(false);
+		mntmPerfil = new JMenuItem("Perfil");
+		mntmPerfil.setVisible(false);
 		mntmPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -180,38 +177,25 @@ public class Janela {
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				telaCadastro = new TelaCadastro();
 				telaCadastro.setVisible(true);
 				frame.setContentPane(telaCadastro);
 				frame.revalidate();
-				
-				telaCadastro.getBtnCadastrar().addActionListener(new ActionListener() 
-				{
-					public void actionPerformed(ActionEvent e)
-					{
-						UsuarioController controller = new UsuarioController();
-						Usuario usuario = new Usuario();
-						usuario.setNome(telaCadastro.getTextFNome().getText());
-						usuario.seteMail(telaCadastro.getTextFEmail().getText());
-						usuario.setSenha(telaCadastro.getTextFSenha().getText());
-						// quando exception for implementada isso estara num try/catch
-						telaCadastro.validaCampos(usuario);
-						int cadastrados = controller.cadastrar(usuario);
-						if(cadastrados != -1)
-						{
-							telaLogin = new TelaLogin();
-							telaLogin.setVisible(true);
-							frame.setContentPane(telaLogin);
-							frame.revalidate();
-							System.out.println("cadastrado como: " + usuario.getNome());
-						}
-					}
-				});
 
 			}
 		});
 		mnConfig.add(mntmCadastrar);
-		
+
+		telaCadastro.getBtnCadastrar().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				telaCadastro.cadastrarUsuario();
+				telaLogin.setVisible(true);
+				frame.setContentPane(telaLogin);
+				frame.revalidate();
+
+			}
+		});
 
 		mntmSair = new JMenuItem("Sair");
 		mntmSair.addActionListener(new ActionListener() {
@@ -224,4 +208,15 @@ public class Janela {
 		mnConfig.add(mntmSair);
 
 	}
+	
+	//TODO criar classe abstrata filha de JPanel
+	private void trocarTela(JPanel tela) {
+			
+		tela.setVisible(true);
+		frame.setContentPane(tela);
+		frame.revalidate();
+		
+	}
+	
+	
 }

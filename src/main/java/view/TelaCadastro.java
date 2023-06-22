@@ -20,15 +20,14 @@ import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.Font;
 
 public class TelaCadastro extends JPanel {
-	private JLabel lblTitulo;
-	private JLabel lblNome;
-	private JLabel lblEmail_1;
-	private JLabel lblSenha;
 	private JTextField textFNome;
 	private JTextField textFEmail;
 	private JTextField textFSenha;
 	private JButton btnCadastrar;
 
+	public JButton getBtnCadastrar() {
+		return btnCadastrar;
+	}
 
 	/**
 	 * Create the panel.
@@ -59,25 +58,25 @@ public class TelaCadastro extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("top:default:grow"),}));
 		 
-		 lblTitulo = new JLabel("Cadastrar Usuario");
+		 JLabel lblTitulo = new JLabel("Cadastrar Usuario");
 		 lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		 add(lblTitulo, "5, 3");
 		 
-		 lblNome = new JLabel(" Nome : ");
+		 JLabel lblNome = new JLabel(" Nome : ");
 		 add(lblNome, "3, 7");
 		 
 		 textFNome = new JTextField();
 		 textFNome.setColumns(15);
 		 add(textFNome, "5, 7");
 		 
-		 lblEmail_1 = new JLabel("E-Mail : ");
-		 add(lblEmail_1, "3, 9");
+		 JLabel lblEmail = new JLabel("E-Mail : ");
+		 add(lblEmail, "3, 9");
 		 
 		 textFEmail = new JTextField();
 		 textFEmail.setColumns(15);
 		 add(textFEmail, "5, 9");
 		 
-		 lblSenha = new JLabel("Senha : ");
+		 JLabel lblSenha = new JLabel("Senha : ");
 		 add(lblSenha, "3, 11");
 		 
 		 textFSenha = new JTextField();
@@ -89,38 +88,21 @@ public class TelaCadastro extends JPanel {
 		 
 	}
 	
-	public JTextField getTextFNome() {
-		return textFNome;
-	}
-
-
-	public void setTextFNome(JTextField textFNome) {
-		this.textFNome = textFNome;
-	}
-
-
-	public JTextField getTextFEmail() {
-		return textFEmail;
-	}
-
-
-	public void setTextFEmail(JTextField textFEmail) {
-		this.textFEmail = textFEmail;
-	}
-
-
-	public JTextField getTextFSenha() {
-		return textFSenha;
-	}
-
-
-	public void setTextFSenha(JTextField textFSenha) {
-		this.textFSenha = textFSenha;
-	}
-
-
-	public JButton getBtnCadastrar() {
-		return btnCadastrar;
+	public void cadastrarUsuario() {
+		
+		UsuarioController controller = new UsuarioController();
+		Usuario usuario = new Usuario();
+		usuario.setNome(textFNome.getText());
+		usuario.seteMail(textFEmail.getText());
+		usuario.setSenha(textFSenha.getText());
+		// quando exception for implementada isso estara num try/catch
+		validaCampos(usuario);
+		int cadastrados = controller.cadastrar(usuario);
+		if(cadastrados != -1){
+			
+			System.out.println("cadastrado como: " + usuario.getNome());
+		}
+		
 	}
 	
 	public void validaCampos(Usuario u)
