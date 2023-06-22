@@ -29,10 +29,6 @@ public class TelaCadastro extends JPanel {
 	private JTextField textFSenha;
 	private JButton btnCadastrar;
 
-	public JButton getBtnCadastrar() {
-		return btnCadastrar;
-	}
-
 
 	/**
 	 * Create the panel.
@@ -91,25 +87,43 @@ public class TelaCadastro extends JPanel {
 		 btnCadastrar = new JButton("Cadastrar");
 		 add(btnCadastrar, "5, 13");
 		 
-		 btnCadastrar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					UsuarioController controller = new UsuarioController();
-					Usuario usuario = new Usuario();
-					usuario.setNome(textFNome.getText());
-					usuario.seteMail(textFEmail.getText());
-					usuario.setSenha(textFSenha.getText());
-					// quando exception for implementada isso estara num try/catch
-					validaCampos(usuario);
-					int cadastrados = controller.cadastrar(usuario);
-					if(cadastrados != -1)
-					{
-						System.out.println("cadastrado como: " + usuario.getNome());
-					}
-				}
-			});
 	}
 	
-	private void validaCampos(Usuario u)
+	public JTextField getTextFNome() {
+		return textFNome;
+	}
+
+
+	public void setTextFNome(JTextField textFNome) {
+		this.textFNome = textFNome;
+	}
+
+
+	public JTextField getTextFEmail() {
+		return textFEmail;
+	}
+
+
+	public void setTextFEmail(JTextField textFEmail) {
+		this.textFEmail = textFEmail;
+	}
+
+
+	public JTextField getTextFSenha() {
+		return textFSenha;
+	}
+
+
+	public void setTextFSenha(JTextField textFSenha) {
+		this.textFSenha = textFSenha;
+	}
+
+
+	public JButton getBtnCadastrar() {
+		return btnCadastrar;
+	}
+	
+	public void validaCampos(Usuario u)
 	{
 		String alerta = "";
 		if(u.getNome().trim().isEmpty())

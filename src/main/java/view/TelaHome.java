@@ -83,6 +83,13 @@ public class TelaHome extends JPanel {
 
 	}
 	
+	
+	
+	public JTable getTable() {
+		return table;
+	}
+
+
 	private void limparTabela() {
 		table.setModel(new DefaultTableModel(new Object[][] { , }, nomesColunas));
 	}

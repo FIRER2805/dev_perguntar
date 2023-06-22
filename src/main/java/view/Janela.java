@@ -1,16 +1,18 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+
+import controller.UsuarioController;
+import model.vo.Pergunta;
+import model.vo.Usuario;
 
 public class Janela {
 
@@ -76,7 +78,20 @@ public class Janela {
 				telaHome.setVisible(true);
 				frame.setContentPane(telaHome);
 				frame.revalidate();
-
+				telaHome.getBtnVizualizar().addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						int linhaSelecionada = telaHome.getTable().getSelectedRow();
+						if(linhaSelecionada == -1)
+						return;
+						Pergunta pergunta = (Pergunta)telaHome.getTable().getModel().getValueAt(linhaSelecionada, 1);
+						TelaPergunta telaPergunta = new TelaPergunta(pergunta);
+						telaPergunta.setVisible(true);
+						frame.setContentPane(telaPergunta);
+						frame.revalidate();
+					}
+				});
 			}
 		});
 		menuBar.add(mntmHome);
@@ -146,6 +161,29 @@ public class Janela {
 				telaCadastro.setVisible(true);
 				frame.setContentPane(telaCadastro);
 				frame.revalidate();
+				
+				telaCadastro.getBtnCadastrar().addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						UsuarioController controller = new UsuarioController();
+						Usuario usuario = new Usuario();
+						usuario.setNome(telaCadastro.getTextFNome().getText());
+						usuario.seteMail(telaCadastro.getTextFEmail().getText());
+						usuario.setSenha(telaCadastro.getTextFSenha().getText());
+						// quando exception for implementada isso estara num try/catch
+						telaCadastro.validaCampos(usuario);
+						int cadastrados = controller.cadastrar(usuario);
+						if(cadastrados != -1)
+						{
+							telaLogin = new TelaLogin();
+							telaLogin.setVisible(true);
+							frame.setContentPane(telaLogin);
+							frame.revalidate();
+							System.out.println("cadastrado como: " + usuario.getNome());
+						}
+					}
+				});
 
 			}
 		});
