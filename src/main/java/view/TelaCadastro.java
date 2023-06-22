@@ -4,7 +4,10 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import controller.PerguntaController;
 import controller.UsuarioController;
+import model.vo.Categoria;
+import model.vo.Pergunta;
 import model.vo.Usuario;
 
 import javax.swing.JButton;
@@ -87,28 +90,23 @@ public class TelaCadastro extends JPanel {
 		 
 		 btnCadastrar = new JButton("Cadastrar");
 		 add(btnCadastrar, "5, 13");
-	}
-	
-	private void abc() {
-		UsuarioController controller = new UsuarioController();
-		Usuario usuario = new Usuario();
-		usuario.setNome(textFNome.getText());
-		usuario.seteMail(textFEmail.getText());
-		usuario.setSenha(textFSenha.getText());
-		// quando exception for implementada isso estara num try/catch
-		validaCampos(usuario);
-		int cadastrados = controller.cadastrar(usuario);
-		if(cadastrados != -1)
-		{
-			// Lucas
-			// da um jeito de trocar para a tela incial enviando o objeto usuario para ela
-			// eu estava pensando em criar um construtor para a tela inicial e deixar o objeto usuario
-			// como atributo, para o controle de sessão, ai caso esteja null quer dizer q ele
-			// esta deslogado, ai ele não consegue fazer pergunta nem responder, ai tu
-			// fica redirecionando ele pra tela de login ou cadastro quando ele clicasse no botão
-			// de perguntas, respostas, ect...
-			System.out.println("cadastrado como: " + usuario.getNome());
-		}
+		 
+		 btnCadastrar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					UsuarioController controller = new UsuarioController();
+					Usuario usuario = new Usuario();
+					usuario.setNome(textFNome.getText());
+					usuario.seteMail(textFEmail.getText());
+					usuario.setSenha(textFSenha.getText());
+					// quando exception for implementada isso estara num try/catch
+					validaCampos(usuario);
+					int cadastrados = controller.cadastrar(usuario);
+					if(cadastrados != -1)
+					{
+						System.out.println("cadastrado como: " + usuario.getNome());
+					}
+				}
+			});
 	}
 	
 	private void validaCampos(Usuario u)

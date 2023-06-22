@@ -11,7 +11,7 @@ public class Teste {
 	{
 		
 		PerguntaDAO dao = new PerguntaDAO();
-		ArrayList<Pergunta> perguntas = dao.busca();
+		ArrayList<Pergunta> perguntas = dao.busca("o que é java");
 		
 		for(Pergunta pergunta: perguntas)
 		{

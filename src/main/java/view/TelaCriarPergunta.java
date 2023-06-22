@@ -1,22 +1,30 @@
 package view;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JTextPane;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+
+import controller.PerguntaController;
+import model.vo.Categoria;
+import model.vo.Pergunta;
+import model.vo.Usuario;
 
 public class TelaCriarPergunta extends JPanel {
 	private JTextField textFTitulo;
+	private JTextArea textADuvida;
 
 	/**
 	 * Create the panel.
@@ -81,12 +89,28 @@ public class TelaCriarPergunta extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "6, 14, 7, 1, fill, fill");
 		
-		JTextArea textADuvida = new JTextArea();
+		textADuvida = new JTextArea();
 		scrollPane.setViewportView(textADuvida);
 		
 		JButton btnPostarPergunta = new JButton("Postar Pergunta");
 		add(btnPostarPergunta, "6, 18, 7, 1, center, default");
 		
-		
+		btnPostarPergunta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Pergunta pergunta = new Pergunta();
+				pergunta.setTitulo(textFTitulo.getText());
+				pergunta.setConteudo(textADuvida.getText());
+				Categoria categoria = new Categoria();
+				Usuario usuario = new Usuario();
+				
+				categoria.setId(1);
+				usuario.setId(1);
+				pergunta.setCategoria(categoria);
+				pergunta.setUsuario(usuario);
+				
+				PerguntaController perguntaController = new PerguntaController();
+				perguntaController.perguntar(pergunta);
+			}
+		});
 	}
 }

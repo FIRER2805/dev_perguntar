@@ -26,9 +26,8 @@ public class PerguntaDAO {
 		try {
 			ps.setString(1, p.getTitulo());
 			ps.setString(2, p.getConteudo());
-			ps.setString(3, p.getData().toString());
-			ps.setInt(4, p.getUsuario().getId());
-			ps.setInt(5, p.getCategoria().getId());
+			ps.setInt(3, p.getUsuario().getId());
+			ps.setInt(4, p.getCategoria().getId());
 			
 			ps.executeUpdate();
 			chaves = ps.getGeneratedKeys();
@@ -83,6 +82,45 @@ public class PerguntaDAO {
 		{
 			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return perguntas;
+	}
+	
+	public ArrayList<Pergunta> busca(String texto)
+	{
+		String sql ="select "
+				+ "	p.* "
+				+ ",case when u.nome is null then '[DELETADO]' else u.nome end as nome "
+				+ ",c.nome as categoria "
+				+ "from pergunta p "
+				+ "left join usuario u on u.id = p.id_usuario "
+				+ "left join categoria c on c.id = p.id_usuario "
+				+ "where p.titulo like '%" + texto + "%' or p.conteudo like '%" + texto + "%'";
+		ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+		Connection conn = Banco.getConnection();
+		Statement pstmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		try 
+		{
+			resultado = pstmt.executeQuery(sql);
+			while(resultado.next())
+			{
+				Pergunta pergunta = montaPergunta(resultado);
+				pergunta.getUsuario().setNome(resultado.getString("nome"));
+				pergunta.getCategoria().setNome(resultado.getString("categoria"));
+				perguntas.add(pergunta);
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método busca da classe PerguntaDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(pstmt);
 			Banco.closeConnection(conn);
 		}
 		return perguntas;
