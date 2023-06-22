@@ -10,13 +10,15 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.JTextPane;
 
 public class TelaPesquisa extends JPanel {
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTable table;
+	private JTextField textFDataInicial;
+	private JTextField textFDataFinal;
 	
 
 
@@ -24,72 +26,96 @@ public class TelaPesquisa extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaPesquisa() {
-		setLayout(null);
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(150dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:default"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:default:grow"),}));
 		
-		JComboBox cbCategorias = new JComboBox();
-		cbCategorias.setToolTipText("");
-		cbCategorias.setBounds(393, 31, 130, 22);
-		add(cbCategorias);
+		JLabel lblTituloPagina = new JLabel("Consultar Oraculo");
+		add(lblTituloPagina, "4, 4, 9, 1, center, fill");
 		
-		JLabel lblNewLabel = new JLabel("Status");
-		lblNewLabel.setBounds(107, 35, 46, 14);
-		add(lblNewLabel);
+		JLabel lblStatus = new JLabel("Status");
+		add(lblStatus, "4, 8, default, fill");
 		
-		JLabel lblTitulo = new JLabel("titulo");
-		lblTitulo.setBounds(107, 79, 46, 14);
-		add(lblTitulo);
+		JCheckBox chckbxResolvido = new JCheckBox("Resolvido");
+		add(chckbxResolvido, "6, 8");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(170, 76, 86, 20);
-		add(textField_1);
+		JLabel lblCategoria = new JLabel("Categoria");
+		add(lblCategoria, "10, 8");
 		
-		JLabel lblDescricao = new JLabel("descricao");
-		lblDescricao.setBounds(107, 127, 46, 14);
-		add(lblDescricao);
+		JComboBox cbCategoria = new JComboBox();
+		add(cbCategoria, "12, 8, fill, default");
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(170, 124, 86, 20);
-		add(textField_2);
+		JLabel lblTitulo = new JLabel("Duvida");
+		add(lblTitulo, "4, 12, default, top");
 		
-		JLabel lblDataInicial = new JLabel("De");
-		lblDataInicial.setBounds(107, 184, 46, 14);
-		add(lblDataInicial);
+		JTextPane textPDuvida = new JTextPane();
+		add(textPDuvida, "6, 12, 7, 1, fill, fill");
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(170, 181, 86, 20);
-		add(textField_3);
+		JLabel lblIntervaloDtCriacao = new JLabel("Intevalo de Data de Criação");
+		add(lblIntervaloDtCriacao, "4, 16, 9, 1, center, fill");
 		
-		JLabel lblNewLabel_3_1 = new JLabel("Até");
-		lblNewLabel_3_1.setBounds(327, 187, 46, 14);
-		add(lblNewLabel_3_1);
+		JLabel lblDataInicial = new JLabel("De :");
+		add(lblDataInicial, "4, 18, default, fill");
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(390, 184, 86, 20);
-		add(textField_4);
+		textFDataInicial = new JTextField();
+		add(textFDataInicial, "6, 18, fill, default");
+		textFDataInicial.setColumns(10);
 		
-		JLabel lblNewLabel_3_1_1 = new JLabel("Intervalo de Datas de Criação");
-		lblNewLabel_3_1_1.setBounds(249, 155, 168, 14);
-		add(lblNewLabel_3_1_1);
+		JLabel lblDataFinal = new JLabel("Até :");
+		add(lblDataFinal, "10, 18");
+		
+		textFDataFinal = new JTextField();
+		add(textFDataFinal, "12, 18, fill, default");
+		textFDataFinal.setColumns(10);
 		
 		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(266, 235, 89, 23);
-		add(btnPesquisar);
+		add(btnPesquisar, "4, 22, 9, 1, center, fill");
 		
-		JLabel lblCategorias = new JLabel("Categorias");
-		lblCategorias.setBounds(314, 35, 69, 14);
-		add(lblCategorias);
-		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Resolvido");
-		chckbxNewCheckBox.setBounds(170, 31, 97, 23);
-		add(chckbxNewCheckBox);
-		
-		table = new JTable();
-		table.setBounds(107, 283, 444, 161);
-		add(table);
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "4, 26, 9, 1, fill, fill");
 		
 		
 		
