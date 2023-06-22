@@ -14,13 +14,14 @@ public class Teste {
 		
 		PerguntaDAO dao = new PerguntaDAO();
 		
-		/*
-		 * CategoriaDAO daoc = new CategoriaDAO();
-		 * 
-		 * ArrayList<Categoria> categorias = daoc.buscarTodas(); for(Categoria categoria
-		 * : categorias) { System.out.println(categoria.getId());
-		 * System.out.println(categoria.getNome()); }
-		 */
+		CategoriaDAO daoc = new CategoriaDAO();
+		
+		ArrayList<Categoria> categorias = daoc.buscarTodas();
+		for(Categoria categoria : categorias)
+		{
+			System.out.println(categoria.getId());
+			System.out.println(categoria.getNome());
+		}
 			
 		
 		
