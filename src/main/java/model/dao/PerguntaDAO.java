@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import model.Banco;
+import model.vo.Categoria;
 import model.vo.Pergunta;
+import model.vo.Usuario;
 
 public class PerguntaDAO {
 	
@@ -17,13 +20,13 @@ public class PerguntaDAO {
 	{
 		int chave = 0;
 		ResultSet chaves = null;
-		String sql = "insert into pergunta(titulo, conteudo, data_pergunta, data_resolucao,id_usuario, id_categoria) values(?,?,now(),?,?,?);";
+		String sql = "insert into pergunta(titulo, conteudo, data_pergunta, id_usuario, id_categoria) values(?,?,now(),?,?);";
 		Connection c = Banco.getConnection();
 		PreparedStatement ps = Banco.getPreparedStmtPK(c, sql);
 		try {
 			ps.setString(1, p.getTitulo());
-			ps.setString(2, p.getTitulo());
-			ps.setString(3, p.getDataResolucao().toString());
+			ps.setString(2, p.getConteudo());
+			ps.setString(3, p.getData().toString());
 			ps.setInt(4, p.getUsuario().getId());
 			ps.setInt(5, p.getCategoria().getId());
 			
@@ -48,9 +51,13 @@ public class PerguntaDAO {
 	
 	public ArrayList<Pergunta> busca()
 	{
-		String sql = "select p.*, case when u.nome is null then '[DELETADO]' else u.nome end as nome"
-				+ "from pergunta"
-				+ "left join usuario u on u.id = p.id_usuario"
+		String sql = "select "
+				+ "	p.* "
+				+ "	,case when u.nome is null then '[DELETADO]' else u.nome end as nome "
+				+ " ,c.nome as categoria "
+				+ "from pergunta p "
+				+ "left join usuario u on u.id = p.id_usuario "
+				+ "left join categoria c on c.id = p.id_usuario "
 				+ "limit 5;";
 		ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
 		Connection conn = Banco.getConnection();
@@ -61,51 +68,25 @@ public class PerguntaDAO {
 			resultado = stmt.executeQuery(sql);
 			while(resultado.next())
 			{
-				Pergunta pergunta = new Pergunta();
-				pergunta.setId(resultado.getInt(1));
-				pergunta.setTitulo(resultado.getString(2));
-				pergunta.setConteudo(resultado.getString(3));
-				pergunta.setData(LocalDateTime.parse(resultado.getString(4)));
-				pergunta.setDataResolucao(LocalDateTime.parse(resultado.getString(5)));
+				Pergunta pergunta = montaPergunta(resultado);
+				pergunta.getUsuario().setNome(resultado.getString("nome"));
+				pergunta.getCategoria().setNome(resultado.getString("categoria"));
+				perguntas.add(pergunta);
 			}
 		}
 		catch(SQLException e)
 		{
-			
+			System.out.println("Erro no método busca da classe PerguntaDAO");
+			System.out.println(e.getMessage());
 		}
-		return null;
+		finally 
+		{
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return perguntas;
 	}
-	
-//	public Pergunta buscarPorId(int id)
-//	{
-//		String sql =  "select * from categoria where id = ?";
-//		Categoria categoria = null;
-//		Connection conn = Banco.getConnection();
-//		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
-//		ResultSet rs = null;
-//		try {
-//			rs = pStmt.executeQuery();
-//			if(rs.next())
-//			{
-//				categoria = new Categoria();
-//				categoria.setId(rs.getInt(1));
-//				categoria.setNome(rs.getString(2));
-//			}
-//		}
-//		catch(SQLException e)
-//		{
-//			categoria = null;
-//			System.out.println("Erro no método buscarPorId da classe CategoriaDAO");
-//			System.out.println(e.getMessage());
-//		}
-//		finally 
-//		{
-//			Banco.closeResultSet(rs);
-//			Banco.closeStatement(pStmt);
-//			Banco.closeConnection(conn);
-//		}
-//		return categoria;
-//	}
 	
 	public int atualizar(Pergunta p)
 	{
@@ -153,5 +134,25 @@ public class PerguntaDAO {
 			Banco.closeConnection(conn);
 		}
 		return registrosAfetados;
+	}
+	
+	public Pergunta montaPergunta(ResultSet rs) throws SQLException
+	{
+		Pergunta pergunta = new Pergunta();
+		Usuario usuario = new Usuario();
+		Categoria categoria = new Categoria();
+		
+		pergunta.setId(rs.getInt("id"));
+		pergunta.setTitulo(rs.getString("titulo"));
+		pergunta.setConteudo(rs.getString("conteudo"));
+		pergunta.setData(LocalDateTime.parse(rs.getString("data_pergunta"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		if(rs.getString("data_resolucao") != null)
+			pergunta.setDataResolucao(LocalDateTime.parse(rs.getString("data_resolucao"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		usuario.setId(rs.getInt("id_usuario"));
+		categoria.setId(rs.getInt("id_categoria"));
+		pergunta.setCategoria(categoria);
+		pergunta.setUsuario(usuario);
+		
+		return pergunta;
 	}
 }
