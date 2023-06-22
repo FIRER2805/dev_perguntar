@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
-public class TelaInicial {
+public class Janela {
 
 	private JFrame frame;
 	private JMenuBar menuBar;
@@ -38,7 +38,7 @@ public class TelaInicial {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaInicial window = new TelaInicial();
+					Janela window = new Janela();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +50,7 @@ public class TelaInicial {
 	/**
 	 * Create the application.
 	 */
-	public TelaInicial() {
+	public Janela() {
 		initialize();
 	}
 
@@ -59,26 +59,37 @@ public class TelaInicial {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 800, 500 );
+		frame.setBounds(100, 100, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setContentPane(telaHome);
+
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		menuBar.setVisible(true);
 
 		mntmHome = new JMenuItem("Home");
+		mntmHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				telaHome = new TelaHome();
+				telaHome.setVisible(true);
+				frame.setContentPane(telaHome);
+				frame.revalidate();
+
+			}
+		});
 		menuBar.add(mntmHome);
 
 		mntmPesquisa = new JMenuItem("Pesquisa");
 		mntmPesquisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaPesquisa = new TelaPesquisa();
 				telaPesquisa.setVisible(true);
 				frame.setContentPane(telaPesquisa);
 				frame.revalidate();
-				
+
 			}
 		});
 		menuBar.add(mntmPesquisa);
@@ -88,54 +99,54 @@ public class TelaInicial {
 		mntmCriarPesquisa.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaCriacaoDePergunta = new TelaCriarPergunta();
 				telaCriacaoDePergunta.setVisible(true);
 				frame.setContentPane(telaCriacaoDePergunta);
 				frame.revalidate();
-				
+
 			}
 		});
 		menuBar.add(mntmCriarPesquisa);
 
 		mnConfig = new JMenu("Config");
 		menuBar.add(mnConfig);
-		
+
 		mntmLogin = new JMenuItem("Login");
 		mntmLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaLogin = new TelaLogin();
 				telaLogin.setVisible(true);
 				frame.setContentPane(telaLogin);
 				frame.revalidate();
-				
+
 			}
 		});
 		mnConfig.add(mntmLogin);
-		
+
 		JMenuItem mntmPerfil = new JMenuItem("Perfil");
 		mntmPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaPerfil = new TelaPerfil();
 				telaPerfil.setVisible(true);
 				frame.setContentPane(telaPerfil);
 				frame.revalidate();
-				
+
 			}
 		});
 		mnConfig.add(mntmPerfil);
-		
+
 		mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaCadastro = new TelaCadastro();
 				telaCadastro.setVisible(true);
 				frame.setContentPane(telaCadastro);
 				frame.revalidate();
-				
+
 			}
 		});
 		mnConfig.add(mntmCadastrar);
@@ -143,14 +154,12 @@ public class TelaInicial {
 		mntmSair = new JMenuItem("Sair");
 		mntmSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				System.exit(0);
-				
+
 			}
 		});
 		mnConfig.add(mntmSair);
-		
-		
 
 	}
 }

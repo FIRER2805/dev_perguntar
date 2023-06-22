@@ -6,49 +6,86 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import java.awt.Font;
 
 public class TelaCriarPergunta extends JPanel {
-	private JTextField txtFTitulo;
+	private JTextField textFTitulo;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaCriarPergunta() {
-		setLayout(null);
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("bottom:default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(66dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:default:grow"),}));
 		
-		JLabel lblCriarPergunta = new JLabel("Criar Pergunta");
-		lblCriarPergunta.setBounds(267, 49, 70, 23);
-		add(lblCriarPergunta);
-
-		JLabel lblTitulo = new JLabel("Titulo");
-		lblTitulo.setBounds(133, 109, 59, 14);
-		add(lblTitulo);
+		JLabel lblTituloPagina = new JLabel("Criar Pergunta");
+		lblTituloPagina.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		add(lblTituloPagina, "6, 6, 7, 1, center, default");
 		
-		txtFTitulo = new JTextField();
-		txtFTitulo.setBounds(202, 106, 86, 20);
-		add(txtFTitulo);
-		txtFTitulo.setColumns(10);
+		JLabel lblTitulo = new JLabel("Titulo :");
+		add(lblTitulo, "6, 10, right, default");
 		
-		JLabel lblCategorias = new JLabel("Categorias");
-		lblCategorias.setBounds(366, 109, 70, 14);
-		add(lblCategorias);
-
-		JComboBox cbCategorias = new JComboBox();
-		cbCategorias.setToolTipText("");
-		cbCategorias.setBounds(446, 105, 95, 22);
-		add(cbCategorias);
+		textFTitulo = new JTextField();
+		add(textFTitulo, "8, 10, left, default");
+		textFTitulo.setColumns(10);
 		
-		JLabel lblDuvida = new JLabel("Duvida");
-		lblDuvida.setBounds(133, 168, 59, 14);
-		add(lblDuvida);
+		JLabel lblCategoria = new JLabel("Categoria :");
+		add(lblCategoria, "10, 10, right, default");
 		
-		JTextPane txtPDuvida = new JTextPane();
-		txtPDuvida.setBounds(213, 168, 218, 186);
-		add(txtPDuvida);
+		JComboBox cbCategoria = new JComboBox();
+		add(cbCategoria, "12, 10, left, default");
 		
-		JButton btnPostarDuvida = new JButton("Postar");
-		btnPostarDuvida.setBounds(241, 376, 89, 23);
-		add(btnPostarDuvida);
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "6, 14, 7, 1, fill, fill");
+		
+		JTextArea textADuvida = new JTextArea();
+		scrollPane.setViewportView(textADuvida);
+		
+		JButton btnPostarPergunta = new JButton("Postar Pergunta");
+		add(btnPostarPergunta, "6, 18, 7, 1, center, default");
 		
 		
 	}
