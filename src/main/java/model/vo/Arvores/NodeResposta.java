@@ -8,16 +8,15 @@ import model.vo.Resposta;
 public class NodeResposta {
 	private Resposta resposta;
 	private List<NodeResposta> filhos;
-	
-	public NodeResposta(Resposta r)
-	{
+
+	public NodeResposta(Resposta r) {
 		this.resposta = r;
 	}
 
 	public void inserir(Resposta r) {
 		if (r == null)
 			return;
-		
+
 		if (this.filhos == null)
 			this.filhos = new ArrayList<NodeResposta>();
 

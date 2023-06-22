@@ -8,6 +8,7 @@ import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
+import javax.swing.JTree;
 
 public class TelaPergunta extends JPanel {
 

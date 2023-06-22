@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import model.Banco;
 import model.vo.Pergunta;
@@ -41,6 +44,36 @@ public class PerguntaDAO {
 			Banco.closeConnection(c);
 		}
 		return chave;
+	}
+	
+	public ArrayList<Pergunta> busca()
+	{
+		String sql = "select p.*, case when u.nome is null then '[DELETADO]' else u.nome end as nome"
+				+ "from pergunta"
+				+ "left join usuario u on u.id = p.id_usuario"
+				+ "limit 5;";
+		ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		try 
+		{
+			resultado = stmt.executeQuery(sql);
+			while(resultado.next())
+			{
+				Pergunta pergunta = new Pergunta();
+				pergunta.setId(resultado.getInt(1));
+				pergunta.setTitulo(resultado.getString(2));
+				pergunta.setConteudo(resultado.getString(3));
+				pergunta.setData(LocalDateTime.parse(resultado.getString(4)));
+				pergunta.setDataResolucao(LocalDateTime.parse(resultado.getString(5)));
+			}
+		}
+		catch(SQLException e)
+		{
+			
+		}
+		return null;
 	}
 	
 //	public Pergunta buscarPorId(int id)
