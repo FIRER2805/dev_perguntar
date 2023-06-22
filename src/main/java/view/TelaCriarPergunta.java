@@ -23,12 +23,23 @@ import model.dao.CategoriaDAO;
 import model.vo.Categoria;
 import model.vo.Pergunta;
 import model.vo.Usuario;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class TelaCriarPergunta extends JPanel {
 	private JTextField textFTitulo;
 	private JTextArea textADuvida;
 	private JComboBox cbCategoria;
+	PerguntaController perguntaController = new PerguntaController();
+	
 	CategoriaDAO categoriaDAO = new CategoriaDAO();
+	private JButton btnPostarPergunta;
+
+	public JButton getBtnPostarPergunta() {
+		return btnPostarPergunta;
+	}
+
+
 
 	/**
 	 * Create the panel.
@@ -90,7 +101,9 @@ public class TelaCriarPergunta extends JPanel {
 		ArrayList<Categoria> categorias = categoriaDAO.buscarTodas();
 		
 		cbCategoria = new JComboBox(categorias.toArray());
-		add(cbCategoria, "12, 10, left, default");
+		cbCategoria.setBackground(SystemColor.activeCaption);
+		cbCategoria.setSelectedIndex(-1);
+		add(cbCategoria, "12, 10, fill, default");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "6, 14, 7, 1, fill, fill");
@@ -98,26 +111,36 @@ public class TelaCriarPergunta extends JPanel {
 		textADuvida = new JTextArea();
 		scrollPane.setViewportView(textADuvida);
 		
-		JButton btnPostarPergunta = new JButton("Postar Pergunta");
+		 btnPostarPergunta = new JButton("Postar Pergunta");
 		add(btnPostarPergunta, "6, 18, 7, 1, center, default");
 		
-		btnPostarPergunta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Pergunta pergunta = new Pergunta();
-				pergunta.setTitulo(textFTitulo.getText());
-				pergunta.setConteudo(textADuvida.getText());
-				Categoria categoria = new Categoria();
-				Usuario usuario = new Usuario();
-				
-				categoria = (Categoria)cbCategoria.getSelectedItem();
-				categoria.setId(categoria.getId());
-				usuario.setId(1);
-				pergunta.setCategoria(categoria);
-				pergunta.setUsuario(usuario);
-				
-				PerguntaController perguntaController = new PerguntaController();
-				perguntaController.perguntar(pergunta);
-			}
-		});
+
 	}
+	
+	
+	
+	public void cadastrarPergunta(Usuario usuario) {
+		
+		Pergunta pergunta = new Pergunta();
+		pergunta.setTitulo(textFTitulo.getText());
+		pergunta.setConteudo(textADuvida.getText());
+		Categoria categoria = new Categoria();
+		categoria = (Categoria)cbCategoria.getSelectedItem();
+		pergunta.setCategoria(categoria);
+		pergunta.setUsuario(usuario);
+		
+		
+		perguntaController.perguntar(pergunta);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

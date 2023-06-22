@@ -21,7 +21,7 @@ public class Janela {
 	private JMenuBar menuBar;
 	private JMenuItem mntmHome;
 	private JMenuItem mntmPesquisa;
-	private JMenuItem mntmCriarPesquisa;
+	private JMenuItem mntmCriarPergunta;
 	private JMenu mnConfig;
 	private JMenuItem mntmSair;
 	private view.TelaCadastro telaCadastro = new TelaCadastro();
@@ -29,7 +29,7 @@ public class Janela {
 	private JTextField textField;
 	private JMenuItem mntmCadastrar;
 	private JMenuItem mntmLogin;
-	private TelaCriarPergunta telaCriacaoDePergunta;
+	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
 	private TelaPerfil telaPerfil;
 	private TelaPesquisa telaPesquisa;
 	private TelaHome telaHome = new TelaHome();
@@ -105,25 +105,33 @@ public class Janela {
 				telaPesquisa.setVisible(true);
 				frame.setContentPane(telaPesquisa);
 				frame.revalidate();
-
+				
 			}
 		});
 		menuBar.add(mntmPesquisa);
 
-		mntmCriarPesquisa = new JMenuItem("Criar pergunta");
-		mntmCriarPesquisa.setVisible(false);
-		mntmCriarPesquisa.addActionListener(new ActionListener() {
+		mntmCriarPergunta = new JMenuItem("Criar pergunta");
+		mntmCriarPergunta.setVisible(false);
+		mntmCriarPergunta.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
-				telaCriacaoDePergunta = new TelaCriarPergunta();
 				telaCriacaoDePergunta.setVisible(true);
 				frame.setContentPane(telaCriacaoDePergunta);
 				frame.revalidate();
 
 			}
 		});
-		menuBar.add(mntmCriarPesquisa);
+		menuBar.add(mntmCriarPergunta);
+		
+		telaCriacaoDePergunta.getBtnPostarPergunta().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				telaCriacaoDePergunta.cadastrarPergunta(usuarioLogado);
+				
+			}
+		});
 
 		mnConfig = new JMenu("Config");
 		menuBar.add(mnConfig);
@@ -147,7 +155,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				usuarioLogado = telaLogin.logarUsuario();
-				mntmCriarPesquisa.setVisible(true);
+				mntmCriarPergunta.setVisible(true);
 				mntmPerfil.setVisible(true);
 				mntmCadastrar.setVisible(false);
 				mntmLogin.setVisible(false);
