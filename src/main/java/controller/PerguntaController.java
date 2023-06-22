@@ -12,4 +12,9 @@ public class PerguntaController {
 	{
 		return bo.busca();
 	}
+	
+	public int perguntar(Pergunta pergunta)
+	{
+		return bo.perguntar(pergunta);
+	}
 }

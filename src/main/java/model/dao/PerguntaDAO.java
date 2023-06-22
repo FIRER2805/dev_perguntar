@@ -20,13 +20,13 @@ public class PerguntaDAO {
 	{
 		int chave = 0;
 		ResultSet chaves = null;
-		String sql = "insert into pergunta(titulo, conteudo, data_pergunta, data_resolucao,id_usuario, id_categoria) values(?,?,now(),?,?,?);";
+		String sql = "insert into pergunta(titulo, conteudo, data_pergunta, id_usuario, id_categoria) values(?,?,now(),?,?);";
 		Connection c = Banco.getConnection();
 		PreparedStatement ps = Banco.getPreparedStmtPK(c, sql);
 		try {
 			ps.setString(1, p.getTitulo());
-			ps.setString(2, p.getTitulo());
-			ps.setString(3, p.getDataResolucao().toString());
+			ps.setString(2, p.getConteudo());
+			ps.setString(3, p.getData().toString());
 			ps.setInt(4, p.getUsuario().getId());
 			ps.setInt(5, p.getCategoria().getId());
 			
