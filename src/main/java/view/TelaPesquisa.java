@@ -19,6 +19,7 @@ import javax.swing.JTextPane;
 public class TelaPesquisa extends JPanel {
 	private JTextField textFDataInicial;
 	private JTextField textFDataFinal;
+	private JTable table;
 	
 
 
@@ -53,7 +54,7 @@ public class TelaPesquisa extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
+				RowSpec.decode("max(50dlu;default)"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -67,7 +68,7 @@ public class TelaPesquisa extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("max(150dlu;default)"),
+				RowSpec.decode("max(133dlu;default)"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("top:default"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -116,6 +117,9 @@ public class TelaPesquisa extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "4, 26, 9, 1, fill, fill");
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		
 		
