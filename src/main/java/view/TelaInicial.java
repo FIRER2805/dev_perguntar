@@ -29,6 +29,7 @@ public class TelaInicial {
 	private TelaCriarPergunta telaCriacaoDePergunta;
 	private TelaPerfil telaPerfil;
 	private TelaPesquisa telaPesquisa;
+	private TelaHome telaHome = new TelaHome();
 
 	/**
 	 * Launch the application.
@@ -58,19 +59,10 @@ public class TelaInicial {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 633, 451);
+		frame.setBounds(100, 100, 800, 500 );
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(150, 235, 295, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(251, 277, 89, 23);
-		frame.getContentPane().add(btnPesquisar);
-
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		menuBar.setVisible(true);
