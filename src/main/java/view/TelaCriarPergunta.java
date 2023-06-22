@@ -3,6 +3,7 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +19,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.PerguntaController;
+import model.dao.CategoriaDAO;
 import model.vo.Categoria;
 import model.vo.Pergunta;
 import model.vo.Usuario;
@@ -25,6 +27,8 @@ import model.vo.Usuario;
 public class TelaCriarPergunta extends JPanel {
 	private JTextField textFTitulo;
 	private JTextArea textADuvida;
+	private JComboBox cbCategoria;
+	CategoriaDAO categoriaDAO = new CategoriaDAO();
 
 	/**
 	 * Create the panel.
@@ -83,7 +87,9 @@ public class TelaCriarPergunta extends JPanel {
 		JLabel lblCategoria = new JLabel("Categoria :");
 		add(lblCategoria, "10, 10, right, default");
 		
-		JComboBox cbCategoria = new JComboBox();
+		ArrayList<Categoria> categorias = categoriaDAO.buscarTodas();
+		
+		cbCategoria = new JComboBox(categorias.toArray());
 		add(cbCategoria, "12, 10, left, default");
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -103,7 +109,8 @@ public class TelaCriarPergunta extends JPanel {
 				Categoria categoria = new Categoria();
 				Usuario usuario = new Usuario();
 				
-				categoria.setId(1);
+				categoria = (Categoria)cbCategoria.getSelectedItem();
+				categoria.setId(categoria.getId());
 				usuario.setId(1);
 				pergunta.setCategoria(categoria);
 				pergunta.setUsuario(usuario);

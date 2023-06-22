@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import model.Banco;
 import model.vo.Categoria;
@@ -66,6 +68,38 @@ public class CategoriaDAO {
 			Banco.closeConnection(conn);
 		}
 		return categoria;
+	}
+	
+	public ArrayList<Categoria> buscarTodas()
+	{
+		String sql =  "select * from categoria order by id;";
+		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet rs = null;
+		try {
+			rs = stmt.executeQuery(sql);
+			while(rs.next())
+			{
+				Categoria categoria = new Categoria();
+				categoria.setId(rs.getInt("id"));
+				categoria.setNome(rs.getString("nome"));
+				categorias.add(categoria);
+			}
+		}
+		catch(SQLException e)
+		{
+			categorias = null;
+			System.out.println("Erro no método buscarPorId da classe CategoriaDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeResultSet(rs);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return categorias;
 	}
 	
 	public int atualizar(Categoria c)

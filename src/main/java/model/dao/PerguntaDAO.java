@@ -56,7 +56,7 @@ public class PerguntaDAO {
 				+ " ,c.nome as categoria "
 				+ "from pergunta p "
 				+ "left join usuario u on u.id = p.id_usuario "
-				+ "left join categoria c on c.id = p.id_usuario "
+				+ "left join categoria c on c.id = p.id "
 				+ "limit 5;";
 		ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
 		Connection conn = Banco.getConnection();

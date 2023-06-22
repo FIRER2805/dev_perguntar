@@ -45,3 +45,9 @@ CREATE TABLE resposta
     id_resposta INT NULL,
     FOREIGN KEY(id_resposta) REFERENCES resposta(id)
 );
+
+insert into categoria(nome) values('java');
+insert into categoria(nome) values('pascal');
+insert into categoria(nome) values('html');
+
+select * from categoria;

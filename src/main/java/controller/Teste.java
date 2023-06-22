@@ -2,7 +2,9 @@ package controller;
 
 import java.util.ArrayList;
 
+import model.dao.CategoriaDAO;
 import model.dao.PerguntaDAO;
+import model.vo.Categoria;
 import model.vo.Pergunta;
 import model.vo.Resposta;
 
@@ -11,7 +13,18 @@ public class Teste {
 	{
 		
 		PerguntaDAO dao = new PerguntaDAO();
-		ArrayList<Pergunta> perguntas = dao.busca("o que é java");
+		
+		/*
+		 * CategoriaDAO daoc = new CategoriaDAO();
+		 * 
+		 * ArrayList<Categoria> categorias = daoc.buscarTodas(); for(Categoria categoria
+		 * : categorias) { System.out.println(categoria.getId());
+		 * System.out.println(categoria.getNome()); }
+		 */
+			
+		
+		
+		ArrayList<Pergunta> perguntas = dao.busca();
 		
 		for(Pergunta pergunta: perguntas)
 		{
