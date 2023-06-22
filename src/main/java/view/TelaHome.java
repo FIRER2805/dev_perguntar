@@ -102,8 +102,8 @@ public class TelaHome extends JPanel {
 			
 			novaLinhaDaTabela[0] = p.getTitulo();
 			novaLinhaDaTabela[1] = p.getData();
-			novaLinhaDaTabela[2] = p.getUsuario();
-			novaLinhaDaTabela[3] = p.getCategoria();
+			novaLinhaDaTabela[2] = p.getUsuario().getNome();
+			novaLinhaDaTabela[3] = p.getCategoria().getNome();
 			
 			
 			
