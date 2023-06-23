@@ -26,6 +26,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class TelaHome extends JPanel {
+	public ArrayList<Pergunta> getPerguntas() {
+		return perguntas;
+	}
+
 	private JTable table;
 	private PerguntaController p = new PerguntaController();
 	private JButton btnVizualizar;
@@ -119,7 +123,16 @@ public class TelaHome extends JPanel {
 		
 	}
 	
-	
+	public Pergunta resgatarPergunta() {
+		
+		int linhaSelecionada = table.getSelectedRow();
+//		if (linhaSelecionada == -1) {
+//			return;
+//		}
+		Pergunta pergunta = perguntas.get(linhaSelecionada);
+		return pergunta;
+		
+	}
 	
 	
 	

@@ -35,6 +35,7 @@ public class Janela {
 	private TelaHome telaHome = new TelaHome();
 	private Usuario usuarioLogado;
 	private JMenuItem mntmPerfil;
+	private TelaPergunta telaPergunta = new TelaPergunta();
 
 	/**
 	 * Launch the application.
@@ -77,25 +78,25 @@ public class Janela {
 		mntmHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				telaHome = new TelaHome();
 				telaHome.setVisible(true);
 				frame.setContentPane(telaHome);
 				frame.revalidate();
-				telaHome.getBtnVizualizar().addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						int linhaSelecionada = telaHome.getTable().getSelectedRow();
-						if (linhaSelecionada == -1)
-							return;
-						Pergunta pergunta = (Pergunta) telaHome.getTable().getModel().getValueAt(linhaSelecionada, 1);
-						TelaPergunta telaPergunta = new TelaPergunta(pergunta);
-						telaPergunta.setVisible(true);
-						frame.setContentPane(telaPergunta);
-						frame.revalidate();
-					}
-				});
+
 			}
 		});
 		menuBar.add(mntmHome);
+
+		telaHome.getBtnVizualizar().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				telaPergunta.atualizarCampos(telaHome.resgatarPergunta());
+				telaPergunta.setVisible(true);
+				frame.setContentPane(telaPergunta);
+				frame.revalidate();
+
+			}
+		});
 
 		mntmPesquisa = new JMenuItem("Pesquisa");
 		mntmPesquisa.addActionListener(new ActionListener() {
@@ -105,7 +106,7 @@ public class Janela {
 				telaPesquisa.setVisible(true);
 				frame.setContentPane(telaPesquisa);
 				frame.revalidate();
-				
+
 			}
 		});
 		menuBar.add(mntmPesquisa);
@@ -123,13 +124,13 @@ public class Janela {
 			}
 		});
 		menuBar.add(mntmCriarPergunta);
-		
+
 		telaCriacaoDePergunta.getBtnPostarPergunta().addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaCriacaoDePergunta.cadastrarPergunta(usuarioLogado);
-				
+
 			}
 		});
 
@@ -216,15 +217,7 @@ public class Janela {
 		mnConfig.add(mntmSair);
 
 	}
+
 	
-	//TODO criar classe abstrata filha de JPanel
-	private void trocarTela(JPanel tela) {
-			
-		tela.setVisible(true);
-		frame.setContentPane(tela);
-		frame.revalidate();
-		
-	}
-	
-	
+
 }

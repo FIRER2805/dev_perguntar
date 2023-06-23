@@ -133,6 +133,10 @@ public class TelaCriarPergunta extends JPanel {
 		perguntaController.perguntar(pergunta);
 		
 	}
+
+
+
+	
 	
 	
 	
