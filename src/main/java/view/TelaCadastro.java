@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import controller.PerguntaController;
@@ -101,6 +102,7 @@ public class TelaCadastro extends JPanel {
 		if(cadastrados != -1){
 			
 			System.out.println("cadastrado como: " + usuario.getNome());
+			JOptionPane.showMessageDialog(null, "Cadastro Efetuado");
 		}
 		
 	}

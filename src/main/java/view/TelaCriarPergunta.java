@@ -129,9 +129,17 @@ public class TelaCriarPergunta extends JPanel {
 		pergunta.setCategoria(categoria);
 		pergunta.setUsuario(usuario);
 		
-		
 		perguntaController.perguntar(pergunta);
 		
+		//TODO cria aviso de criação de conta
+		
+	}
+	
+	public void atualizarCampos() {
+		
+		textFTitulo.setText("");
+		cbCategoria.setSelectedIndex(-1);
+		textADuvida.setText("");
 	}
 
 

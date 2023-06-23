@@ -80,7 +80,7 @@ public class TelaHome extends JPanel {
 		
 		
 		
-		perguntas = p.busca();
+		
 		
 		atualizarTable();
 		
@@ -104,6 +104,8 @@ public class TelaHome extends JPanel {
 		
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		
+		perguntas = p.busca();
+		
 		
 		for (Pergunta p : this.perguntas) {
 			
@@ -126,6 +128,7 @@ public class TelaHome extends JPanel {
 	public Pergunta resgatarPergunta() {
 		
 		int linhaSelecionada = table.getSelectedRow();
+//		TODO criar uma exception
 //		if (linhaSelecionada == -1) {
 //			return;
 //		}

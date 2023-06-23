@@ -77,7 +77,8 @@ public class Janela {
 		mntmHome = new JMenuItem("Home");
 		mntmHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				telaHome.atualizarTable();
 				telaHome.setVisible(true);
 				frame.setContentPane(telaHome);
 				frame.revalidate();
@@ -116,7 +117,8 @@ public class Janela {
 		mntmCriarPergunta.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-
+				
+				telaCriacaoDePergunta.atualizarCampos();
 				telaCriacaoDePergunta.setVisible(true);
 				frame.setContentPane(telaCriacaoDePergunta);
 				frame.revalidate();
@@ -199,6 +201,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				telaCadastro.cadastrarUsuario();
+				telaLogin.limparCampos();
 				telaLogin.setVisible(true);
 				frame.setContentPane(telaLogin);
 				frame.revalidate();
