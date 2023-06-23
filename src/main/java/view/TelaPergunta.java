@@ -13,6 +13,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import model.vo.Pergunta;
+import javax.swing.JTextField;
 
 public class TelaPergunta extends JPanel {
 
@@ -23,6 +24,7 @@ public class TelaPergunta extends JPanel {
 	private JTextArea textADescricao;
 	private JLabel lblDtCriacao;
 	private JLabel lblDtResolucao;
+	private JTextField textResposta;
 
 	/**
 	 * Create the panel.
@@ -30,16 +32,28 @@ public class TelaPergunta extends JPanel {
 	public TelaPergunta() {
 
 
-		setLayout(new FormLayout(
-				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"),
-						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(150dlu;default)"),
-						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(150dlu;default)"),
-						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"), },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("max(75dlu;default)"),
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("default:grow"), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(150dlu;default):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(150dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(75dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
 
 		lblAutor = new JLabel("Autor :");
 		lblAutor.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -66,6 +80,10 @@ public class TelaPergunta extends JPanel {
 
 		lblDtResolucao = new JLabel("data resolucao");
 		add(lblDtResolucao, "6, 10, right, default");
+		
+		textResposta = new JTextField();
+		add(textResposta, "4, 12, 3, 1, fill, default");
+		textResposta.setColumns(10);
 	}
 
 	public void atualizarCampos(Pergunta pergunta) {
