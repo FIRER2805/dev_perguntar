@@ -67,7 +67,7 @@ public class Janela {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 800, 600);
+		frame.setBounds(100, 100, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setContentPane(telaHome);
@@ -119,6 +119,23 @@ public class Janela {
 			}
 		});
 		menuBar.add(mntmPesquisa);
+		
+		telaPesquisa.getBtnVisualizar().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					telaPergunta.atualizarCampos(telaPesquisa.resgatarPergunta());
+					telaPergunta.setVisible(true);
+					frame.setContentPane(telaPergunta);
+					frame.revalidate();
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção",
+							JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
+		});
 
 		mntmCriarPergunta = new JMenuItem("Criar pergunta");
 		mntmCriarPergunta.setVisible(false);

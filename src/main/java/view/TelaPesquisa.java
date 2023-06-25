@@ -14,85 +14,127 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.PerguntaController;
 import model.dao.CategoriaDAO;
+import model.exception.DevPerguntarException;
 import model.vo.Categoria;
 import model.vo.Pergunta;
 import model.vo.Pesquisa;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.Sizes;
 
 public class TelaPesquisa extends JPanel {
 
 	private Pesquisa pesquisa = new Pesquisa();
 	private PerguntaController perguntaController = new PerguntaController();
-	private JTable table;
 	private JButton btnBusca;
 	private CategoriaDAO categoriaDAO = new CategoriaDAO();
 	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
-	private JTextField textDuvida;
+	public JButton getBtnVisualizar() {
+		return btnVisualizar;
+	}
+
+	private JTextField textFDuvida;
+	private JTable table;
+	private ArrayList<Pergunta> perguntas;
+	private JButton btnVisualizar;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaPesquisa() {
-		setLayout(null);
+		setLayout(new FormLayout(
+				new ColumnSpec[] { ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("right:default"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("center:max(118dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default"),
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default:grow"), },
+				new RowSpec[] { FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						new RowSpec(RowSpec.TOP,
+								Sizes.bounded(Sizes.DEFAULT, Sizes.constant("150dlu", false),
+										Sizes.constant("180dlu", false)),
+								0),
+						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("top:default:grow"), }));
 
-		JLabel lblTituloPagina = new JLabel("Consultar Oraculo");
-		lblTituloPagina.setBounds(185, 31, 86, 14);
-		add(lblTituloPagina);
-		
 		ArrayList<Categoria> categorias = categoriaDAO.buscarTodas();
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(16, 87, 330, 200);
-		add(scrollPane);
+		JLabel lblTituloPagina = new JLabel("Consultar Oraculo");
+		add(lblTituloPagina, "5, 3, center, top");
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
-		textDuvida = new JTextField();
-		textDuvida.setBounds(112, 56, 234, 20);
-		add(textDuvida);
-		textDuvida.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("Duvida:");
-		lblNewLabel.setBounds(56, 59, 46, 14);
-		add(lblNewLabel);
-		
+		JLabel lblNewLabel = new JLabel("Duvida : ");
+		add(lblNewLabel, "3, 5, right, center");
+
+		textFDuvida = new JTextField();
+		add(textFDuvida, "5, 5, fill, fill");
+		textFDuvida.setColumns(10);
+
 		btnBusca = new JButton("Buscar");
-		btnBusca.setBounds(351, 55, 89, 23);
-		add(btnBusca);
-		
-		JButton btnVisualizar = new JButton("visualizar");
-		btnVisualizar.setBounds(356, 171, 94, 23);
-		add(btnVisualizar);
-		atualizarCampos();
-		
+		add(btnBusca, "9, 5, fill, fill");
+
 		btnBusca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
-
+				perguntas = perguntaController.busca(textFDuvida.getText());
+				
+				limparTabela();
+				
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-				ArrayList<Pergunta> perguntas = perguntaController.busca(textDuvida.getText());
 
-				for (Pergunta pergunta : perguntas) {
+				for (Pergunta p : perguntas) {
 
-					Object[] novaLinhaDaTabela = new Object[4];
+					Object[] novaLinhaDaTabela = new Object[5];
 
-					novaLinhaDaTabela[0] = pergunta.getTitulo();
-					novaLinhaDaTabela[1] = pergunta.getData();
-					novaLinhaDaTabela[2] = pergunta.getUsuario().getNome();
-					novaLinhaDaTabela[3] = pergunta.getCategoria().getNome();
+					novaLinhaDaTabela[0] = p.getTitulo();
+					novaLinhaDaTabela[1] = p.getData();
+					novaLinhaDaTabela[2] = p.getDataResolucao() == null ? "Em Aberto" : "Resolvido";
+					novaLinhaDaTabela[3] = p.getUsuario().getNome();
+					novaLinhaDaTabela[4] = p.getCategoria().getNome();
 
 					model.addRow(novaLinhaDaTabela);
 				}
+
 			}
 		});
+
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "5, 9, fill, fill");
+
+		table = new JTable() {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false;
+			}
+		};
+		scrollPane.setViewportView(table);
+
+		btnVisualizar = new JButton("visualizar");
+		add(btnVisualizar, "9, 9, fill, center");
+		atualizarCampos();
 	}
 
 	public void pesquisar() {
-		perguntaController.busca(textDuvida.getText());
+		perguntaController.busca(textFDuvida.getText());
 	}
 
 	public void atualizarCampos() {
-		pesquisa = new Pesquisa() ;
+		pesquisa = new Pesquisa();
 	}
+
+	public Pergunta resgatarPergunta() throws DevPerguntarException {
+
+		int linhaSelecionada = table.getSelectedRow();
+		if (linhaSelecionada == -1) {
+			throw new DevPerguntarException("Selecione uma Pergunta");
+		}
+		Pergunta pergunta = perguntas.get(linhaSelecionada);
+		return pergunta;
+
+	}
+	
+	private void limparTabela() {
+		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
+	}
+
 }
