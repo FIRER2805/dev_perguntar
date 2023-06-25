@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.UsuarioController;
+import model.exception.DevPerguntarException;
 import model.vo.Usuario;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -60,19 +61,29 @@ public class TelaLogin extends JPanel {
 		
 	}
 
-	public Usuario logarUsuario() {
+	public Usuario logarUsuario()  {
 		UsuarioController controller = new UsuarioController();
 		Usuario usuario = new Usuario();
 		usuario.seteMail(textEmail.getText());
 		usuario.setSenha(textSenha.getText());
 		// quando exception for implementada isso estara num try/catch
-		validaCampos(usuario);
+		try {
+			validaCampos(usuario);
+		} catch (DevPerguntarException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			JOptionPane.showMessageDialog(	, e.getMessage(), "Falha ao Efetuar Login", ABORT);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Falha ao Efetuar Login", JOptionPane.WARNING_MESSAGE);
+		}
 		usuario = controller.login(usuario);
 		if (usuario != null) {
 			
-			System.out.println("Logado como: " + usuario.getNome());
+			
 			
 		}
+			
+			System.out.println("Logado como: " + usuario.getNome());
+			
 		
 		return usuario;
 	}
@@ -82,7 +93,7 @@ public class TelaLogin extends JPanel {
 		textSenha.setText("");
 		}
 
-	private void validaCampos(Usuario u) {
+	private void validaCampos(Usuario u) throws DevPerguntarException {
 		String alerta = "";
 		if (u.geteMail().trim().isEmpty()) {
 			alerta += "Campo e-mail é obrigatório\n";
@@ -92,8 +103,9 @@ public class TelaLogin extends JPanel {
 		}
 
 		// lançar a exception
-		if (alerta.isEmpty()) {
+		if (!alerta.isEmpty()) {
 			// lança exception
+			throw new DevPerguntarException(alerta);
 		}
 	}
 }
