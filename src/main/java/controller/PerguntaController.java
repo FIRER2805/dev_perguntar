@@ -13,6 +13,11 @@ public class PerguntaController {
 		return bo.busca();
 	}
 	
+	public ArrayList<Pergunta> busca(String texto)
+	{
+		return bo.busca(texto);
+	}
+	
 	public int perguntar(Pergunta pergunta)
 	{
 		return bo.perguntar(pergunta);

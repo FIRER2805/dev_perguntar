@@ -88,7 +88,7 @@ public class TelaPergunta extends JPanel {
 
 	public void atualizarCampos(Pergunta pergunta) {
 
-		// autor catehoria titulo descricao data
+		// autor categoria titulo descricao data
 		lblAutor.setText("Autor : " + pergunta.getUsuario().getNome());
 		lblCategoria.setText("Categoria : " + pergunta.getCategoria().getNome());
 		lblTitulo.setText(" " + pergunta.getTitulo());
@@ -99,8 +99,6 @@ public class TelaPergunta extends JPanel {
 		}else {
 			lblDtResolucao.setText("Data de Resolução : " + pergunta.getDataResolucao());
 		}
-		
-
 	}
 
 }

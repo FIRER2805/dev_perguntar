@@ -12,6 +12,11 @@ public class PerguntaBO {
 	{
 		return dao.busca();
 	}
+	
+	public ArrayList<Pergunta> busca(String texto)
+	{
+		return dao.busca(texto);
+	}
 
 	public int perguntar(Pergunta pergunta) {
 		if(pergunta.getTitulo().trim().isEmpty())
