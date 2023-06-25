@@ -12,6 +12,7 @@ BEGIN
         ,id_pergunta int
         ,id_usuario int
         ,id_resposta int
+        ,camada int
 	);
 	set @respostas_root = (select count(*) from resposta where id_resposta is null and id_pergunta = pergunta_id);
     
@@ -22,13 +23,13 @@ BEGIN
         fetch cursor_resposta into id_resposta_root;
         
 		insert into arvore_montada with recursive respostasFilho as (
-			select *
+			select *, 1 as n
 			from resposta 
 			where id = id_resposta_root and id_pergunta = pergunta_id
             
 			UNION
             
-			select r.*
+			select r.*, rf.n + 1
 			from respostasFilho rf 
 			join resposta r on r.id_resposta = rf.id
 		)

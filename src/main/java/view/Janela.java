@@ -118,15 +118,6 @@ public class Janela {
 			}
 		});
 		menuBar.add(mntmPesquisa);
-		
-		telaPesquisa.getBtnPesquisar().addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				
-				telaPesquisa.atualizarCampos();
-				
-			}
-		});
 
 		mntmCriarPergunta = new JMenuItem("Criar pergunta");
 		mntmCriarPergunta.setVisible(false);

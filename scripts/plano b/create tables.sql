@@ -38,12 +38,9 @@ CREATE TABLE resposta
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     conteudo TEXT NOT NULL,
     id_pergunta INT NOT NULL,
+    solucao TINYINT DEFAULT 0;
     FOREIGN KEY(id_pergunta) REFERENCES pergunta(id)
     ON DELETE CASCADE,
-    id_usuario INT NULL,
-    FOREIGN KEY(id_usuario) REFERENCES usuario(id),
-    id_resposta INT NULL,
-    FOREIGN KEY(id_resposta) REFERENCES resposta(id)
 );
 
 insert into categoria(nome) values('java');
