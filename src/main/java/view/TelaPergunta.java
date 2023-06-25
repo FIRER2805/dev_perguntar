@@ -1,7 +1,8 @@
 package view;
 
 import java.awt.Font;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import controller.RespostaController;
 import model.dao.RespostaDAO;
 import model.vo.Pergunta;
 import model.vo.Resposta;
@@ -25,9 +27,9 @@ public class TelaPergunta extends JPanel {
 	private JTextArea textADescricao;
 	private JLabel lblDtCriacao;
 	private JLabel lblDtResolucao;
-	private JTextField textField;
+	private JTextField textResposta;
 	private JLabel lblSuaResposta;
-	private JButton btnNewButton;
+	private JButton btnPublicar;
 	private JLabel lblNewLabel;
 	private JTable table;
 	private String[] nomesColunas = {"respostas"};
@@ -70,18 +72,30 @@ public class TelaPergunta extends JPanel {
 		lblDtResolucao.setBounds(542, 199, 142, 14);
 		add(lblDtResolucao);
 		
-		textField = new JTextField();
-		textField.setBounds(87, 245, 526, 82);
-		add(textField);
-		textField.setColumns(10);
+		textResposta = new JTextField();
+		textResposta.setBounds(87, 245, 526, 82);
+		add(textResposta);
+		textResposta.setColumns(10);
+		
+		
 		
 		lblSuaResposta = new JLabel("Sua Resposta:");
 		lblSuaResposta.setBounds(84, 224, 89, 14);
 		add(lblSuaResposta);
 		
-		btnNewButton = new JButton("Publicar");
-		btnNewButton.setBounds(524, 338, 89, 23);
-		add(btnNewButton);
+		btnPublicar = new JButton("Publicar");
+		btnPublicar.setBounds(524, 338, 89, 23);
+		add(btnPublicar);
+		
+		btnPublicar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RespostaController respostaController = new RespostaController();
+				Resposta resposta = new Resposta();
+				resposta.setConteudo(textResposta.getText());
+				resposta.setIdPergunta(pergunta.getId());
+				resposta.setSolucao(false);
+				respostaController.inserir(resposta);
+		}});
 		
 		lblNewLabel = new JLabel("Respostas");
 		lblNewLabel.setBounds(87, 358, 86, 14);
@@ -94,6 +108,14 @@ public class TelaPergunta extends JPanel {
 		limparTabela();
 		
 		RespostaDAO respostaDAO = new RespostaDAO();
+	}
+
+	public Pergunta getPergunta() {
+		return pergunta;
+	}
+
+	public void setPergunta(Pergunta pergunta) {
+		this.pergunta = pergunta;
 	}
 
 	public void atualizarCampos(Pergunta pergunta) {
