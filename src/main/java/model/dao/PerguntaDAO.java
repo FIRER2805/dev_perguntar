@@ -94,7 +94,7 @@ public class PerguntaDAO {
 				+ ",c.nome as categoria "
 				+ "from pergunta p "
 				+ "left join usuario u on u.id = p.id_usuario "
-				+ "left join categoria c on c.id = p.id_usuario "
+				+ "left join categoria c on c.id = p.id_categoria "
 				+ "where p.titulo like '%" + texto + "%' or p.conteudo like '%" + texto + "%'";
 		ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
 		Connection conn = Banco.getConnection();

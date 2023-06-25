@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.RespostaController;
 import model.dao.RespostaDAO;
+import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Resposta;
 
@@ -96,7 +98,11 @@ public class TelaPergunta extends JPanel {
 				resposta.setConteudo(textResposta.getText());
 				resposta.setIdPergunta(pergunta.getId());
 				resposta.setSolucao(false);
-				respostaController.inserir(resposta);
+				try {
+					respostaController.inserir(resposta);
+				} catch (DevPerguntarException e1) {
+					JOptionPane.showMessageDialog(null,e1.getMessage(), "Erro:",JOptionPane.ERROR_MESSAGE);
+				}
 		}});
 		
 		lblNewLabel = new JLabel("Respostas");
