@@ -1,73 +1,60 @@
 package view;
 
 import java.awt.Font;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
-
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-
-import model.vo.Pergunta;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import model.dao.RespostaDAO;
+import model.vo.Pergunta;
+import model.vo.Resposta;
 
 public class TelaPergunta extends JPanel {
 
-	Pergunta pergunta;
+	private Pergunta pergunta;
 	private JLabel lblAutor;
 	private JLabel lblCategoria;
 	private JLabel lblTitulo;
 	private JTextArea textADescricao;
 	private JLabel lblDtCriacao;
 	private JLabel lblDtResolucao;
-	private JTextField textResposta;
+	private JTextField textField;
+	private JLabel lblSuaResposta;
+	private JButton btnNewButton;
+	private JLabel lblNewLabel;
+	private JTable table;
+	private String[] nomesColunas = {"respostas"};
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaPergunta() {
-
-
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(150dlu;default):grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(150dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("max(75dlu;default)"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),}));
+		setLayout(null);
 
 		lblAutor = new JLabel("Autor :");
+		lblAutor.setBounds(87, 31, 136, 17);
 		lblAutor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblAutor, "4, 4, left, default");
+		add(lblAutor);
 
 		lblCategoria = new JLabel("Categoria : ");
-		add(lblCategoria, "6, 4, right, default");
+		lblCategoria.setBounds(556, 32, 128, 14);
+		add(lblCategoria);
 
 		lblTitulo = new JLabel("Titulo : ");
+		lblTitulo.setBounds(87, 54, 297, 20);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblTitulo, "4, 6");
+		add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "4, 8, 3, 1, fill, fill");
+		scrollPane.setBounds(87, 80, 526, 113);
+		add(scrollPane);
 
 //		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -76,14 +63,37 @@ public class TelaPergunta extends JPanel {
 		scrollPane.setViewportView(textADescricao);
 
 		lblDtCriacao = new JLabel("Data de Criação :");
-		add(lblDtCriacao, "4, 10");
+		lblDtCriacao.setBounds(87, 199, 297, 14);
+		add(lblDtCriacao);
 
 		lblDtResolucao = new JLabel("data resolucao");
-		add(lblDtResolucao, "6, 10, right, default");
+		lblDtResolucao.setBounds(542, 199, 142, 14);
+		add(lblDtResolucao);
 		
-		textResposta = new JTextField();
-		add(textResposta, "4, 12, 3, 1, fill, default");
-		textResposta.setColumns(10);
+		textField = new JTextField();
+		textField.setBounds(87, 245, 526, 82);
+		add(textField);
+		textField.setColumns(10);
+		
+		lblSuaResposta = new JLabel("Sua Resposta:");
+		lblSuaResposta.setBounds(84, 224, 89, 14);
+		add(lblSuaResposta);
+		
+		btnNewButton = new JButton("Publicar");
+		btnNewButton.setBounds(524, 338, 89, 23);
+		add(btnNewButton);
+		
+		lblNewLabel = new JLabel("Respostas");
+		lblNewLabel.setBounds(87, 358, 86, 14);
+		add(lblNewLabel);
+		
+		table = new JTable();
+		table.setBounds(87, 372, 527, 136);
+		add(table);
+		
+		limparTabela();
+		
+		RespostaDAO respostaDAO = new RespostaDAO();
 	}
 
 	public void atualizarCampos(Pergunta pergunta) {
@@ -100,5 +110,8 @@ public class TelaPergunta extends JPanel {
 			lblDtResolucao.setText("Data de Resolução : " + pergunta.getDataResolucao());
 		}
 	}
-
+	
+	private void limparTabela() {
+		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
+	}
 }

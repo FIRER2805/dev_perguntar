@@ -11,19 +11,19 @@ import model.vo.Categoria;
 import model.vo.Pergunta;
 import model.vo.Resposta;
 
-public class RepostaDAO {
+public class RespostaDAO {
 	
 	public int inserir(Resposta r)
 	{
 		int chave = 0;
 		ResultSet chaves = null;
-		String sql = "insert into resposta(conteudo, id_pergunta, id_usuario) values(?, ?, ?);";
+		String sql = "insert into resposta(conteudo, id_pergunta, solucao) values(?, ?, ?);";
 		Connection c = Banco.getConnection();
 		PreparedStatement ps = Banco.getPreparedStmtPK(c, sql);
 		try {
 			ps.setString(1, r.getConteudo());
 			ps.setInt(2, r.getIdPergunta());
-			ps.setInt(3, r.getUsuario().getId());
+			ps.setBoolean(3, r.isSolucao());
 			
 			ps.executeUpdate();
 			chaves = ps.getGeneratedKeys();
@@ -44,40 +44,39 @@ public class RepostaDAO {
 		return chave;
 	}
 	
-//	public ArrayList<Resposta> buscarTodos(int idPergunta)
-//	{
-//		UsuarioDAO usuarioDAO = new UsuarioDAO();
-//		String sql =  "select * from resposta where id_pergunta = ?";
-//		ArrayList<Resposta> respostas = new ArrayList<Resposta>();
-//		Connection conn = Banco.getConnection();
-//		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
-//		ResultSet rs = null;
-//		try {
-//			rs = pStmt.executeQuery();
-//			while(rs.next())
-//			{
-//				Resposta r = new Resposta();
-//				r.setId(rs.getInt(1));
-//				r.setConteudo(rs.getString(2));
-//				r.setIdPergunta(rs.getInt(3));
-//				r.setUsuario(usuarioDAO.buscarPorId(rs.getInt(4)));
-//				r.
-//			}
-//		}
-//		catch(SQLException e)
-//		{
-//			categoria = null;
-//			System.out.println("Erro no método buscarPorId da classe CategoriaDAO");
-//			System.out.println(e.getMessage());
-//		}
-//		finally 
-//		{
-//			Banco.closeResultSet(rs);
-//			Banco.closeStatement(pStmt);
-//			Banco.closeConnection(conn);
-//		}
-//		return categoria;
-//	}
+	public ArrayList<Resposta> buscarTodos(int idPergunta)
+	{
+		String sql =  "select * from resposta where id_pergunta = ?";
+		ArrayList<Resposta> respostas = new ArrayList<Resposta>();
+		Connection conn = Banco.getConnection();
+		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
+		ResultSet rs = null;
+		try {
+			pStmt.setInt(1, idPergunta);
+			rs = pStmt.executeQuery();
+			while(rs.next())
+			{
+				Resposta r = new Resposta();
+				r.setId(rs.getInt("id"));
+				r.setConteudo(rs.getString("conteudo"));
+				r.setIdPergunta(rs.getInt("id_pergunta"));
+				r.setSolucao(rs.getBoolean("solucao"));
+				respostas.add(r);
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método buscarTodos da classe RespostaDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeResultSet(rs);
+			Banco.closeStatement(pStmt);
+			Banco.closeConnection(conn);
+		}
+		return respostas;
+	}
 	
 	public int atualizar(Pergunta p)
 	{

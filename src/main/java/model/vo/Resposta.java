@@ -4,9 +4,14 @@ public class Resposta {
 	private int id;
 	private String conteudo;
 	private int idPergunta;
-	private Usuario usuario;
-	private Resposta respostaPai;
+	private boolean solucao;
 	
+	public boolean isSolucao() {
+		return solucao;
+	}
+	public void setSolucao(boolean solucao) {
+		this.solucao = solucao;
+	}
 	public int getId() {
 		return id;
 	}
@@ -24,17 +29,5 @@ public class Resposta {
 	}
 	public void setIdPergunta(int idPergunta) {
 		this.idPergunta = idPergunta;
-	}
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-	public Resposta getRespostaPai() {
-		return respostaPai;
-	}
-	public void setRespostaPai(Resposta resposta) {
-		this.respostaPai = resposta;
 	}
 }

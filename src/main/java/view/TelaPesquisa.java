@@ -25,12 +25,8 @@ public class TelaPesquisa extends JPanel {
 	private JTable table;
 	private JButton btnBusca;
 	private CategoriaDAO categoriaDAO = new CategoriaDAO();
-<<<<<<< HEAD
 	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
-=======
-	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Usuario", "Categoria" };
 	private JTextField textDuvida;
->>>>>>> branch 'main' of https://github.com/FIRER2805/dev_perguntar.git
 
 	/**
 	 * Create the panel.
@@ -98,16 +94,5 @@ public class TelaPesquisa extends JPanel {
 
 	public void atualizarCampos() {
 		pesquisa = new Pesquisa() ;
-<<<<<<< HEAD
-		chckbxResolvido.setSelected(false);
-		cbCategoria.setSelectedIndex(-1);
-		textPDuvida.setText("");
-		textFDataInicial.setText("");
-		textFDataFinal.setText("");
-		
-		
-
-=======
->>>>>>> branch 'main' of https://github.com/FIRER2805/dev_perguntar.git
 	}
 }
