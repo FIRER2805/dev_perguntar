@@ -67,6 +67,11 @@ public class TelaLogin extends JPanel {
 		usuario.setSenha(textSenha.getText());
 		validaCampos(usuario);
 		usuario = controller.login(usuario);
+		
+		if(usuario == null || usuario.getId() < 0) {
+			throw new DevPerguntarException("Usuario ou Senha Invalido(s)");
+		}
+		
 
 		return usuario;
 	}

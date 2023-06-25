@@ -6,6 +6,12 @@ public class Usuario {
 	private String eMail;
 	private String senha;
 	
+	
+	
+	public Usuario() {
+		super();
+		this.id = 0;
+	}
 	public int getId() {
 		return id;
 	}
@@ -36,4 +42,5 @@ public class Usuario {
 	{
 		return nome;
 	}
+	
 }

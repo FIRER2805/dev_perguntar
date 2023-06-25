@@ -35,7 +35,7 @@ public class TelaPesquisa extends JPanel {
 	private JTextPane textPDuvida;
 	private JButton btnPesquisar;
 	private CategoriaDAO categoriaDAO = new CategoriaDAO();
-	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Usuario", "Categoria" };
+	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
 
 	/**
 	 * Create the panel.
@@ -164,8 +164,6 @@ public class TelaPesquisa extends JPanel {
 	public void atualizarCampos() {
 
 		pesquisa = new Pesquisa() ;
-		
-//		chckbxResolvido.setContentAreaFilled(false);
 		chckbxResolvido.setSelected(false);
 		cbCategoria.setSelectedIndex(-1);
 		textPDuvida.setText("");

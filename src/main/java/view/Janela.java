@@ -110,7 +110,8 @@ public class Janela {
 		mntmPesquisa = new JMenuItem("Pesquisa");
 		mntmPesquisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				telaPesquisa.atualizarCampos();
 				telaPesquisa.setVisible(true);
 				frame.setContentPane(telaPesquisa);
 				frame.revalidate();
