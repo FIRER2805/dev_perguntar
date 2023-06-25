@@ -17,7 +17,8 @@ import model.vo.Pergunta;
 import model.vo.Resposta;
 
 public class TelaPergunta extends JPanel {
-
+	
+	private int idPergunta;
 	private Pergunta pergunta;
 	private JLabel lblAutor;
 	private JLabel lblCategoria;
@@ -30,7 +31,9 @@ public class TelaPergunta extends JPanel {
 	private JButton btnNewButton;
 	private JLabel lblNewLabel;
 	private JTable table;
+	private ArrayList<Resposta> respostas;
 	private String[] nomesColunas = {"respostas"};
+	private RespostaDAO respostaDAO;
 
 	/**
 	 * Create the panel.
@@ -55,8 +58,6 @@ public class TelaPergunta extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(87, 80, 526, 113);
 		add(scrollPane);
-
-//		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		textADescricao = new JTextArea();
 		textADescricao.setEnabled(false);
@@ -87,17 +88,22 @@ public class TelaPergunta extends JPanel {
 		lblNewLabel.setBounds(87, 358, 86, 14);
 		add(lblNewLabel);
 		
-		table = new JTable();
+		table = new JTable() {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false;
+			}
+		};
 		table.setBounds(87, 372, 527, 136);
 		add(table);
 		
 		limparTabela();
 		
-		RespostaDAO respostaDAO = new RespostaDAO();
+		 respostaDAO = new RespostaDAO();
 	}
 
 	public void atualizarCampos(Pergunta pergunta) {
-
+		idPergunta = pergunta.getId();
+		
 		// autor categoria titulo descricao data
 		lblAutor.setText("Autor : " + pergunta.getUsuario().getNome());
 		lblCategoria.setText("Categoria : " + pergunta.getCategoria().getNome());
@@ -111,7 +117,44 @@ public class TelaPergunta extends JPanel {
 		}
 	}
 	
-	private void limparTabela() {
-		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
+	public void preencherTabela() {
+		respostas = respostaDAO.buscarTodos(idPergunta);
+		
+		limparTabela();
+		
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+
+		for (Resposta r : respostas) {
+
+			Object[] novaLinhaDaTabela = new Object[1];
+
+			novaLinhaDaTabela[0] = r.getConteudo();
+
+			model.addRow(novaLinhaDaTabela);
+		}
+		
 	}
+	
+	private void limparTabela() {
+		table.setModel(new DefaultTableModel(new Object[][] {nomesColunas,}, nomesColunas));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
