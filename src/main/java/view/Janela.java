@@ -8,10 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.UsuarioController;
+import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Usuario;
 
@@ -31,7 +33,7 @@ public class Janela {
 	private JMenuItem mntmLogin;
 	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
 	private TelaPerfil telaPerfil;
-	private TelaPesquisa telaPesquisa;
+	private TelaPesquisa telaPesquisa = new TelaPesquisa();
 	private TelaHome telaHome = new TelaHome();
 	private Usuario usuarioLogado;
 	private JMenuItem mntmPerfil;
@@ -77,7 +79,7 @@ public class Janela {
 		mntmHome = new JMenuItem("Home");
 		mntmHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaHome.atualizarTable();
 				telaHome.setVisible(true);
 				frame.setContentPane(telaHome);
@@ -91,10 +93,16 @@ public class Janela {
 
 			public void actionPerformed(ActionEvent e) {
 
-				telaPergunta.atualizarCampos(telaHome.resgatarPergunta());
-				telaPergunta.setVisible(true);
-				frame.setContentPane(telaPergunta);
-				frame.revalidate();
+				try {
+					telaPergunta.atualizarCampos(telaHome.resgatarPergunta());
+
+					telaPergunta.setVisible(true);
+					frame.setContentPane(telaPergunta);
+					frame.revalidate();
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção",
+							JOptionPane.WARNING_MESSAGE);
+				}
 
 			}
 		});
@@ -103,7 +111,6 @@ public class Janela {
 		mntmPesquisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				telaPesquisa = new TelaPesquisa();
 				telaPesquisa.setVisible(true);
 				frame.setContentPane(telaPesquisa);
 				frame.revalidate();
@@ -111,13 +118,22 @@ public class Janela {
 			}
 		});
 		menuBar.add(mntmPesquisa);
+		
+		telaPesquisa.getBtnPesquisar().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				telaPesquisa.atualizarCampos();
+				
+			}
+		});
 
 		mntmCriarPergunta = new JMenuItem("Criar pergunta");
 		mntmCriarPergunta.setVisible(false);
 		mntmCriarPergunta.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaCriacaoDePergunta.atualizarCampos();
 				telaCriacaoDePergunta.setVisible(true);
 				frame.setContentPane(telaCriacaoDePergunta);
@@ -157,15 +173,20 @@ public class Janela {
 
 			public void actionPerformed(ActionEvent e) {
 
-				usuarioLogado = telaLogin.logarUsuario();
-				mntmCriarPergunta.setVisible(true);
-				mntmPerfil.setVisible(true);
-				mntmCadastrar.setVisible(false);
-				mntmLogin.setVisible(false);
+				try {
+					usuarioLogado = telaLogin.logarUsuario();
+					mntmCriarPergunta.setVisible(true);
+					mntmPerfil.setVisible(true);
+					mntmCadastrar.setVisible(false);
+					mntmLogin.setVisible(false);
 
-				telaHome.setVisible(true);
-				frame.setContentPane(telaHome);
-				frame.revalidate();
+					telaHome.setVisible(true);
+					frame.setContentPane(telaHome);
+					frame.revalidate();
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Falha ao Efetuar Login",
+							JOptionPane.WARNING_MESSAGE);
+				}
 
 			}
 		});
@@ -200,11 +221,16 @@ public class Janela {
 
 			public void actionPerformed(ActionEvent e) {
 
-				telaCadastro.cadastrarUsuario();
-				telaLogin.limparCampos();
-				telaLogin.setVisible(true);
-				frame.setContentPane(telaLogin);
-				frame.revalidate();
+				try {
+					telaCadastro.cadastrarUsuario();
+					telaLogin.limparCampos();
+					telaLogin.setVisible(true);
+					frame.setContentPane(telaLogin);
+					frame.revalidate();
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Falha ao Efetuar Cadastro",
+							JOptionPane.WARNING_MESSAGE);
+				}
 
 			}
 		});
@@ -220,7 +246,5 @@ public class Janela {
 		mnConfig.add(mntmSair);
 
 	}
-
-	
 
 }
