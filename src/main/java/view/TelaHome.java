@@ -15,6 +15,7 @@ import java.awt.Font;
 import com.jgoodies.forms.layout.Sizes;
 
 import controller.PerguntaController;
+import model.exception.DevPerguntarException;
 import model.vo.Categoria;
 import model.vo.Pergunta;
 import model.vo.Usuario;
@@ -33,113 +34,87 @@ public class TelaHome extends JPanel {
 	private JTable table;
 	private PerguntaController p = new PerguntaController();
 	private JButton btnVizualizar;
-	private String[] nomesColunas = {  "Titulo ", "DT-Criação", "Usuario", "Categoria" };
+	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Usuario", "Categoria" };
 	private ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
 
-	
 	public JButton getBtnVizualizar() {
 		return btnVizualizar;
 	}
-	
-	
+
 	/**
 	 * Create the panel.
 	 */
 	public TelaHome() {
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("right:default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:max(340dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("60dlu"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default:grow"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("fill:max(229dlu;min)"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("top:default:grow"),}));
-		
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("right:default:grow"),
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:max(340dlu;default)"),
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("60dlu"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("left:default:grow"), },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("fill:max(229dlu;min)"), FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("top:default:grow"), }));
+
 		JLabel lblTitulo = new JLabel("Duvidas Recentes");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblTitulo, "4, 4, center, default");
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "4, 6, fill, default");
-		
-		table = new JTable();
+
+		table = new JTable() {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false;
+			}
+		};
 		scrollPane.setViewportView(table);
-		
-		 btnVizualizar = new JButton("Vizualizar");
+		table.isCellEditable(UNDEFINED_CONDITION, UNDEFINED_CONDITION);
+
+		btnVizualizar = new JButton("Vizualizar");
 		add(btnVizualizar, "6, 6, default, center");
-		
-		
-		
-		
-		
+
 		atualizarTable();
-		
 
 	}
-	
-	
-	
+
 	public JTable getTable() {
 		return table;
 	}
 
-
 	private void limparTabela() {
-		table.setModel(new DefaultTableModel(new Object[][] { , }, nomesColunas));
+		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
 	}
-	
+
 	public void atualizarTable() {
 		limparTabela();
-		
-		
+
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		
+
 		perguntas = p.busca();
-		
-		
+
 		for (Pergunta p : this.perguntas) {
-			
-			
+
 			Object[] novaLinhaDaTabela = new Object[4];
-			
-			
+
 			novaLinhaDaTabela[0] = p.getTitulo();
 			novaLinhaDaTabela[1] = p.getData();
 			novaLinhaDaTabela[2] = p.getUsuario().getNome();
 			novaLinhaDaTabela[3] = p.getCategoria().getNome();
-			
-			
-			
+
 			model.addRow(novaLinhaDaTabela);
 		}
-		
+
 	}
-	
-	public Pergunta resgatarPergunta() {
-		
+
+	public Pergunta resgatarPergunta() throws DevPerguntarException {
+
 		int linhaSelecionada = table.getSelectedRow();
-//		TODO criar uma exception
-//		if (linhaSelecionada == -1) {
-//			return;
-//		}
+		if (linhaSelecionada == -1) {
+			throw new DevPerguntarException("Selecione uma Pergunta");
+		}
 		Pergunta pergunta = perguntas.get(linhaSelecionada);
 		return pergunta;
-		
-	}
-	
-	
-	
 
-	
+	}
 
 }
