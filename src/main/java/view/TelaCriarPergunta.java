@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -129,7 +130,12 @@ public class TelaCriarPergunta extends JPanel {
 		pergunta.setCategoria(categoria);
 		pergunta.setUsuario(usuario);
 		
-		perguntaController.perguntar(pergunta);
+		int idpergunta = perguntaController.perguntar(pergunta);
+		if(idpergunta > 0) {
+			atualizarCampos();
+			JOptionPane.showMessageDialog(null, "Pergunta feita com Sucesso");
+			
+		}
 		
 		//TODO cria aviso de criação de conta
 		

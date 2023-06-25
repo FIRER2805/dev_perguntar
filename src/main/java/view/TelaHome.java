@@ -27,14 +27,11 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class TelaHome extends JPanel {
-	public ArrayList<Pergunta> getPerguntas() {
-		return perguntas;
-	}
 
 	private JTable table;
 	private PerguntaController p = new PerguntaController();
 	private JButton btnVizualizar;
-	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Usuario", "Categoria" };
+	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
 	private ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
 
 	public JButton getBtnVizualizar() {
@@ -68,17 +65,12 @@ public class TelaHome extends JPanel {
 			}
 		};
 		scrollPane.setViewportView(table);
-		table.isCellEditable(UNDEFINED_CONDITION, UNDEFINED_CONDITION);
 
 		btnVizualizar = new JButton("Vizualizar");
 		add(btnVizualizar, "6, 6, default, center");
 
 		atualizarTable();
 
-	}
-
-	public JTable getTable() {
-		return table;
 	}
 
 	private void limparTabela() {
@@ -94,12 +86,13 @@ public class TelaHome extends JPanel {
 
 		for (Pergunta p : this.perguntas) {
 
-			Object[] novaLinhaDaTabela = new Object[4];
+			Object[] novaLinhaDaTabela = new Object[5];
 
 			novaLinhaDaTabela[0] = p.getTitulo();
 			novaLinhaDaTabela[1] = p.getData();
-			novaLinhaDaTabela[2] = p.getUsuario().getNome();
-			novaLinhaDaTabela[3] = p.getCategoria().getNome();
+			novaLinhaDaTabela[2] = p.getDataResolucao() == null ? "Em Aberto" : "Resolvido";
+			novaLinhaDaTabela[3] = p.getUsuario().getNome();
+			novaLinhaDaTabela[4] = p.getCategoria().getNome();
 
 			model.addRow(novaLinhaDaTabela);
 		}
