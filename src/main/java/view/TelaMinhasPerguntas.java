@@ -1,16 +1,23 @@
 package view;
 
-import javax.swing.JPanel;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import com.jgoodies.forms.layout.Sizes;
 import javax.swing.JTable;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.Sizes;
+
+import controller.PerguntaController;
+import model.vo.Pergunta;
 
 public class TelaMinhasPerguntas extends JPanel {
 	private JTable table;
@@ -56,6 +63,17 @@ public class TelaMinhasPerguntas extends JPanel {
 		add(btnVizualizar, "6, 8");
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				PerguntaController pCont = new PerguntaController();	
+				Pergunta p = new Pergunta();
+				//TODO criar metodo Excluir
+//				pCont.excluir(p);
+				
+				
+			}
+		});
 		add(btnExcluir, "6, 10");
 
 	}

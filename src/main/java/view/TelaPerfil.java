@@ -30,7 +30,7 @@ public class TelaPerfil extends JPanel {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("left:default:grow"),},
 			new RowSpec[] {
-				FormSpecs.DEFAULT_ROWSPEC,
+				RowSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
