@@ -103,6 +103,7 @@ public class TelaPergunta extends JPanel {
 				} catch (DevPerguntarException e1) {
 					JOptionPane.showMessageDialog(null,e1.getMessage(), "Erro:",JOptionPane.ERROR_MESSAGE);
 				}
+				preencherTabela();
 		}});
 		
 		lblNewLabel = new JLabel("Respostas");
