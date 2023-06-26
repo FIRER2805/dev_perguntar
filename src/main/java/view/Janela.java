@@ -9,12 +9,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.UsuarioController;
 import model.exception.DevPerguntarException;
-import model.vo.Pergunta;
 import model.vo.Usuario;
 
 public class Janela {
@@ -26,18 +23,20 @@ public class Janela {
 	private JMenuItem mntmCriarPergunta;
 	private JMenu mnConfig;
 	private JMenuItem mntmSair;
-	private view.TelaCadastro telaCadastro = new TelaCadastro();
-	private view.TelaLogin telaLogin = new TelaLogin();
 	private JTextField textField;
 	private JMenuItem mntmCadastrar;
 	private JMenuItem mntmLogin;
-	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
-	private TelaPerfil telaPerfil;
-	private TelaPesquisa telaPesquisa = new TelaPesquisa();
-	private TelaHome telaHome = new TelaHome();
 	private Usuario usuarioLogado;
 	private JMenuItem mntmPerfil;
+	private view.TelaCadastro telaCadastro = new TelaCadastro();
+	private view.TelaLogin telaLogin = new TelaLogin();
+	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
+	private TelaPerfil telaPerfil = new TelaPerfil();
+	private TelaPesquisa telaPesquisa = new TelaPesquisa();
+	private TelaHome telaHome = new TelaHome();
 	private TelaPergunta telaPergunta = new TelaPergunta();
+	private TelaMinhasPerguntas telaMinhasPerguntas = new TelaMinhasPerguntas();
+	private TelaTrocarSenha TelaTrocarSenha = new TelaTrocarSenha();
 
 	/**
 	 * Launch the application.
@@ -170,7 +169,6 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				telaLogin.limparCampos();
-				;
 				telaLogin.setVisible(true);
 				frame.setContentPane(telaLogin);
 				frame.revalidate();
@@ -206,7 +204,6 @@ public class Janela {
 		mntmPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				telaPerfil = new TelaPerfil();
 				telaPerfil.setVisible(true);
 				frame.setContentPane(telaPerfil);
 				frame.revalidate();
@@ -214,6 +211,29 @@ public class Janela {
 			}
 		});
 		mnConfig.add(mntmPerfil);
+		
+		telaPerfil.getBtnMinhasPerguntas().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				telaMinhasPerguntas.setVisible(true);
+				frame.setContentPane(telaMinhasPerguntas);
+				frame.revalidate();
+				
+			}
+		});
+		
+		telaPerfil.getBtnTrocarSenha().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				TelaTrocarSenha.setVisible(true);
+				frame.setContentPane(TelaTrocarSenha);
+				frame.revalidate();
+				
+			}
+		});
 
 		mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
@@ -249,7 +269,15 @@ public class Janela {
 		mntmSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				System.exit(0);
+				usuarioLogado = null;
+				mntmCriarPergunta.setVisible(false);
+				mntmPerfil.setVisible(false);
+				mntmCadastrar.setVisible(true);
+				mntmLogin.setVisible(true);
+				telaLogin.limparCampos();
+				telaLogin.setVisible(true);
+				frame.setContentPane(telaLogin);
+				frame.revalidate();
 
 			}
 		});

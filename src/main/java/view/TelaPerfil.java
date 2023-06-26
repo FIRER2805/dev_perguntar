@@ -18,6 +18,16 @@ import java.awt.event.ActionEvent;
 public class TelaPerfil extends JPanel {
 	
 	UsuarioController uController = new UsuarioController();
+	private JButton btnMinhasPerguntas;
+	private JButton btnTrocarSenha;
+
+	public JButton getBtnMinhasPerguntas() {
+		return btnMinhasPerguntas;
+	}
+
+	public JButton getBtnTrocarSenha() {
+		return btnTrocarSenha;
+	}
 
 	/**
 	 * Create the panel.
@@ -51,22 +61,21 @@ public class TelaPerfil extends JPanel {
 		JLabel lblNewLabel = new JLabel("Perfil");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblNewLabel, "3, 3, center, default");
-		
-		JButton btnMinhasPerguntas = new JButton("Minhas Perguntas");
+
+		btnMinhasPerguntas = new JButton("Minhas Perguntas");
 		add(btnMinhasPerguntas, "3, 7");
-		
-		JButton btnTrocarSenha = new JButton("Trocar senha");
+
+		btnTrocarSenha = new JButton("Trocar senha");
 		add(btnTrocarSenha, "3, 11, default, fill");
-		
+
 		JButton btnExcluirConta = new JButton("Excluir Conta");
-		btnExcluirConta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-//				uController.excluir();
-				
-			}
-		});
+		
 		add(btnExcluirConta, "3, 15");
 
+	}
+	
+	private void ExcluirContaBUtao() {
+		//TODO criar metodo para Excluir
+//		uController.excluirUsuario();
 	}
 }

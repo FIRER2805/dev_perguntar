@@ -20,6 +20,10 @@ import model.dao.RespostaDAO;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Resposta;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
 
 public class TelaPergunta extends JPanel {
 	
@@ -44,52 +48,67 @@ public class TelaPergunta extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaPergunta() {
-		setLayout(null);
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("84px"),
+				ColumnSpec.decode("300px"),
+				ColumnSpec.decode("140px"),
+				ColumnSpec.decode("160px"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("31px"),
+				RowSpec.decode("17px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("113px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("14px"),
+				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				RowSpec.decode("14px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("82px"),
+				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				RowSpec.decode("34px"),
+				RowSpec.decode("136px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
 
 		lblAutor = new JLabel("Autor :");
-		lblAutor.setBounds(87, 31, 136, 17);
 		lblAutor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblAutor);
+		add(lblAutor, "2, 2, left, top");
 
 		lblCategoria = new JLabel("Categoria : ");
-		lblCategoria.setBounds(556, 32, 128, 14);
-		add(lblCategoria);
+		add(lblCategoria, "4, 2, fill, center");
 
 		lblTitulo = new JLabel("Titulo : ");
-		lblTitulo.setBounds(87, 54, 297, 20);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblTitulo);
+		add(lblTitulo, "2, 4, fill, top");
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(87, 80, 526, 113);
-		add(scrollPane);
+		add(scrollPane, "2, 6, 3, 1, fill, fill");
 
 		textADescricao = new JTextArea();
 		textADescricao.setEnabled(false);
 		scrollPane.setViewportView(textADescricao);
 
 		lblDtCriacao = new JLabel("Data de Criação :");
-		lblDtCriacao.setBounds(87, 199, 297, 14);
-		add(lblDtCriacao);
+		add(lblDtCriacao, "2, 8, fill, fill");
 
 		lblDtResolucao = new JLabel("data resolucao");
-		lblDtResolucao.setBounds(542, 199, 142, 14);
-		add(lblDtResolucao);
+		add(lblDtResolucao, "4, 8, fill, fill");
 		
 		textResposta = new JTextField();
-		textResposta.setBounds(87, 245, 526, 82);
-		add(textResposta);
+		add(textResposta, "2, 12, 3, 1, fill, fill");
 		textResposta.setColumns(10);
 		
 		
 		
 		lblSuaResposta = new JLabel("Sua Resposta:");
-		lblSuaResposta.setBounds(84, 224, 89, 14);
-		add(lblSuaResposta);
+		add(lblSuaResposta, "2, 10, left, fill");
 		
 		btnPublicar = new JButton("Publicar");
-		btnPublicar.setBounds(524, 338, 89, 23);
-		add(btnPublicar);
+		add(btnPublicar, "4, 14, left, top");
 		
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -107,16 +126,15 @@ public class TelaPergunta extends JPanel {
 		}});
 		
 		lblNewLabel = new JLabel("Respostas");
-		lblNewLabel.setBounds(87, 358, 86, 14);
-		add(lblNewLabel);
+		add(lblNewLabel, "2, 14, left, bottom");
 		
 		table = new JTable() {
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false;
 			}
 		};
-		table.setBounds(87, 372, 527, 136);
-		add(table);
+		table.setRowHeight(50);
+		add(table, "2, 15, 3, 1, fill, fill");
 		
 		limparTabela();
 		
@@ -167,7 +185,7 @@ public class TelaPergunta extends JPanel {
 	}
 	
 	private void limparTabela() {
-		table.setModel(new DefaultTableModel(new Object[][] {nomesColunas,}, nomesColunas));
+		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
 	}
 	
 	
