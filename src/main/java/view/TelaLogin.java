@@ -16,11 +16,12 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.JPasswordField;
 
 public class TelaLogin extends JPanel {
 	private JTextField textEmail;
-	private JTextField textSenha;
 	private JButton btnLogin;
+	private JPasswordField pFSenha;
 
 	public JButton getBtnLogin() {
 		return btnLogin;
@@ -30,16 +31,28 @@ public class TelaLogin extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaLogin() {
-		setLayout(new FormLayout(
-				new ColumnSpec[] { ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("max(48dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("max(108dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("left:default:grow"), },
-				new RowSpec[] { RowSpec.decode("bottom:default:grow"), FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("top:default:grow"), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(48dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("bottom:default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:default:grow"),}));
 
 		JLabel lblEmail = new JLabel("Email");
 		add(lblEmail, "3, 3, right, center");
@@ -50,10 +63,9 @@ public class TelaLogin extends JPanel {
 
 		JLabel lblSenha = new JLabel("Senha");
 		add(lblSenha, "3, 7, right, center");
-
-		textSenha = new JTextField();
-		textSenha.setColumns(15);
-		add(textSenha, "5, 7, left, center");
+		
+		pFSenha = new JPasswordField();
+		add(pFSenha, "5, 7, fill, default");
 
 		btnLogin = new JButton("Login");
 		add(btnLogin, "5, 11, left, center");
@@ -64,7 +76,9 @@ public class TelaLogin extends JPanel {
 		UsuarioController controller = new UsuarioController();
 		Usuario usuario = new Usuario();
 		usuario.seteMail(textEmail.getText());
-		usuario.setSenha(textSenha.getText());
+		char[] passwordChars = pFSenha.getPassword();
+		String password = new String(passwordChars);
+		usuario.setSenha(password);
 		validaCampos(usuario);
 		usuario = controller.login(usuario);
 		
@@ -78,7 +92,7 @@ public class TelaLogin extends JPanel {
 
 	public void limparCampos() {
 		textEmail.setText(null);
-		textSenha.setText("");
+		pFSenha.setText("");
 	}
 
 	private void validaCampos(Usuario u) throws DevPerguntarException {

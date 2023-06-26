@@ -20,12 +20,13 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.Font;
+import javax.swing.JPasswordField;
 
 public class TelaCadastro extends JPanel {
 	private JTextField textFNome;
 	private JTextField textFEmail;
-	private JTextField textFSenha;
 	private JButton btnCadastrar;
+	private JPasswordField pFSenha;
 
 	public JButton getBtnCadastrar() {
 		return btnCadastrar;
@@ -35,17 +36,32 @@ public class TelaCadastro extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaCadastro() {
-		setLayout(new FormLayout(
-				new ColumnSpec[] { ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("right:max(45dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("left:max(124dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("left:default:grow"), },
-				new RowSpec[] { RowSpec.decode("bottom:default:grow"), FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("top:default:grow"), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("right:max(45dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:max(124dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("bottom:default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:default:grow"),}));
 
 		JLabel lblTitulo = new JLabel("Cadastrar Usuario");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -67,13 +83,13 @@ public class TelaCadastro extends JPanel {
 
 		JLabel lblSenha = new JLabel("Senha : ");
 		add(lblSenha, "3, 11");
-
-		textFSenha = new JTextField();
-		textFSenha.setColumns(15);
-		add(textFSenha, "5, 11");
+		
+		pFSenha = new JPasswordField();
+		pFSenha.setColumns(15);
+		add(pFSenha, "5, 11, left, default");
 
 		btnCadastrar = new JButton("Cadastrar");
-		add(btnCadastrar, "5, 13");
+		add(btnCadastrar, "5, 15");
 
 	}
 
@@ -83,7 +99,9 @@ public class TelaCadastro extends JPanel {
 		Usuario usuario = new Usuario();
 		usuario.setNome(textFNome.getText());
 		usuario.seteMail(textFEmail.getText());
-		usuario.setSenha(textFSenha.getText());
+		char[] passwordChars = pFSenha.getPassword();
+		String password = new String(passwordChars);
+		usuario.setSenha(password);
 		validaCampos(usuario);
 		int cadastrados = controller.cadastrar(usuario);
 		if (cadastrados != -1) {

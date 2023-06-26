@@ -1,29 +1,34 @@
 package view;
 
+import java.awt.Font;
+import java.util.Arrays;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import com.jgoodies.forms.layout.FormLayout;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.UsuarioController;
 import model.exception.DevPerguntarException;
 import model.vo.Usuario;
-
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaTrocarSenha extends JPanel {
-
-	private JTextField textFSenhaAtual;
-	private JTextField textFNovaSenha;
-	private JTextField textFComfirmacaoNovaSenha;
 	private JButton btnSalvar;
 	Usuario u = new Usuario();
 	UsuarioController uCont = new UsuarioController();
+	private JPasswordField pFSenhaAtual;
+	private JPasswordField pFNovaSenha;
+	private JPasswordField pFComfirmNovaSenha;
+	private String novaSenha;
 	
 	public JButton getBtnSalvar() {
 		return btnSalvar;
@@ -71,25 +76,34 @@ public class TelaTrocarSenha extends JPanel {
 		JLabel lblNewLabel_1 = new JLabel("Senha Atual");
 		add(lblNewLabel_1, "4, 8");
 		
-		textFSenhaAtual = new JTextField();
-		add(textFSenhaAtual, "4, 10, fill, default");
-		textFSenhaAtual.setColumns(10);
+		pFSenhaAtual = new JPasswordField();
+		add(pFSenhaAtual, "4, 10, fill, default");
 		
 		JLabel lblNewLabel_2 = new JLabel("Nova Senha");
 		add(lblNewLabel_2, "4, 12");
 		
-		textFNovaSenha = new JTextField();
-		add(textFNovaSenha, "4, 14, fill, default");
-		textFNovaSenha.setColumns(10);
+		pFNovaSenha = new JPasswordField();
+		add(pFNovaSenha, "4, 14, fill, default");
 		
 		JLabel lblNewLabel_3 = new JLabel("Comfirmar Nova Senha");
 		add(lblNewLabel_3, "4, 16");
-		
-		textFComfirmacaoNovaSenha = new JTextField();
-		add(textFComfirmacaoNovaSenha, "4, 18, fill, default");
-		textFComfirmacaoNovaSenha.setColumns(10);
+		 
+		 pFComfirmNovaSenha = new JPasswordField();
+		 add(pFComfirmNovaSenha, "4, 18, fill, default");
 		
 		 btnSalvar = new JButton("Salvar");
+		 btnSalvar.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		
+		 		try {
+					SalvarNovaSenha();
+				} catch (DevPerguntarException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Atenção",
+							JOptionPane.WARNING_MESSAGE);
+				}
+		 		
+		 	}
+		 });
 		add(btnSalvar, "4, 22");
 		
 		
@@ -101,7 +115,7 @@ public class TelaTrocarSenha extends JPanel {
 	public void SalvarNovaSenha() throws DevPerguntarException {
 		
 		validarCampos();
-		u.setSenha(textFNovaSenha.getText());
+		u.setSenha(novaSenha);
 //		TODO criar metodos DAO ou DTO para trocar senha do usuario
 //		if(uCont.validarSenhaAtual(u)) {
 //			uCont.trocarSenha(u);
@@ -116,21 +130,31 @@ public class TelaTrocarSenha extends JPanel {
 	}
 	
 	public void validarCampos() throws DevPerguntarException {
+		
+		char[] cSenhaAtual = pFSenhaAtual.getPassword();
+		String senhaAtual = new String(cSenhaAtual);
+		 
+		char[] cNovaSenha = pFNovaSenha.getPassword();
+		 novaSenha = new String(cNovaSenha);
+		
+		char[] cComfirmNovaSenha = pFComfirmNovaSenha.getPassword();
+		String comfirmNovaSenha = new String(cComfirmNovaSenha);
+		
 		String alerta = "";
 		
-		if (textFSenhaAtual.getText().trim().isEmpty()) {
-			alerta += "Insira a Senha Atual";
+		if (senhaAtual.trim().isEmpty()) {
+			alerta += "Insira a Senha Atual\n";
 		}
 		
-		if (textFNovaSenha.getText().trim().isEmpty()) {
-			alerta += "Insira a Nova Senha";
+		if (novaSenha.trim().isEmpty()) {
+			alerta += "Insira a Nova Senha\n";
 		}
 		
-		if (textFComfirmacaoNovaSenha.getText().trim().isEmpty()) {
-			alerta += "Insira a Comfirmação da Nova Senha";
+		if (comfirmNovaSenha.trim().isEmpty()) {
+			alerta += "Insira a Comfirmação da Nova Senha\n";
 		}
 		
-		if (textFNovaSenha.getText().equals(textFComfirmacaoNovaSenha.getText())) {
+		if (!novaSenha.equals(comfirmNovaSenha)) {
 			alerta += "Campos de nova Senha não Coincidem";
 		}
 
@@ -139,6 +163,14 @@ public class TelaTrocarSenha extends JPanel {
 			throw new DevPerguntarException(alerta);
 		}
 		
+	}
+	
+	public void pega() {
+		// Limpando o array de caracteres da senha
+		char[] passwordChars = pFSenhaAtual.getPassword();
+		String password = new String(passwordChars);
+		Arrays.fill(passwordChars, '\0');
+
 	}
 	
 	
