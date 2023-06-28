@@ -6,12 +6,21 @@ public class Usuario {
 	private String eMail;
 	private String senha;
 	
-	
-	
 	public Usuario() {
 		super();
 		this.id = 0;
 	}
+	
+	
+	public Usuario(int id, String nome, String eMail, String senha) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.eMail = eMail;
+		this.senha = senha;
+	}
+
+
 	public int getId() {
 		return id;
 	}

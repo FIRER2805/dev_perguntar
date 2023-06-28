@@ -22,11 +22,9 @@ public class UsuarioBO {
 		boolean retorno = true;
 		
 		if(!dao.eMailDisponivel(u.geteMail())){
-			retorno = false;
 			throw new DevPerguntarException("Email Indisponivel");
 		}
 		if(u.getNome().trim().length() < 3 ) {
-			retorno = false;
 			throw new DevPerguntarException("Nome invalido");
 		}
 		
