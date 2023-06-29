@@ -218,6 +218,7 @@ public class Janela {
 				
 				telaMinhasPerguntas.setVisible(true);
 				frame.setContentPane(telaMinhasPerguntas);
+				telaMinhasPerguntas.setUsuario(usuarioLogado);
 				frame.revalidate();
 				
 			}

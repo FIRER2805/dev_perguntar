@@ -18,6 +18,11 @@ public class PerguntaController {
 		return bo.busca(texto, categoria, resolvido);
 	}
 	
+	public ArrayList<Pergunta> busca(int idUsuario)
+	{
+		return bo.busca(idUsuario);
+	}
+	
 	public int perguntar(Pergunta pergunta)
 	{
 		return bo.perguntar(pergunta);

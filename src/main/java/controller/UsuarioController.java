@@ -1,7 +1,10 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.bo.UsuarioBO;
 import model.exception.DevPerguntarException;
+import model.vo.Pergunta;
 import model.vo.Usuario;
 
 public class UsuarioController {

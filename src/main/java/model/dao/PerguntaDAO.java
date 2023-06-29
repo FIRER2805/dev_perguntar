@@ -134,6 +134,45 @@ public class PerguntaDAO {
 		return perguntas;
 	}
 	
+	public ArrayList<Pergunta> busca(int idUsuario)
+	{
+		String sql = "select "
+				+ "	p.* "
+				+ "	,case when u.nome is null then '[DELETADO]' else u.nome end as nome "
+				+ " ,c.nome as categoria "
+				+ "from pergunta p "
+				+ "left join usuario u on u.id = p.id_usuario "
+				+ "left join categoria c on c.id = p.id_categoria"
+				+ " where id_usuario = " + idUsuario + ";";
+		ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		try 
+		{
+			resultado = stmt.executeQuery(sql);
+			while(resultado.next())
+			{
+				Pergunta pergunta = montaPergunta(resultado);
+				pergunta.getUsuario().setNome(resultado.getString("nome"));
+				pergunta.getCategoria().setNome(resultado.getString("categoria"));
+				perguntas.add(pergunta);
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método busca da classe PerguntaDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return perguntas;
+	}
+	
 	public int atualizar(Pergunta p)
 	{
 		String sql =  "update pergunta set titulo = ?, conteudo = ? where id = ?";

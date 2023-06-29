@@ -31,4 +31,8 @@ public class PerguntaBO {
 		
 		return dao.inserir(pergunta);
 	}
+
+	public ArrayList<Pergunta> busca(int idUsuario) {
+		return dao.busca(idUsuario);
+	}
 }

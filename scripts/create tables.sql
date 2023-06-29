@@ -9,7 +9,8 @@ CREATE TABLE usuario
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     e_mail VARCHAR(255) UNIQUE NOT NULL,
-    senha VARCHAR(50) NOT NULL
+    senha VARCHAR(50) NOT NULL,
+    ativo TINYINT not null default 1
 );
 
 CREATE TABLE categoria
@@ -26,8 +27,7 @@ CREATE TABLE pergunta
     data_pergunta DATETIME NOT NULL,
     data_resolucao DATETIME NULL,
 	id_usuario INT NULL,
-    FOREIGN KEY(id_usuario) REFERENCES usuario(id)
-    ON DELETE SET NULL,
+    FOREIGN KEY(id_usuario) REFERENCES usuario(id),
     id_categoria INT NULL,
     FOREIGN KEY(id_categoria) REFERENCES categoria(id)
     ON DELETE SET NULL
@@ -60,20 +60,6 @@ insert into categoria(nome) values('linux');
 insert into categoria(nome) values('hacking');
 
 select * from resposta;
-
-insert into resposta(INSERT INTO `db_dev_perguntar`.`resposta`
-(`id`,
-`conteudo`,
-`id_pergunta`,
-`id_usuario`,
-`id_resposta`)
-VALUES
-(<{id: 1}>,
-<{conteudo: resposta1}>,
-<{id_pergunta: }>,
-<{id_usuario: }>,
-<{id_resposta: }>);
-);
 
 select * from categoria;
 

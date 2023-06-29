@@ -1,9 +1,7 @@
 package view;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,13 +19,17 @@ import com.jgoodies.forms.layout.Sizes;
 import controller.PerguntaController;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
+import model.vo.Usuario;
 
 public class TelaMinhasPerguntas extends JPanel {
 	private JTable table;
 	private JButton btnVizualizar;
 	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
-	private ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+	private List<Pergunta> perguntas;
 	private PerguntaController pCont = new PerguntaController();
+	private Usuario usuario;
+
+
 
 	/**
 	 * Create the panel.
@@ -74,7 +76,13 @@ public class TelaMinhasPerguntas extends JPanel {
 
 	}
 	
+	public Usuario getUsuario() {
+		return usuario;
+	}
 	
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 	private void limparTabela() {
 		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
@@ -85,7 +93,7 @@ public class TelaMinhasPerguntas extends JPanel {
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-		perguntas = pCont.busca();
+		perguntas = pCont.busca(usuario.getId());
 
 		for (Pergunta p : this.perguntas) {
 
