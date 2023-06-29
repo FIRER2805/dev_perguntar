@@ -11,4 +11,9 @@ public class RespostaController {
 	{
 		return respostaBO.inserir(resposta);
 	}
+	
+	public Resposta consultarPorId(int id)
+	{
+		return respostaBO.consultarPorId(id);
+	}
 }

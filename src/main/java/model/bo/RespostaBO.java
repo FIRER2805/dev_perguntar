@@ -13,4 +13,8 @@ public class RespostaBO {
 			throw new DevPerguntarException("a respota deve conter pelo menos 1 caractere");
 		return  respostaDAO.inserir(resposta);
 	}
+
+	public Resposta consultarPorId(int id) {
+		return respostaDAO.consultarPorId(id);
+	}
 }

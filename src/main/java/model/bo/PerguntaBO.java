@@ -13,9 +13,9 @@ public class PerguntaBO {
 		return dao.busca();
 	}
 	
-	public ArrayList<Pergunta> busca(String texto)
+	public ArrayList<Pergunta> busca(String texto, String categoria, boolean resolvido)
 	{
-		return dao.busca(texto);
+		return dao.busca(texto, categoria, resolvido);
 	}
 
 	public int perguntar(Pergunta pergunta) {

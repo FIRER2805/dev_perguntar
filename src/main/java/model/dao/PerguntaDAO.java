@@ -86,7 +86,7 @@ public class PerguntaDAO {
 		return perguntas;
 	}
 	
-	public ArrayList<Pergunta> busca(String texto)
+	public ArrayList<Pergunta> busca(String texto, String categoria, boolean resolvido)
 	{
 		String sql ="select "
 				+ "	p.* "
@@ -95,7 +95,16 @@ public class PerguntaDAO {
 				+ "from pergunta p "
 				+ "left join usuario u on u.id = p.id_usuario "
 				+ "left join categoria c on c.id = p.id_categoria "
-				+ "where p.titulo like '%" + texto + "%' or p.conteudo like '%" + texto + "%'";
+				+ "where (p.titulo like '%" + texto + "%' or p.conteudo like '%" + texto + "%') "
+				+ "and c.nome = '" + categoria + "' ";
+		if(resolvido)
+		{
+			sql += " and p.data_resolucao is not null";
+		}
+		else 
+		{
+			sql += " and p.data_resolucao is null";
+		}
 		ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
 		Connection conn = Banco.getConnection();
 		Statement pstmt = Banco.getStatement(conn);

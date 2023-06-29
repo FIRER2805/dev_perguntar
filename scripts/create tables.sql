@@ -59,4 +59,39 @@ insert into categoria(nome) values('c/c++');
 insert into categoria(nome) values('linux');
 insert into categoria(nome) values('hacking');
 
+select * from resposta;
+
+insert into resposta(INSERT INTO `db_dev_perguntar`.`resposta`
+(`id`,
+`conteudo`,
+`id_pergunta`,
+`id_usuario`,
+`id_resposta`)
+VALUES
+(<{id: 1}>,
+<{conteudo: resposta1}>,
+<{id_pergunta: }>,
+<{id_usuario: }>,
+<{id_resposta: }>);
+);
+
 select * from categoria;
+
+select * from pergunta;
+
+select * from usuario;
+
+select * from resposta;
+
+insert into usuario(nome, e_mail, senha) values('gabriel', 'gabriel@hotmail.com', '123456');
+
+insert into pergunta(titulo, conteudo, data_pergunta, id_usuario, id_categoria) values('pergunta1', 'pergunta1', now(), 1, 1);
+
+insert into resposta(conteudo, id_pergunta, id_usuario) values('resposta1', 1, 1);
+
+insert into resposta(conteudo, id_pergunta, id_usuario, id_resposta) values('resposta2', 1, 1, 1);
+
+select * from resposta;
+
+ALTER TABLE `db_dev_perguntar`.`resposta` 
+ADD COLUMN `solucao` TINYINT NULL DEFAULT 0 AFTER `id_resposta`;

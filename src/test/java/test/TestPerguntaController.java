@@ -1,9 +1,7 @@
-package controller;
+package test;
 
+import controller.PerguntaController;
 import junit.framework.TestCase;
-import model.vo.Categoria;
-import model.vo.Pergunta;
-import model.vo.Usuario;
 
 public class TestPerguntaController extends TestCase {
 	private PerguntaController controller = new PerguntaController();

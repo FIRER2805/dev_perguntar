@@ -2,10 +2,19 @@ package model.vo;
 
 public class Resposta {
 	private int id;
+	private Resposta respostaPai;
 	private String conteudo;
 	private int idPergunta;
 	private boolean solucao;
 	
+	
+	
+	public Resposta getRespostaPai() {
+		return respostaPai;
+	}
+	public void setRespostaPai(Resposta respostaPai) {
+		this.respostaPai = respostaPai;
+	}
 	public boolean isSolucao() {
 		return solucao;
 	}

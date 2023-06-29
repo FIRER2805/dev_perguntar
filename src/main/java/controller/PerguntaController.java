@@ -13,9 +13,9 @@ public class PerguntaController {
 		return bo.busca();
 	}
 	
-	public ArrayList<Pergunta> busca(String texto)
+	public ArrayList<Pergunta> busca(String texto, String categoria, boolean resolvido)
 	{
-		return bo.busca(texto);
+		return bo.busca(texto, categoria, resolvido);
 	}
 	
 	public int perguntar(Pergunta pergunta)

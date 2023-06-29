@@ -1,7 +1,6 @@
-package controller;
+package test;
 
-import static org.junit.Assert.assertEquals;
-
+import controller.UsuarioController;
 import junit.framework.TestCase;
 import model.exception.DevPerguntarException;
 import model.vo.Usuario;

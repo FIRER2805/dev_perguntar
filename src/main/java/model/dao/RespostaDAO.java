@@ -78,6 +78,51 @@ public class RespostaDAO {
 		return respostas;
 	}
 	
+	public Resposta consultarPorId(int idResposta)
+	{
+		String sql =  "select * from resposta where id = ?";
+		Resposta r = null;
+		Connection conn = Banco.getConnection();
+		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
+		ResultSet rs = null;
+		try {
+			pStmt.setInt(1, idResposta);
+			rs = pStmt.executeQuery();
+			while(rs.next())
+			{
+				r = construirDoResultSet(rs);
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método buscarPorId da classe RespostaDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeResultSet(rs);
+			Banco.closeStatement(pStmt);
+			Banco.closeConnection(conn);
+		}
+		return r;
+	}
+	
+	private Resposta construirDoResultSet(ResultSet rs) throws SQLException {
+		Resposta r = new Resposta();
+		r.setId(rs.getInt("id"));
+		r.setConteudo(rs.getString("conteudo"));
+		r.setIdPergunta(rs.getInt("id_pergunta"));
+		r.setSolucao(rs.getBoolean("solucao"));
+		
+		int idRespostaPai = rs.getInt("id_resposta");
+		
+		if(idRespostaPai > 0) {
+			r.setRespostaPai(consultarPorId(idRespostaPai));
+		}
+		
+		return r;
+	}
+
 	public int atualizar(Pergunta p)
 	{
 		String sql =  "update pergunta set titulo = ?, conteudo = ? where id = ?";
