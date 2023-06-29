@@ -72,7 +72,7 @@ public class CategoriaDAO {
 	
 	public ArrayList<Categoria> buscarTodas()
 	{
-		String sql =  "select * from categoria order by id;";
+		String sql =  "select * from categoria order by nome asc;";
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
