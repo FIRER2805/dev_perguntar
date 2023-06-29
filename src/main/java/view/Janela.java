@@ -37,6 +37,7 @@ public class Janela {
 	private TelaPergunta telaPergunta = new TelaPergunta();
 	private TelaMinhasPerguntas telaMinhasPerguntas = new TelaMinhasPerguntas();
 	private TelaTrocarSenha TelaTrocarSenha = new TelaTrocarSenha();
+	private JMenuItem mntmMinhasPerguntas;
 
 	/**
 	 * Launch the application.
@@ -160,8 +161,20 @@ public class Janela {
 
 			}
 		});
+		
+		mntmMinhasPerguntas = new JMenuItem("Minhas Perguntas");
+		mntmMinhasPerguntas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				telaMinhasPerguntas.setVisible(true);
+				frame.setContentPane(telaMinhasPerguntas);
+				telaMinhasPerguntas.setUsuario(usuarioLogado);
+				frame.revalidate();
+			}
+		});
+		menuBar.add(mntmMinhasPerguntas);
 
-		mnConfig = new JMenu("Config");
+		mnConfig = new JMenu("Usuario");
 		menuBar.add(mnConfig);
 
 		mntmLogin = new JMenuItem("Login");
@@ -185,6 +198,7 @@ public class Janela {
 					usuarioLogado = telaLogin.logarUsuario();
 					mntmCriarPergunta.setVisible(true);
 					mntmPerfil.setVisible(true);
+					mntmSair.setVisible(true);
 					mntmCadastrar.setVisible(false);
 					mntmLogin.setVisible(false);
 
@@ -203,7 +217,8 @@ public class Janela {
 		mntmPerfil.setVisible(false);
 		mntmPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				telaPerfil.atualizarCampos(usuarioLogado);
 				telaPerfil.setVisible(true);
 				frame.setContentPane(telaPerfil);
 				frame.revalidate();
@@ -212,30 +227,6 @@ public class Janela {
 		});
 		mnConfig.add(mntmPerfil);
 		
-		telaPerfil.getBtnMinhasPerguntas().addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				
-				telaMinhasPerguntas.setVisible(true);
-				frame.setContentPane(telaMinhasPerguntas);
-				telaMinhasPerguntas.setUsuario(usuarioLogado);
-				frame.revalidate();
-				
-			}
-		});
-		
-		telaPerfil.getBtnTrocarSenha().addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				
-				
-				TelaTrocarSenha.setVisible(true);
-				frame.setContentPane(TelaTrocarSenha);
-				frame.revalidate();
-				
-			}
-		});
-
 		mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -267,12 +258,14 @@ public class Janela {
 		});
 
 		mntmSair = new JMenuItem("Sair");
+		mntmSair.setVisible(false);
 		mntmSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				usuarioLogado = null;
 				mntmCriarPergunta.setVisible(false);
 				mntmPerfil.setVisible(false);
+				mntmSair.setVisible(false);
 				mntmCadastrar.setVisible(true);
 				mntmLogin.setVisible(true);
 				telaLogin.limparCampos();
