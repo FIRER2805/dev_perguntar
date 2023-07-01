@@ -31,28 +31,14 @@ public class TelaLogin extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaLogin() {
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("right:default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(48dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default:grow"),},
-			new RowSpec[] {
-				RowSpec.decode("bottom:default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("top:default:grow"),}));
+		setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(48dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default:grow"), },
+				new RowSpec[] { RowSpec.decode("bottom:default:grow"), FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("top:default:grow"), }));
 
 		JLabel lblEmail = new JLabel("Email");
 		add(lblEmail, "3, 3, right, center");
@@ -63,7 +49,7 @@ public class TelaLogin extends JPanel {
 
 		JLabel lblSenha = new JLabel("Senha");
 		add(lblSenha, "3, 7, right, center");
-		
+
 		pFSenha = new JPasswordField();
 		add(pFSenha, "5, 7, fill, default");
 
@@ -81,11 +67,10 @@ public class TelaLogin extends JPanel {
 		usuario.setSenha(password);
 		validaCampos(usuario);
 		usuario = controller.login(usuario);
-		
-		if(usuario == null || usuario.getId() < 0) {
+
+		if (usuario == null || usuario.getId() < 0) {
 			throw new DevPerguntarException("Usuario ou Senha Invalido(s)");
 		}
-		
 
 		return usuario;
 	}
@@ -111,4 +96,5 @@ public class TelaLogin extends JPanel {
 			throw new DevPerguntarException(alerta);
 		}
 	}
+
 }

@@ -31,6 +31,7 @@ public class TelaCadastro extends JPanel {
 	public JButton getBtnCadastrar() {
 		return btnCadastrar;
 	}
+	
 
 	/**
 	 * Create the panel.

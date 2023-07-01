@@ -43,26 +43,16 @@ public class TelaHome extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaHome() {
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("right:default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:max(340dlu;default):grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default:grow"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow(9)"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				new RowSpec(RowSpec.CENTER, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("40dlu", false), Sizes.constant("50dlu", false)), 1),}));
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("right:default:grow"),
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:max(340dlu;default):grow"),
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default:grow"), },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow(9)"),
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						new RowSpec(RowSpec.CENTER, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("40dlu", false),
+								Sizes.constant("50dlu", false)), 1), }));
 
 		JLabel lblTitulo = new JLabel("Duvidas Recentes");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -77,9 +67,9 @@ public class TelaHome extends JPanel {
 			}
 		};
 		scrollPane.setViewportView(table);
-		
-				btnVizualizar = new JButton("Vizualizar");
-				add(btnVizualizar, "4, 10, center, center");
+
+		btnVizualizar = new JButton("Vizualizar");
+		add(btnVizualizar, "4, 10, center, center");
 
 		atualizarTable();
 

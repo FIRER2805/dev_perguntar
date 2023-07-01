@@ -48,7 +48,7 @@ public class TelaPesquisa extends JPanel {
 	private JComboBox cbxCategorias;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
-
+	
 	/**
 	 * Create the panel.
 	 */

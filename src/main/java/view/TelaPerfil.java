@@ -33,38 +33,19 @@ public class TelaPerfil extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaPerfil() {
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("right:default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("center:default"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default:grow"),},
-			new RowSpec[] {
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("top:default:grow"),}));
+		setLayout(new FormLayout(
+				new ColumnSpec[] { ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("left:default"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("center:default"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("left:default:grow"), },
+				new RowSpec[] { FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("top:default:grow"), }));
 
 		JLabel lblNewLabel = new JLabel("Perfil");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -72,17 +53,17 @@ public class TelaPerfil extends JPanel {
 
 		JLabel lblNewLabel_1 = new JLabel("Nome : ");
 		add(lblNewLabel_1, "3, 7");
-		
-				txtNome = new JTextField();
-				add(txtNome, "7, 7, 5, 1, fill, default");
-				txtNome.setColumns(10);
+
+		txtNome = new JTextField();
+		add(txtNome, "7, 7, 5, 1, fill, default");
+		txtNome.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("E-mail :");
 		add(lblNewLabel_2, "3, 9");
-		
-				txtEmail = new JTextField();
-				add(txtEmail, "7, 9, 5, 1, fill, default");
-				txtEmail.setColumns(10);
+
+		txtEmail = new JTextField();
+		add(txtEmail, "7, 9, 5, 1, fill, default");
+		txtEmail.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Senha :");
 		add(lblNewLabel_3, "3, 11");
@@ -93,19 +74,19 @@ public class TelaPerfil extends JPanel {
 				salvarEdicao();
 			}
 		});
-		
-				pFSenha = new JPasswordField();
-				add(pFSenha, "7, 11, 5, 1, fill, default");
+
+		pFSenha = new JPasswordField();
+		add(pFSenha, "7, 11, 5, 1, fill, default");
 		add(btnSalvarEdicao, "3, 15, 3, 1, left, fill");
-		
-				JButton btnExcluirConta = new JButton("Excluir Conta");
-				btnExcluirConta.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						excluirConta();
-					}
-				});
-				
-						add(btnExcluirConta, "11, 15, right, default");
+
+		JButton btnExcluirConta = new JButton("Excluir Conta");
+		btnExcluirConta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				excluirConta();
+			}
+		});
+
+		add(btnExcluirConta, "11, 15, right, default");
 
 	}
 
@@ -121,13 +102,13 @@ public class TelaPerfil extends JPanel {
 				// TODO editar usuario no Banco
 				// o usuarioEditado ja tem o Id e
 				// as imformações editadas ou anteriores
-				if (!uController.editarUsuario()) {
-					JOptionPane.showMessageDialog(null, "Falha ao Conectar ao Server");
-				}else {
+				if (uController.editarUsuario(userEditado)) {
 					atualizarCampos(userEditado);
-					JOptionPane.showMessageDialog(null, "Edição Executada Com Sucesso");	
+					JOptionPane.showMessageDialog(null, "Edição Executada Com Sucesso");
+				} else {
+					JOptionPane.showMessageDialog(null, "Falha ao Conectar ao Server");
 				}
-				
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Nenhum Campo Foi Editado");
 			}
@@ -182,10 +163,9 @@ public class TelaPerfil extends JPanel {
 
 	private void excluirConta() {
 		// TODO criar metodo para Excluir usuario do Banco
-		if(uController.excluirUsuario(userLogado.getId())) {
-			JOptionPane.showMessageDialog(null, "Exclusão Executada Com Sucesso");	
+		if (uController.excluirUsuario(userLogado.getId())) {
+			JOptionPane.showMessageDialog(null, "Exclusão Executada Com Sucesso");
 		}
-		
 
 	}
 }

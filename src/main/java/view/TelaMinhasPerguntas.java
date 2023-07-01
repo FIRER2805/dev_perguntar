@@ -29,8 +29,6 @@ public class TelaMinhasPerguntas extends JPanel {
 	private PerguntaController pCont = new PerguntaController();
 	private Usuario usuario;
 
-
-
 	/**
 	 * Create the panel.
 	 */
@@ -92,14 +90,14 @@ public class TelaMinhasPerguntas extends JPanel {
 		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
 	}
 
-	public void atualizarTable() {
+	public void atualizarTable(int id) {
 		limparTabela();
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-		perguntas = pCont.busca(usuario.getId());
+		perguntas = pCont.busca(id);
 
-		for (Pergunta p : this.perguntas) {
+		for (Pergunta p : perguntas) {
 
 			Object[] novaLinhaDaTabela = new Object[5];
 

@@ -19,4 +19,14 @@ public class UsuarioController {
 	{
 		return bo.login(u);
 	}
+
+	public boolean editarUsuario(Usuario userEditado) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean excluirUsuario(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
