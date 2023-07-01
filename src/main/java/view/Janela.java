@@ -23,21 +23,19 @@ public class Janela {
 	private JMenuItem mntmCriarPergunta;
 	private JMenu mnConfig;
 	private JMenuItem mntmSair;
-	private JTextField textField;
 	private JMenuItem mntmCadastrar;
 	private JMenuItem mntmLogin;
 	private Usuario usuarioLogado;
 	private JMenuItem mntmPerfil;
-	private view.TelaCadastro telaCadastro = new TelaCadastro();
-	private view.TelaLogin telaLogin = new TelaLogin();
-	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
-	private TelaPerfil telaPerfil = new TelaPerfil();
-	private TelaPesquisa telaPesquisa = new TelaPesquisa();
-	private TelaHome telaHome = new TelaHome();
-	private TelaPergunta telaPergunta = new TelaPergunta();
-	private TelaMinhasPerguntas telaMinhasPerguntas = new TelaMinhasPerguntas();
-	private TelaTrocarSenha TelaTrocarSenha = new TelaTrocarSenha();
 	private JMenuItem mntmMinhasPerguntas;
+	private view.TelaCadastro telaCadastro = new TelaCadastro();
+	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
+	private TelaHome telaHome = new TelaHome();
+	private view.TelaLogin telaLogin = new TelaLogin();
+	private TelaMinhasPerguntas telaMinhasPerguntas = new TelaMinhasPerguntas();
+	private TelaPerfil telaPerfil = new TelaPerfil();
+	private TelaPergunta telaPergunta = new TelaPergunta();
+	private TelaPesquisa telaPesquisa = new TelaPesquisa();
 
 	/**
 	 * Launch the application.
@@ -163,6 +161,7 @@ public class Janela {
 		});
 		
 		mntmMinhasPerguntas = new JMenuItem("Minhas Perguntas");
+		mntmMinhasPerguntas.setVisible(false);
 		mntmMinhasPerguntas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -198,6 +197,7 @@ public class Janela {
 					usuarioLogado = telaLogin.logarUsuario();
 					mntmCriarPergunta.setVisible(true);
 					mntmPerfil.setVisible(true);
+					mntmMinhasPerguntas.setVisible(true);
 					mntmSair.setVisible(true);
 					mntmCadastrar.setVisible(false);
 					mntmLogin.setVisible(false);
@@ -266,6 +266,7 @@ public class Janela {
 				mntmCriarPergunta.setVisible(false);
 				mntmPerfil.setVisible(false);
 				mntmSair.setVisible(false);
+				mntmMinhasPerguntas.setVisible(false);
 				mntmCadastrar.setVisible(true);
 				mntmLogin.setVisible(true);
 				telaLogin.limparCampos();

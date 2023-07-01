@@ -41,7 +41,9 @@ public class TelaMinhasPerguntas extends JPanel {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),},
 			new RowSpec[] {
@@ -52,27 +54,29 @@ public class TelaMinhasPerguntas extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				new RowSpec(RowSpec.CENTER, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("100dlu", false), Sizes.constant("120dlu", false)), 0),
+				RowSpec.decode("max(50dlu;min):grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				new RowSpec(RowSpec.CENTER, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("100dlu", false), Sizes.constant("120dlu", false)), 0),
+				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("fill:default:grow"),}));
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
 		
 		JLabel lblNewLabel = new JLabel("Minhas Perguntas");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblNewLabel, "4, 4, center, default");
+		add(lblNewLabel, "4, 4, 5, 1, center, default");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "4, 8, 1, 3, fill, fill");
+		add(scrollPane, "4, 8, 5, 1, fill, fill");
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		btnVizualizar = new JButton("Vizualizar");
-		add(btnVizualizar, "6, 8");
-		
 		JButton btnExcluir = new JButton("Excluir");
-		add(btnExcluir, "6, 10");
+		add(btnExcluir, "4, 12, right, default");
+		
+		btnVizualizar = new JButton("Vizualizar");
+		add(btnVizualizar, "8, 12, left, default");
 
 	}
 	
