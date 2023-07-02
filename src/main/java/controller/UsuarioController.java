@@ -20,13 +20,12 @@ public class UsuarioController {
 		return bo.login(u);
 	}
 
-	public boolean editarUsuario(Usuario userEditado) {
-		// TODO Auto-generated method stub
-		return false;
+	public int editarUsuario(Usuario userEditado, String emailAntigo) throws DevPerguntarException {
+		return bo.atualizar(userEditado, emailAntigo);
 	}
 
-	public boolean excluirUsuario(int id) {
+	public int excluirUsuario(int id) {
 		// TODO Auto-generated method stub
-		return false;
+		return bo.excluir(null);
 	}
 }

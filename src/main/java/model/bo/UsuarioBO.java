@@ -10,32 +10,43 @@ public class UsuarioBO {
 	
 	public int cadastrar(Usuario u) throws DevPerguntarException
 	{
-		int retorno = -1;
-		if(validarCampos(u)) {
-			retorno =  dao.inserir(u);
-		}
-		
-		return retorno;
+		this.validarCampos(u);
+		return dao.inserir(u);
 	}
 	
-	public boolean validarCampos(Usuario u) throws DevPerguntarException {
-		boolean retorno = true;
-		
+	private void validarCampos(Usuario u) throws DevPerguntarException {
 		if(!dao.eMailDisponivel(u.geteMail())){
 			throw new DevPerguntarException("Email Indisponivel");
 		}
 		if(u.getNome().trim().length() < 3 ) {
 			throw new DevPerguntarException("Nome invalido");
 		}
-		
-		return retorno;
-		
 	}
 	
-	
+	// outra ideia é verificar no banco se mudou o email 
+	// e colocar esta confimação no metodo acima tendo assim apenas um método
+	private void validarCampos(Usuario u, String emailAntigo) throws DevPerguntarException {
+		if(!dao.eMailDisponivel(u.geteMail()) && !u.geteMail().equals(emailAntigo)){
+			throw new DevPerguntarException("Email Indisponivel");
+		}
+		if(u.getNome().trim().length() < 3 ) {
+			throw new DevPerguntarException("Nome invalido");
+		}
+	}
 	
 	public Usuario login(Usuario u)
 	{
 		return dao.login(u);
+	}
+	
+	public int atualizar(Usuario u, String emailAntigo) throws DevPerguntarException
+	{
+		validarCampos(u,emailAntigo);
+		return dao.atualizar(u);
+	}
+	
+	public int excluir(Usuario u)
+	{
+		return dao.excluir(u.getId());
 	}
 }

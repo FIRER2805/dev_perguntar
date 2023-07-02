@@ -101,7 +101,7 @@ public class UsuarioDAO {
 	
 	public int excluir(int id) 
 	{
-		String sql =  "delete from usuario where id = ?";
+		String sql =  "update from usuario set ativo = 0 where id = ?";
 		int registrosAfetados = 0;
 		Connection conn = Banco.getConnection();
 		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
@@ -181,5 +181,12 @@ public class UsuarioDAO {
 			Banco.closeConnection(conn);
 		}
 		return retorno;
+	}
+	
+	public boolean mudouEmail(Usuario u)
+	{
+		// TODO verificar se o email novo é igual ao que esta no banco ou não
+		// para a atualização de usuario
+		return false;
 	}
 }

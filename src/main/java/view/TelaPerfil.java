@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,8 +19,6 @@ import com.jgoodies.forms.layout.RowSpec;
 import controller.UsuarioController;
 import model.exception.DevPerguntarException;
 import model.vo.Usuario;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class TelaPerfil extends JPanel {
 	Usuario userLogado = new Usuario();
@@ -97,12 +97,12 @@ public class TelaPerfil extends JPanel {
 			userEditado.setId(userLogado.getId());
 			userEditado.setNome(txtNome.getText());
 			userEditado.seteMail(txtEmail.getText());
-			userEditado.setSenha(pFSenha.getPassword().toString());
+			userEditado.setSenha(new String(pFSenha.getPassword()));
 			if (validarEdicao(userEditado)) {
 				// TODO editar usuario no Banco
 				// o usuarioEditado ja tem o Id e
 				// as imformações editadas ou anteriores
-				if (uController.editarUsuario(userEditado)) {
+				if (uController.editarUsuario(userEditado, userLogado.geteMail()) > 0) {
 					atualizarCampos(userEditado);
 					JOptionPane.showMessageDialog(null, "Edição Executada Com Sucesso");
 				} else {
@@ -163,8 +163,10 @@ public class TelaPerfil extends JPanel {
 
 	private void excluirConta() {
 		// TODO criar metodo para Excluir usuario do Banco
-		if (uController.excluirUsuario(userLogado.getId())) {
+		if (uController.excluirUsuario(userLogado.getId()) > 0) {
 			JOptionPane.showMessageDialog(null, "Exclusão Executada Com Sucesso");
+		} else {
+			JOptionPane.showMessageDialog(null, "Erro ao excluir usuario");
 		}
 
 	}

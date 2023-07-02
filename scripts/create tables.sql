@@ -78,6 +78,3 @@ insert into resposta(conteudo, id_pergunta, id_usuario) values('resposta1', 1, 1
 insert into resposta(conteudo, id_pergunta, id_usuario, id_resposta) values('resposta2', 1, 1, 1);
 
 select * from resposta;
-
-ALTER TABLE `db_dev_perguntar`.`resposta` 
-ADD COLUMN `solucao` TINYINT NULL DEFAULT 0 AFTER `id_resposta`;
