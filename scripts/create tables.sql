@@ -22,7 +22,7 @@ CREATE TABLE categoria
 CREATE TABLE pergunta
 (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(50) NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
     conteudo TEXT NOT NULL,
     data_pergunta DATETIME NOT NULL,
     data_resolucao DATETIME NULL,

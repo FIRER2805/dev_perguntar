@@ -70,7 +70,6 @@ public class Janela {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setContentPane(telaHome);
-
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		menuBar.setVisible(true);
@@ -93,7 +92,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					telaPergunta.atualizarCampos(telaHome.resgatarPergunta());
+					telaPergunta.atualizarCampos(telaHome.resgatarPergunta(), usuarioLogado);
 					telaPergunta.setPergunta(telaHome.resgatarPergunta());
 					telaPergunta.preencherTabela();
 					telaPergunta.setVisible(true);
@@ -125,7 +124,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					telaPergunta.atualizarCampos(telaPesquisa.resgatarPergunta());
+					telaPergunta.atualizarCampos(telaPesquisa.resgatarPergunta(), usuarioLogado);
 					telaPergunta.setVisible(true);
 					frame.setContentPane(telaPergunta);
 					frame.revalidate();

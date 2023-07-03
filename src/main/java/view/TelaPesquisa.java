@@ -48,6 +48,7 @@ public class TelaPesquisa extends JPanel {
 	private JComboBox cbxCategorias;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
+	private JButton btnGerarExcel;
 	
 	/**
 	 * Create the panel.
@@ -151,9 +152,12 @@ public class TelaPesquisa extends JPanel {
 			}
 		};
 		scrollPane.setViewportView(table);
-
-		btnVisualizar = new JButton("visualizar");
-		add(btnVisualizar, "3, 13, 11, 1, center, center");
+				
+				btnGerarExcel = new JButton("Gerar Excel");
+				add(btnGerarExcel, "3, 13, 3, 1, left, default");
+		
+				btnVisualizar = new JButton("visualizar");
+				add(btnVisualizar, "13, 13, center, center");
 		atualizarCampos();
 	}
 
