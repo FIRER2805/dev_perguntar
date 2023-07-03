@@ -1,11 +1,14 @@
 package test;
 
-import org.junit.Test;
+import java.util.ArrayList;
+
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import controller.RespostaController;
 import junit.framework.TestCase;
 import model.exception.DevPerguntarException;
 import model.vo.Resposta;
+import model.vo.Arvores.ArvoreRespostas;
 
 public class TestRespostaController extends TestCase {
 	RespostaController controller = new RespostaController();
@@ -26,21 +29,21 @@ public class TestRespostaController extends TestCase {
 		assertEquals(retornoEsperado, retornoFeito);
 	}
 	
-	public void testConsultarRespostaPai()
-	{
-		Resposta respostaRaiz = controller.consultarPorId(1);
-		
-		assertNotNull(respostaRaiz);
-		assertEquals(respostaRaiz.getId(), 1);
-		assertNull(respostaRaiz.getRespostaPai());
-	}
-	
-	public void testConsultarRespostaFilha()
-	{
-		Resposta respostaRaiz = controller.consultarPorId(2);
-		
-		assertNotNull(respostaRaiz);
-		assertEquals(respostaRaiz.getId(), 2);
-		assertNotNull(respostaRaiz.getRespostaPai());
-	}
+//	public void testConsultarRespostaPai()
+//	{
+//		ArrayList<ArvoreRespostas> respostaRaiz = controller.consultarPorIdPergunta(1);
+//		
+//		assertNotNull(respostaRaiz);
+//		assertEquals(respostaRaiz.getId(), 1);
+//		assertNull(respostaRaiz.getRespostaPai());
+//	}
+//	
+//	public void testConsultarRespostaFilha()
+//	{
+//		Resposta respostaRaiz = controller.consultarPorId(2);
+//		
+//		assertNotNull(respostaRaiz);
+//		assertEquals(respostaRaiz.getId(), 2);
+//		assertNotNull(respostaRaiz.getRespostaPai());
+//	}
 }

@@ -90,11 +90,11 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					telaPergunta.atualizarCampos(telaHome.resgatarPergunta(), usuarioLogado);
+					telaPergunta.atualizarCampos(telaHome.resgatarPergunta()/*, usuarioLogado*/);
 					telaPergunta.setPergunta(telaHome.resgatarPergunta());
-					telaPergunta.preencherTabela();
 					telaPergunta.setVisible(true);
 					frame.setContentPane(new JScrollPane(telaPergunta));
+					telaPergunta.mostrarPergutas();
 					frame.revalidate();
 				} catch (DevPerguntarException erro) {
 					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -121,7 +121,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					telaPergunta.atualizarCampos(telaPesquisa.resgatarPergunta(), usuarioLogado);
+					telaPergunta.atualizarCampos(telaPesquisa.resgatarPergunta()/*, usuarioLogado*/);
 					telaPergunta.setVisible(true);
 					frame.setContentPane(telaPergunta);
 					frame.revalidate();

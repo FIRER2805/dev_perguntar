@@ -1,5 +1,9 @@
 package model.bo;
 
+import java.util.List;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import model.dao.RespostaDAO;
 import model.exception.DevPerguntarException;
 import model.vo.Resposta;
@@ -14,7 +18,7 @@ public class RespostaBO {
 		return  respostaDAO.inserir(resposta);
 	}
 
-	public Resposta consultarPorId(int id) {
-		return respostaDAO.consultarPorId(id);
+	public List<DefaultMutableTreeNode> consultarPorIdPergunta(int idPergunta) {
+		return respostaDAO.montaArvoresResposta(idPergunta);
 	}
 }

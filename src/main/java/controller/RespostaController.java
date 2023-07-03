@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.List;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import model.bo.RespostaBO;
 import model.exception.DevPerguntarException;
 import model.vo.Resposta;
@@ -12,8 +16,8 @@ public class RespostaController {
 		return respostaBO.inserir(resposta);
 	}
 	
-	public Resposta consultarPorId(int id)
+	public List<DefaultMutableTreeNode> consultarPorIdPergunta(int idPergunta)
 	{
-		return respostaBO.consultarPorId(id);
+		return respostaBO.consultarPorIdPergunta(idPergunta);
 	}
 }

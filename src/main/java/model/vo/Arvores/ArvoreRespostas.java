@@ -1,5 +1,9 @@
 package model.vo.Arvores;
 
+import javax.swing.event.TreeModelListener;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
+
 import model.vo.Resposta;
 
 public class ArvoreRespostas {
@@ -12,6 +16,7 @@ public class ArvoreRespostas {
 	public ArvoreRespostas(Resposta resposta) {
 		NodeResposta novaRoot = new NodeResposta(resposta);
 		this.root = novaRoot;
+		
 	}
 
 	public void percorreArvore() {
