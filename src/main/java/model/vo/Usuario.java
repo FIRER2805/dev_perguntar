@@ -5,6 +5,9 @@ public class Usuario {
 	private String nome;
 	private String eMail;
 	private String senha;
+	private int numPergunta;
+	private int numResposta;
+	private int numsolucao;
 	
 	public Usuario() {
 		super();

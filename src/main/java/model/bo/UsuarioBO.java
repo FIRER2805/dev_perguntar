@@ -1,7 +1,10 @@
 package model.bo;
 
+import java.util.ArrayList;
+
 import model.dao.UsuarioDAO;
 import model.exception.DevPerguntarException;
+import model.vo.PesquisaUsuario;
 import model.vo.Usuario;
 
 public class UsuarioBO {
@@ -48,5 +51,10 @@ public class UsuarioBO {
 	public int excluir(Usuario u)
 	{
 		return dao.excluir(u.getId());
+	}
+
+	public boolean pesquisarUsuario(ArrayList<Usuario> usuarios, PesquisaUsuario pesquisaUsuario) {
+
+		return dao.pesquisarUsuario(usuarios, pesquisaUsuario);
 	}
 }

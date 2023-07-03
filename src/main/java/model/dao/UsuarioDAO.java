@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import model.Banco;
+import model.vo.PesquisaUsuario;
+import model.vo.Produto;
 import model.vo.Usuario;
 
 public class UsuarioDAO {
@@ -187,6 +191,81 @@ public class UsuarioDAO {
 	{
 		// TODO verificar se o email novo é igual ao que esta no banco ou não
 		// para a atualização de usuario
+		return false;
+	}
+
+	public boolean pesquisarUsuario(ArrayList<Usuario> usuarios, PesquisaUsuario pesquisaUsuario) {
+		
+		
+		
+		
+		String sqlaaa =  "select * from categoria order by nome asc;";
+		
+		
+String sql ="select * from produto where ";
+		
+		String filtro = "";
+		if(pesquisaUsuario.getBusca() != null) {
+			filtro += "nome like '%" + pesquisaUsuario.getBusca() + "%' ";
+		}
+		if(!filtro.isEmpty()) {
+			filtro += "and ";
+		}
+		if(pesquisa.getCategoria() != null) {
+			filtro += "categoria = '" + pesquisa.getCategoria() + "'";
+		}
+		sql += filtro;
+		
+		ArrayList<Produto> produtos = new ArrayList<Produto>();
+		Connection conn = Banco.getConnection();
+		Statement pstmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		try {
+			resultado = pstmt.executeQuery(sql);
+			while(resultado.next()){
+				
+				Produto produto = montaProduto(resultado);
+				
+				produtos.add(produto);
+			}
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		finally{
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(pstmt);
+			Banco.closeConnection(conn);
+		}
+	
+		return produtos;
+		
+		String teste = ""
+				+ "select\n"
+				+ "u.nome,\n"
+				+ "count(pergunta.id) as qtdpergunta,\n"
+				+ "count(resposta.id) as qtdresposta,\n"
+				+ "count((select id from resposta where resposta.id_usuario = u.id and solucao = 1)) as qtdsolucao\n"
+				+ "from\n"
+				+ "usuario u\n"
+				+ "left join pergunta on\n"
+				+ "u.id = pergunta.id_usuario\n"
+				+ "left join resposta on\n"
+				+ "u.id = resposta.id_usuario\n"
+				+ "where\n"
+				+ "qtdpergunta > 1 and\n"
+				+ "qtdresposta > 1 and\n"
+				+ "qtdsolucao > 1\n"
+				+ "group by\n"
+				+ "u.nome";
+		
+		
+		
+		
+		
+		
+		
+		
 		return false;
 	}
 }

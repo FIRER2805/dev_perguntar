@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.bo.UsuarioBO;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
+import model.vo.PesquisaUsuario;
 import model.vo.Usuario;
 
 public class UsuarioController {
@@ -25,7 +26,13 @@ public class UsuarioController {
 	}
 
 	public int excluirUsuario(Usuario u) {
-		// TODO Auto-generated method stub
+		
+		
 		return bo.excluir(u);
+	}
+
+	public boolean pesquisarUsuario(ArrayList<Usuario> usuarios, PesquisaUsuario pesquisaUsuario) {
+
+		return bo.pesquisarUsuario(usuarios, pesquisaUsuario);
 	}
 }

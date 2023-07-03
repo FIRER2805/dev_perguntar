@@ -3,22 +3,29 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import controller.PerguntaController;
 import controller.UsuarioController;
 import model.exception.DevPerguntarException;
+import model.vo.Pergunta;
 import model.vo.Usuario;
+import javax.swing.JSeparator;
 
 public class TelaPerfil extends JPanel {
 	private Usuario userLogado = new Usuario();
@@ -29,80 +36,126 @@ public class TelaPerfil extends JPanel {
 	private JTextField txtEmail;
 	private JPasswordField pFSenha;
 	private boolean edicaoComSenha = false;
+	private JScrollPane scrollPane;
+	private JTable table;
+	private JButton btnExcluir;
+	private JButton btnVizualizar;
+	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
+	private List<Pergunta> perguntas;
+	private PerguntaController pCont = new PerguntaController();
+	private JSeparator separator;
+	private JLabel lblNewLabel_4;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaPerfil() {
-		setLayout(new FormLayout(
-				new ColumnSpec[] { ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("left:default"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("center:default"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("left:default:grow"), },
-				new RowSpec[] { FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("top:default:grow"), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(75dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(137dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("center:max(137dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:max(120dlu;min)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		JLabel lblNewLabel = new JLabel("Perfil");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblNewLabel, "3, 3, 7, 1, center, default");
+		add(lblNewLabel, "3, 3, 5, 1, center, default");
 
 		JLabel lblNewLabel_1 = new JLabel("Nome : ");
 		add(lblNewLabel_1, "3, 7");
 
 		txtNome = new JTextField();
-		add(txtNome, "7, 7, 5, 1, fill, default");
+		add(txtNome, "5, 7, 3, 1, fill, default");
 		txtNome.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("E-mail :");
 		add(lblNewLabel_2, "3, 9");
 
 		txtEmail = new JTextField();
-		add(txtEmail, "7, 9, 5, 1, fill, default");
+		add(txtEmail, "5, 9, 3, 1, fill, default");
 		txtEmail.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Senha :");
 		add(lblNewLabel_3, "3, 11");
 
-		btnSalvarEdicao = new JButton("Salvar Edição");
-		btnSalvarEdicao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				salvarEdicao();
-			}
-		});
-
 		pFSenha = new JPasswordField();
-		add(pFSenha, "7, 11, 5, 1, fill, default");
-		add(btnSalvarEdicao, "3, 15, 3, 1, left, fill");
+		add(pFSenha, "5, 11, 3, 1, fill, default");
 
 		btnExcluirConta = new JButton("Excluir Conta");
+		add(btnExcluirConta, "3, 13, 3, 1, left, default");
 
-		add(btnExcluirConta, "11, 15, right, default");
+		btnSalvarEdicao = new JButton("Salvar Edição");
+		add(btnSalvarEdicao, "7, 13, right, fill");
 
+		separator = new JSeparator();
+		add(separator, "1, 17, 9, 1");
+
+		lblNewLabel_4 = new JLabel("Minhas Perguntas");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		add(lblNewLabel_4, "3, 19, 5, 1, center, default");
+
+		scrollPane = new JScrollPane();
+		add(scrollPane, "3, 23, 5, 1, fill, fill");
+
+		table = new JTable();
+		scrollPane.setViewportView(table);
+
+		btnExcluir = new JButton("Excluir Pergunta");
+		add(btnExcluir, "3, 25, left, default");
+
+		btnVizualizar = new JButton("Vizualizar");
+		add(btnVizualizar, "7, 25, right, default");
+		limparTabela();
+	}
+
+	public JButton getBtnSalvarEdicao() {
+		return btnSalvarEdicao;
 	}
 
 	public JButton getBtnExcluirConta() {
 		return btnExcluirConta;
 	}
 
-	public Usuario getUserLogado() {
-		return userLogado;
+	public boolean excluirConta() {
+		boolean deuBom = false;
+		if (uController.excluirUsuario(userLogado) > 0) {
+			deuBom = true;
+		}
+		return deuBom;
 	}
 
-	public void setUserLogado(Usuario userLogado) {
-		this.userLogado = userLogado;
-	}
-
-	public UsuarioController getuController() {
-		return uController;
-	}
-
-	public void salvarEdicao() {
+	public Usuario salvarEdicao() {
+		Usuario userRetornado = new Usuario();
 		try {
 			validarCampos();
 			Usuario userEditado = new Usuario();
@@ -111,14 +164,13 @@ public class TelaPerfil extends JPanel {
 			userEditado.seteMail(txtEmail.getText());
 			userEditado.setSenha(new String(pFSenha.getPassword()));
 			if (validarEdicao(userEditado)) {
-				// TODO editar usuario no Banco
-				// o usuarioEditado ja tem o Id e
-				// as imformações editadas ou anteriores
 				if (uController.editarUsuario(userEditado, userLogado.geteMail()) > 0) {
 					atualizarCampos(userEditado);
 					JOptionPane.showMessageDialog(null, "Edição Executada Com Sucesso");
+					userRetornado = userEditado;
 				} else {
 					JOptionPane.showMessageDialog(null, "Falha ao Conectar ao Server");
+					userRetornado = userLogado;
 				}
 
 			} else {
@@ -127,7 +179,7 @@ public class TelaPerfil extends JPanel {
 		} catch (DevPerguntarException erro) {
 			JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
 		}
-
+		return userRetornado;
 	}
 
 	public boolean validarEdicao(Usuario userEditado) {
@@ -171,5 +223,54 @@ public class TelaPerfil extends JPanel {
 		txtEmail.setText(user.geteMail());
 		pFSenha.setText(user.getSenha());
 
+		atualizarTable(user.getId());
 	}
+
+	
+
+	public void atualizarTable(int id) {
+		limparTabela();
+
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+		perguntas = pCont.busca(id);
+
+		for (Pergunta p : perguntas) {
+
+			Object[] novaLinhaDaTabela = new Object[5];
+
+			novaLinhaDaTabela[0] = p.getTitulo();
+			novaLinhaDaTabela[1] = p.getData();
+			novaLinhaDaTabela[2] = p.getDataResolucao() == null ? "Em Aberto" : "Resolvido";
+			novaLinhaDaTabela[3] = p.getUsuario().getNome();
+			novaLinhaDaTabela[4] = p.getCategoria().getNome();
+
+			model.addRow(novaLinhaDaTabela);
+		}
+
+	}
+	
+	private void limparTabela() {
+		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
+	}
+
+	public Pergunta resgatarPergunta() throws DevPerguntarException {
+
+		int linhaSelecionada = table.getSelectedRow();
+		if (linhaSelecionada == -1) {
+			throw new DevPerguntarException("Selecione uma Pergunta");
+		}
+		Pergunta pergunta = perguntas.get(linhaSelecionada);
+		return pergunta;
+
+	}
+
+	public void excluirPerguntaButao() {
+
+//		PerguntaController pCont = new PerguntaController();	
+//		Pergunta p = new Pergunta();
+//		//TODO criar metodo Excluir
+////		pCont.excluir(p);
+	}
+
 }

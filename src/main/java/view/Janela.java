@@ -28,12 +28,10 @@ public class Janela {
 	private JMenuItem mntmLogin;
 	private Usuario usuarioLogado;
 	private JMenuItem mntmPerfil;
-	private JMenuItem mntmMinhasPerguntas;
 	private view.TelaCadastro telaCadastro = new TelaCadastro();
 	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
 	private TelaHome telaHome = new TelaHome();
 	private view.TelaLogin telaLogin = new TelaLogin();
-	private TelaMinhasPerguntas telaMinhasPerguntas = new TelaMinhasPerguntas();
 	private TelaPerfil telaPerfil = new TelaPerfil();
 	private TelaPergunta telaPergunta = new TelaPergunta();
 	private TelaPesquisa telaPesquisa = new TelaPesquisa();
@@ -99,8 +97,7 @@ public class Janela {
 					frame.setContentPane(new JScrollPane(telaPergunta));
 					frame.revalidate();
 				} catch (DevPerguntarException erro) {
-					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção",
-							JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -109,7 +106,7 @@ public class Janela {
 		mntmPesquisa = new JMenuItem("Pesquisa");
 		mntmPesquisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaPesquisa.atualizarCampos();
 				telaPesquisa.setVisible(true);
 				frame.setContentPane(telaPesquisa);
@@ -118,7 +115,7 @@ public class Janela {
 			}
 		});
 		menuBar.add(mntmPesquisa);
-		
+
 		telaPesquisa.getBtnVisualizar().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -129,8 +126,7 @@ public class Janela {
 					frame.setContentPane(telaPergunta);
 					frame.revalidate();
 				} catch (DevPerguntarException erro) {
-					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção",
-							JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -141,8 +137,7 @@ public class Janela {
 		mntmCriarPergunta.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
 				telaCriacaoDePergunta.atualizarCampos();
 				telaCriacaoDePergunta.setVisible(true);
 				frame.setContentPane(new JScrollPane(telaCriacaoDePergunta));
@@ -160,20 +155,6 @@ public class Janela {
 
 			}
 		});
-		
-		mntmMinhasPerguntas = new JMenuItem("Minhas Perguntas");
-		mntmMinhasPerguntas.setVisible(false);
-		mntmMinhasPerguntas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				telaMinhasPerguntas.atualizarTable(usuarioLogado.getId());
-				telaMinhasPerguntas.setUsuario(usuarioLogado);
-				telaMinhasPerguntas.setVisible(true);
-				frame.setContentPane(telaMinhasPerguntas);
-				frame.revalidate();
-			}
-		});
-		menuBar.add(mntmMinhasPerguntas);
 
 		mnConfig = new JMenu("Usuario");
 		menuBar.add(mnConfig);
@@ -199,7 +180,6 @@ public class Janela {
 					usuarioLogado = telaLogin.logarUsuario();
 					mntmCriarPergunta.setVisible(true);
 					mntmPerfil.setVisible(true);
-					mntmMinhasPerguntas.setVisible(true);
 					mntmSair.setVisible(true);
 					mntmCadastrar.setVisible(false);
 					mntmLogin.setVisible(false);
@@ -219,7 +199,7 @@ public class Janela {
 		mntmPerfil.setVisible(false);
 		mntmPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				telaPerfil.atualizarCampos(usuarioLogado);
 				telaPerfil.setVisible(true);
 				frame.setContentPane(telaPerfil);
@@ -228,7 +208,16 @@ public class Janela {
 			}
 		});
 		mnConfig.add(mntmPerfil);
-		
+
+		telaPerfil.getBtnSalvarEdicao().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				usuarioLogado = telaPerfil.salvarEdicao();
+
+			}
+		});
+
 		mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -264,42 +253,35 @@ public class Janela {
 		mntmSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				usuarioLogado = null;
-				mntmCriarPergunta.setVisible(false);
-				mntmPerfil.setVisible(false);
-				mntmSair.setVisible(false);
-				mntmMinhasPerguntas.setVisible(false);
-				mntmCadastrar.setVisible(true);
-				mntmLogin.setVisible(true);
-				telaLogin.limparCampos();
-				telaLogin.setVisible(true);
-				frame.setContentPane(telaLogin);
-				frame.revalidate();
+				trocarTelasAoSair();
 
 			}
 		});
 		mnConfig.add(mntmSair);
-		
+
 		telaPerfil.getBtnExcluirConta().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (telaPerfil.getuController().excluirUsuario(telaPerfil.getUserLogado()) > 0) {
+				if (telaPerfil.excluirConta()) {
 					JOptionPane.showMessageDialog(null, "Exclusão Executada Com Sucesso");
-					usuarioLogado = null;
-					telaHome.setVisible(true);
-					telaPerfil.setVisible(false);
-					mntmCriarPergunta.setVisible(false);
-					mntmMinhasPerguntas.setVisible(false);
-					mntmCadastrar.setVisible(true);
-					mntmLogin.setVisible(true);
-					mntmPerfil.setVisible(false);
-					mntmSair.setVisible(false);
-					frame.setContentPane(telaHome);
-					frame.revalidate();
+					trocarTelasAoSair();
 				} else {
 					JOptionPane.showMessageDialog(null, "Erro ao excluir usuario");
 				}
 			}
 		});
+	}
+
+	public void trocarTelasAoSair() {
+		usuarioLogado = null;
+		mntmCriarPergunta.setVisible(false);
+		mntmPerfil.setVisible(false);
+		mntmSair.setVisible(false);
+		mntmCadastrar.setVisible(true);
+		mntmLogin.setVisible(true);
+		telaLogin.limparCampos();
+		telaLogin.setVisible(true);
+		frame.setContentPane(telaLogin);
+		frame.revalidate();
 	}
 
 }
