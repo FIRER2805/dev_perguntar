@@ -12,21 +12,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 import controller.RespostaController;
 import model.dao.RespostaDAO;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Resposta;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
+import model.vo.Usuario;
 
 public class TelaPergunta extends JPanel {
 	
+	Usuario usuarioLogado = new Usuario();
 	private int idPergunta;
 	private Pergunta pergunta;
 	private JLabel lblAutor;
@@ -37,7 +39,7 @@ public class TelaPergunta extends JPanel {
 	private JLabel lblDtResolucao;
 	private JLabel lblSuaResposta;
 	private JButton btnPublicar;
-	private JTable table;
+	private JTable tableRespostas;
 	private ArrayList<Resposta> respostas;
 	private String[] nomesColunas = {"respostas"};
 	private RespostaDAO respostaDAO;
@@ -90,11 +92,11 @@ public class TelaPergunta extends JPanel {
 
 		lblTitulo = new JLabel("Titulo : ");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblTitulo, "3, 5, fill, top");
+		add(lblTitulo, "3, 5, 3, 1, fill, top");
 		
 				textADescricao = new JTextArea();
 				textADescricao.setEditable(false);
-				add(textADescricao, "3, 7, 3, 1");
+				add(textADescricao, "3, 7, 3, 1, fill, default");
 
 		lblDtCriacao = new JLabel("Data de Criação :");
 		add(lblDtCriacao, "3, 9, fill, fill");
@@ -128,13 +130,13 @@ public class TelaPergunta extends JPanel {
 				preencherTabela();
 		}});
 		
-		table = new JTable() {
+		tableRespostas = new JTable() {
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false;
 			}
 		};
 		
-		add(table, "3, 17, 3, 1, fill, fill");
+		add(tableRespostas, "3, 17, 3, 1, fill, fill");
 		
 		btnMarcarResolucao = new JButton("Marcar Resposta Como Resolução");
 		add(btnMarcarResolucao, "3, 19, 3, 1, center, default");
@@ -152,8 +154,16 @@ public class TelaPergunta extends JPanel {
 		this.pergunta = pergunta;
 	}
 
-	public void atualizarCampos(Pergunta pergunta) {
+	public void atualizarCampos(Pergunta pergunta, Usuario userLogado) {
 		idPergunta = pergunta.getId();
+		
+		if(userLogado != null) {
+			if(pergunta.getUsuario().getId() == userLogado.getId()) {
+				btnMarcarResolucao.setVisible(true);	
+			}
+		}else {
+			btnMarcarResolucao.setVisible(false);
+		}
 		
 		// autor categoria titulo descricao data
 		lblAutor.setText("Autor : " + pergunta.getUsuario().getNome());
@@ -173,7 +183,7 @@ public class TelaPergunta extends JPanel {
 		
 		limparTabela();
 		
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		DefaultTableModel model = (DefaultTableModel) tableRespostas.getModel();
 
 
 		for (Resposta r : respostas) {
@@ -188,7 +198,7 @@ public class TelaPergunta extends JPanel {
 	}
 	
 	private void limparTabela() {
-		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
+		tableRespostas.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
 	}
 	
 	
