@@ -14,16 +14,18 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 import controller.RespostaController;
 import model.dao.RespostaDAO;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Resposta;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
 
 public class TelaPergunta extends JPanel {
 	
@@ -43,6 +45,7 @@ public class TelaPergunta extends JPanel {
 	private ArrayList<Resposta> respostas;
 	private String[] nomesColunas = {"respostas"};
 	private RespostaDAO respostaDAO;
+	private ArrayList<DefaultMutableTreeNode> arvoresResposta;
 
 	/**
 	 * Create the panel.
@@ -122,7 +125,7 @@ public class TelaPergunta extends JPanel {
 				} catch (DevPerguntarException e1) {
 					JOptionPane.showMessageDialog(null,e1.getMessage(), "Erro:",JOptionPane.ERROR_MESSAGE);
 				}
-				preencherTabela();
+				//preencherTabela();
 		}});
 		
 		lblNewLabel = new JLabel("Respostas");
@@ -165,24 +168,24 @@ public class TelaPergunta extends JPanel {
 		}
 	}
 	
-	public void preencherTabela() {
-		respostas = respostaDAO.buscarTodos(idPergunta);
-		
-		limparTabela();
-		
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-
-
-		for (Resposta r : respostas) {
-
-			Object[] novaLinhaDaTabela = new Object[1];
-
-			novaLinhaDaTabela[0] = r.getConteudo();
-
-			model.addRow(novaLinhaDaTabela);
-		}
-		
-	}
+//	public void preencherTabela() {
+//		respostas = respostaDAO.buscarTodos(idPergunta);
+//		
+//		limparTabela();
+//		
+//		DefaultTableModel model = (DefaultTableModel) table.getModel();
+//
+//
+//		for (Resposta r : respostas) {
+//
+//			Object[] novaLinhaDaTabela = new Object[1];
+//
+//			novaLinhaDaTabela[0] = r.getConteudo();
+//
+//			model.addRow(novaLinhaDaTabela);
+//		}
+//		
+//	}
 	
 	private void limparTabela() {
 		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));

@@ -13,15 +13,16 @@ public class NodeResposta {
 		this.resposta = r;
 	}
 
-	public void inserir(Resposta r) {
+	public NodeResposta inserir(Resposta r) {
 		if (r == null)
-			return;
+			return null;
 
 		if (this.filhos == null)
 			this.filhos = new ArrayList<NodeResposta>();
 
 		NodeResposta novoFilho = new NodeResposta(r);
 		this.filhos.add(novoFilho);
+		return novoFilho;
 	}
 
 	public Resposta getResposta() {

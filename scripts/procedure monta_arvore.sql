@@ -9,6 +9,7 @@ BEGIN
     create temporary table arvore_montada(
 		id int
         ,conteudo text
+        ,solucao tinyint
         ,id_pergunta int
         ,id_usuario int
         ,id_resposta int
@@ -44,3 +45,5 @@ BEGIN
     
 END $$
 DELIMITER ;
+
+drop table arvore_montada;
