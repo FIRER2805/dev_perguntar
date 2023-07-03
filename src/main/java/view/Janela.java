@@ -94,7 +94,7 @@ public class Janela {
 				try {
 					telaPergunta.atualizarCampos(telaHome.resgatarPergunta());
 					telaPergunta.setPergunta(telaHome.resgatarPergunta());
-					telaPergunta.preencherTabela();
+//					telaPergunta.preencherTabela();
 					telaPergunta.setVisible(true);
 					frame.setContentPane(telaPergunta);
 					frame.revalidate();
