@@ -37,6 +37,7 @@ CREATE TABLE resposta
 (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     conteudo TEXT NOT NULL,
+    solucao TINYINT NOT NULL DEFAULT 0,
     id_pergunta INT NOT NULL,
     FOREIGN KEY(id_pergunta) REFERENCES pergunta(id)
     ON DELETE CASCADE,
@@ -78,3 +79,5 @@ insert into resposta(conteudo, id_pergunta, id_usuario) values('resposta1', 1, 1
 insert into resposta(conteudo, id_pergunta, id_usuario, id_resposta) values('resposta2', 1, 1, 1);
 
 select * from resposta;
+
+update usuario set ativo = 1 where id = 1;
