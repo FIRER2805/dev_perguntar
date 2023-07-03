@@ -21,9 +21,10 @@ import model.exception.DevPerguntarException;
 import model.vo.Usuario;
 
 public class TelaPerfil extends JPanel {
-	Usuario userLogado = new Usuario();
-	UsuarioController uController = new UsuarioController();
+	private Usuario userLogado = new Usuario();
+	private UsuarioController uController = new UsuarioController();
 	private JButton btnSalvarEdicao;
+	private JButton btnExcluirConta;
 	private JTextField txtNome;
 	private JTextField txtEmail;
 	private JPasswordField pFSenha;
@@ -79,15 +80,26 @@ public class TelaPerfil extends JPanel {
 		add(pFSenha, "7, 11, 5, 1, fill, default");
 		add(btnSalvarEdicao, "3, 15, 3, 1, left, fill");
 
-		JButton btnExcluirConta = new JButton("Excluir Conta");
-		btnExcluirConta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				excluirConta();
-			}
-		});
+		btnExcluirConta = new JButton("Excluir Conta");
 
 		add(btnExcluirConta, "11, 15, right, default");
 
+	}
+
+	public JButton getBtnExcluirConta() {
+		return btnExcluirConta;
+	}
+
+	public Usuario getUserLogado() {
+		return userLogado;
+	}
+
+	public void setUserLogado(Usuario userLogado) {
+		this.userLogado = userLogado;
+	}
+
+	public UsuarioController getuController() {
+		return uController;
 	}
 
 	public void salvarEdicao() {
@@ -158,16 +170,6 @@ public class TelaPerfil extends JPanel {
 		txtNome.setText(user.getNome());
 		txtEmail.setText(user.geteMail());
 		pFSenha.setText(user.getSenha());
-
-	}
-
-	private void excluirConta() {
-		// TODO criar metodo para Excluir usuario do Banco
-		if (uController.excluirUsuario(userLogado.getId()) > 0) {
-			JOptionPane.showMessageDialog(null, "Exclusão Executada Com Sucesso");
-		} else {
-			JOptionPane.showMessageDialog(null, "Erro ao excluir usuario");
-		}
 
 	}
 }

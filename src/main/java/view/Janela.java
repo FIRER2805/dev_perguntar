@@ -277,7 +277,23 @@ public class Janela {
 			}
 		});
 		mnConfig.add(mntmSair);
-
+		
+		telaPerfil.getBtnExcluirConta().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (telaPerfil.getuController().excluirUsuario(telaPerfil.getUserLogado()) > 0) {
+					JOptionPane.showMessageDialog(null, "Exclusão Executada Com Sucesso");
+					usuarioLogado = null;
+					telaHome.setVisible(true);
+					telaPerfil.setVisible(false);
+					mntmCriarPergunta.setVisible(false);
+					mntmMinhasPerguntas.setVisible(false);
+					frame.setContentPane(telaHome);
+					frame.revalidate();
+				} else {
+					JOptionPane.showMessageDialog(null, "Erro ao excluir usuario");
+				}
+			}
+		});
 	}
 
 }

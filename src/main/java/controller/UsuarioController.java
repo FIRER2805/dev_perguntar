@@ -24,8 +24,8 @@ public class UsuarioController {
 		return bo.atualizar(userEditado, emailAntigo);
 	}
 
-	public int excluirUsuario(int id) {
+	public int excluirUsuario(Usuario u) {
 		// TODO Auto-generated method stub
-		return bo.excluir(null);
+		return bo.excluir(u);
 	}
 }

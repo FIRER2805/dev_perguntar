@@ -101,7 +101,7 @@ public class UsuarioDAO {
 	
 	public int excluir(int id) 
 	{
-		String sql =  "update from usuario set ativo = 0 where id = ?";
+		String sql =  "update usuario set ativo = 0 where id = ?";
 		int registrosAfetados = 0;
 		Connection conn = Banco.getConnection();
 		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
