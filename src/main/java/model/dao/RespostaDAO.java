@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Banco;
-import model.vo.Categoria;
 import model.vo.Pergunta;
 import model.vo.Resposta;
+import model.vo.Arvores.ArvoreRespostas;
 
 public class RespostaDAO {
 	
@@ -78,6 +78,61 @@ public class RespostaDAO {
 		return respostas;
 	}
 	
+	public ArrayList<ArvoreRespostas> montaArvoresResposta(int idPergunta)
+	{
+		String sql = "select * from resposta where id_resposta = null and id_pergunta = ?";
+		Connection con = Banco.getConnection();
+		PreparedStatement pstmt = Banco.getPreparedStmt(con, sql);
+		ResultSet rs = null;
+		try {
+			pstmt.setInt(1, idPergunta);
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Resposta resposta = new Resposta();
+				resposta.setId(rs.getInt("id"));
+				resposta.setConteudo(rs.getString("conteudo"));
+				resposta.setSolucao(rs.getBoolean("solucao"));
+				ArvoreRespostas arvore = new ArvoreRespostas(resposta);
+				montaArvoresRespostaHelper(rs.getInt("id"), arvore);
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método MontaArvoresResposta na classe RespostaDAO");
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	private void montaArvoresRespostaHelper(int idResposta, ArvoreRespostas arvore)
+	{
+		String sql = "select * from resposta where id_resposta = ?";
+		Connection con = Banco.getConnection();
+		PreparedStatement pstmt = Banco.getPreparedStmt(con, sql);
+		ResultSet rs = null;
+		try {
+			pstmt.setInt(1, idResposta);
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Resposta resposta = new Resposta();
+				resposta.setId(rs.getInt("id"));
+				resposta.setConteudo(rs.getString("conteudo"));
+				resposta.setSolucao(rs.getBoolean("solucao"));
+				resposta.setIdPergunta(rs.getInt("id_resposta"));
+				// TODO inseri na arvore
+				montaArvoresRespostaHelper(rs.getInt("id"), arvore);
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método MontaArvoresResposta na classe RespostaDAO");
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	// esta parte não sera utilizada, esta aqui apenas para não dar erro no projeto
 	public Resposta consultarPorId(int idResposta)
 	{
 		String sql =  "select * from resposta where id = ?";
@@ -122,6 +177,8 @@ public class RespostaDAO {
 		
 		return r;
 	}
+	
+	// esta parte vai ser utilizada, é apenas a parte de cima que não
 
 	public int atualizar(Pergunta p)
 	{
