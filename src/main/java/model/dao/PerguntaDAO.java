@@ -138,7 +138,7 @@ public class PerguntaDAO {
 	{
 		String sql = "select "
 				+ "	p.* "
-				+ "	,case when u.nome is null then '[DELETADO]' else u.nome end as nome "
+				+ "	,u.nome as nome "
 				+ " ,c.nome as categoria "
 				+ "from pergunta p "
 				+ "left join usuario u on u.id = p.id_usuario "
