@@ -10,10 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -41,11 +40,11 @@ public class TelaPergunta extends JPanel {
 	private JLabel lblSuaResposta;
 	private JButton btnPublicar;
 	private JLabel lblNewLabel;
-	private JTable table;
 	private ArrayList<Resposta> respostas;
 	private String[] nomesColunas = {"respostas"};
 	private RespostaDAO respostaDAO;
 	private ArrayList<DefaultMutableTreeNode> arvoresResposta;
+	private JScrollPane scrollPaneArvores;
 
 	/**
 	 * Create the panel.
@@ -53,7 +52,7 @@ public class TelaPergunta extends JPanel {
 	public TelaPergunta() {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("84px"),
-				ColumnSpec.decode("300px"),
+				ColumnSpec.decode("300px:grow"),
 				ColumnSpec.decode("140px"),
 				ColumnSpec.decode("160px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -73,7 +72,7 @@ public class TelaPergunta extends JPanel {
 				RowSpec.decode("82px"),
 				FormSpecs.UNRELATED_GAP_ROWSPEC,
 				RowSpec.decode("34px"),
-				RowSpec.decode("136px"),
+				RowSpec.decode("136px:grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:grow"),}));
 
@@ -131,13 +130,8 @@ public class TelaPergunta extends JPanel {
 		lblNewLabel = new JLabel("Respostas");
 		add(lblNewLabel, "2, 14, left, bottom");
 		
-		table = new JTable() {
-			public boolean isCellEditable(int rowIndex, int colIndex) {
-				return false;
-			}
-		};
-		table.setRowHeight(50);
-		add(table, "2, 15, 3, 1, fill, fill");
+		scrollPaneArvores = new JScrollPane();
+		add(scrollPaneArvores, "2, 15, 3, 1, fill, fill");
 		
 		limparTabela();
 		
@@ -188,10 +182,17 @@ public class TelaPergunta extends JPanel {
 //	}
 	
 	private void limparTabela() {
-		table.setModel(new DefaultTableModel(new Object[][] {,}, nomesColunas));
+		scrollPaneArvores.removeAll();
 	}
 	
-	
+	public void mostrarPergutas()
+	{
+		arvoresResposta = (ArrayList<DefaultMutableTreeNode>) respostaDAO.montaArvoresResposta(idPergunta);
+		 for(DefaultMutableTreeNode arvore : arvoresResposta)
+		 {
+			 scrollPaneArvores.add(new JTree(arvore));
+		 }
+	}
 	
 	
 	

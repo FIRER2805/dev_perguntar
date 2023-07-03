@@ -94,9 +94,9 @@ public class Janela {
 				try {
 					telaPergunta.atualizarCampos(telaHome.resgatarPergunta()/*, usuarioLogado*/);
 					telaPergunta.setPergunta(telaHome.resgatarPergunta());
-//					telaPergunta.preencherTabela();
 					telaPergunta.setVisible(true);
 					frame.setContentPane(new JScrollPane(telaPergunta));
+					telaPergunta.mostrarPergutas();
 					frame.revalidate();
 				} catch (DevPerguntarException erro) {
 					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção",
