@@ -3,6 +3,7 @@ package model.bo;
 import java.util.ArrayList;
 
 import model.dao.PerguntaDAO;
+import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 
 public class PerguntaBO {
@@ -18,16 +19,18 @@ public class PerguntaBO {
 		return dao.busca(texto, categoria, resolvido);
 	}
 
-	public int perguntar(Pergunta pergunta) {
+	public int perguntar(Pergunta pergunta) throws DevPerguntarException {
+		String erro = "";
+		
 		if(pergunta.getTitulo().trim().isEmpty())
-			// erro: O titulo deve conter pelo menos um caractere
-			return -1;
+			erro += "O titulo precisa ter pelo menos 1 caractere";
 		if(pergunta.getConteudo().trim().isEmpty())
-			// erro: O conteudo deve conter pelo menos um caractere
-			return -1;
+			erro += "O conteudo precisa ter pelo menos 1 caractere\n";
 		if(pergunta.getConteudo().length() > 1000)
-			// erro: O conteudo deve conter pelo menos um caractere
-			return -1;
+			erro += "O coneteudo não pode ter mais de 1000 caracteres\n";
+		
+		if(!erro.trim().isEmpty())
+			throw new DevPerguntarException(erro);
 		
 		return dao.inserir(pergunta);
 	}

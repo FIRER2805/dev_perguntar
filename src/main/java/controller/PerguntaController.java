@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import model.bo.PerguntaBO;
+import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 
 public class PerguntaController {
@@ -23,7 +24,7 @@ public class PerguntaController {
 		return bo.busca(idUsuario);
 	}
 	
-	public int perguntar(Pergunta pergunta)
+	public int perguntar(Pergunta pergunta) throws DevPerguntarException
 	{
 		return bo.perguntar(pergunta);
 	}

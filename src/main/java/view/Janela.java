@@ -287,6 +287,10 @@ public class Janela {
 					telaPerfil.setVisible(false);
 					mntmCriarPergunta.setVisible(false);
 					mntmMinhasPerguntas.setVisible(false);
+					mntmCadastrar.setVisible(true);
+					mntmLogin.setVisible(true);
+					mntmPerfil.setVisible(false);
+					mntmSair.setVisible(false);
 					frame.setContentPane(telaHome);
 					frame.revalidate();
 				} else {
