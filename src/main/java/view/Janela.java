@@ -165,9 +165,10 @@ public class Janela {
 		mntmMinhasPerguntas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				telaMinhasPerguntas.atualizarTable(usuarioLogado.getId());
+				telaMinhasPerguntas.setUsuario(usuarioLogado);
 				telaMinhasPerguntas.setVisible(true);
 				frame.setContentPane(telaMinhasPerguntas);
-				telaMinhasPerguntas.setUsuario(usuarioLogado);
 				frame.revalidate();
 			}
 		});
