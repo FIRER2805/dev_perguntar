@@ -45,50 +45,70 @@ public class TelaCriarPergunta extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaCriarPergunta() {
-		setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(60dlu;default):grow"),
-				FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(60dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(60dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default:grow"), },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("bottom:default:grow"),
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("max(66dlu;default)"),
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("top:default:grow"), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(60dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(66dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:default:grow"),}));
 
 		JLabel lblTituloPagina = new JLabel("Criar Pergunta");
 		lblTituloPagina.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblTituloPagina, "6, 6, 9, 1, center, default");
+		add(lblTituloPagina, "5, 3, 9, 1, center, default");
 
 		JLabel lblTitulo = new JLabel("Titulo :");
-		add(lblTitulo, "6, 10, left, default");
+		add(lblTitulo, "5, 7, left, default");
 
 		textFTitulo = new JTextField();
-		add(textFTitulo, "10, 10, fill, default");
+		add(textFTitulo, "9, 7, fill, default");
 		textFTitulo.setColumns(10);
 
 		JLabel lblCategoria = new JLabel("Categoria :");
-		add(lblCategoria, "12, 10, right, default");
+		add(lblCategoria, "11, 7, right, default");
 
 		ArrayList<Categoria> categorias = categoriaDAO.buscarTodas();
 		cbCategoria = new JComboBox(categorias.toArray());
 		cbCategoria.setBackground(SystemColor.activeCaption);
 		cbCategoria.setSelectedIndex(-1);
-		add(cbCategoria, "14, 10, fill, default");
-
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "6, 14, 9, 1, fill, fill");
+		add(cbCategoria, "13, 7, fill, default");
 
 		textADuvida = new JTextArea();
-		scrollPane.setViewportView(textADuvida);
+		textADuvida.setLineWrap(true);
+		add(textADuvida, "5, 11, 9, 1, fill, fill");
+
 
 		btnPostarPergunta = new JButton("Postar Pergunta");
-		add(btnPostarPergunta, "6, 18, 9, 1, center, default");
+		add(btnPostarPergunta, "5, 15, 9, 1, center, default");
 
 	}
 

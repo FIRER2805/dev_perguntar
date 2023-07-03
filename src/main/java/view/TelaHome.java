@@ -1,31 +1,25 @@
 package view;
 
-import javax.swing.JPanel;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
+import java.awt.Font;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.Font;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
 import controller.PerguntaController;
 import model.exception.DevPerguntarException;
-import model.vo.Categoria;
 import model.vo.Pergunta;
-import model.vo.Usuario;
-
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.border.EmptyBorder;
 
 public class TelaHome extends JPanel {
 
@@ -43,16 +37,26 @@ public class TelaHome extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaHome() {
-		setLayout(new FormLayout(
-				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("right:default:grow"),
-						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:max(340dlu;default):grow"),
-						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default:grow"), },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow(9)"),
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						new RowSpec(RowSpec.CENTER, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("40dlu", false),
-								Sizes.constant("50dlu", false)), 1), }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:max(350dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow(9)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				new RowSpec(RowSpec.CENTER, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("40dlu", false), Sizes.constant("50dlu", false)), 1),}));
 
 		JLabel lblTitulo = new JLabel("Duvidas Recentes");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -83,7 +87,7 @@ public class TelaHome extends JPanel {
 		limparTabela();
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-
+		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		perguntas = p.busca();
 
 		for (Pergunta p : this.perguntas) {
@@ -91,7 +95,7 @@ public class TelaHome extends JPanel {
 			Object[] novaLinhaDaTabela = new Object[5];
 
 			novaLinhaDaTabela[0] = p.getTitulo();
-			novaLinhaDaTabela[1] = p.getData();
+			novaLinhaDaTabela[1] = p.getData().format(formatador);
 			novaLinhaDaTabela[2] = p.getDataResolucao() == null ? "Em Aberto" : "Resolvido";
 			novaLinhaDaTabela[3] = p.getUsuario().getNome();
 			novaLinhaDaTabela[4] = p.getCategoria().getNome();
