@@ -84,7 +84,7 @@ public class TelaPesquisa extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("max(50dlu;min):grow"),}));
+				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		ArrayList<Categoria> categorias = categoriaDAO.buscarTodas();
 
