@@ -40,13 +40,11 @@ public class TelaCadastro extends JPanel {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("right:default:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("right:max(45dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:max(124dlu;default)"),
+				ColumnSpec.decode("center:max(150dlu;min)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("left:default:grow"),},
 			new RowSpec[] {
-				RowSpec.decode("bottom:default:grow"),
+				RowSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -62,35 +60,50 @@ public class TelaCadastro extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("top:default:grow"),}));
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
 
 		JLabel lblTitulo = new JLabel("Cadastrar Usuario");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblTitulo, "5, 3");
-
-		JLabel lblNome = new JLabel(" Nome : ");
-		add(lblNome, "3, 7");
+		add(lblTitulo, "3, 3");
+		
+				JLabel lblNome = new JLabel(" Nome : ");
+				lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				add(lblNome, "3, 7");
 
 		textFNome = new JTextField();
 		textFNome.setColumns(15);
-		add(textFNome, "5, 7");
-
-		JLabel lblEmail = new JLabel("E-Mail : ");
-		add(lblEmail, "3, 9");
+		add(textFNome, "3, 9, fill, default");
+		
+				JLabel lblEmail = new JLabel("E-Mail : ");
+				lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				add(lblEmail, "3, 13");
 
 		textFEmail = new JTextField();
 		textFEmail.setColumns(15);
-		add(textFEmail, "5, 9");
-
-		JLabel lblSenha = new JLabel("Senha : ");
-		add(lblSenha, "3, 11");
+		add(textFEmail, "3, 15, fill, default");
+		
+				JLabel lblSenha = new JLabel("Senha : ");
+				lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				add(lblSenha, "3, 19");
 		
 		pFSenha = new JPasswordField();
 		pFSenha.setColumns(15);
-		add(pFSenha, "5, 11, left, default");
+		add(pFSenha, "3, 21, fill, default");
 
 		btnCadastrar = new JButton("Cadastrar");
-		add(btnCadastrar, "5, 15");
+		add(btnCadastrar, "3, 27");
 
 	}
 

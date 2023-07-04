@@ -17,6 +17,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JPasswordField;
+import java.awt.Font;
 
 public class TelaLogin extends JPanel {
 	private JTextField textEmail;
@@ -31,30 +32,48 @@ public class TelaLogin extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaLogin() {
-		setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("right:default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(48dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default:grow"), },
-				new RowSpec[] { RowSpec.decode("bottom:default:grow"), FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("top:default:grow"), }));
-
-		JLabel lblEmail = new JLabel("Email");
-		add(lblEmail, "3, 3, right, center");
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("right:default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(150dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("bottom:default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("top:default:grow"),}));
+		
+				JLabel lblEmail = new JLabel("Email");
+				lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				add(lblEmail, "3, 3, center, center");
 
 		textEmail = new JTextField();
-		add(textEmail, "5, 3, left, center");
+		textEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		add(textEmail, "3, 5, fill, center");
 		textEmail.setColumns(15);
-
-		JLabel lblSenha = new JLabel("Senha");
-		add(lblSenha, "3, 7, right, center");
+		
+				JLabel lblSenha = new JLabel("Senha");
+				lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				add(lblSenha, "3, 7, center, center");
 
 		pFSenha = new JPasswordField();
-		add(pFSenha, "5, 7, fill, default");
+		pFSenha.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		add(pFSenha, "3, 9, fill, default");
 
 		btnLogin = new JButton("Login");
-		add(btnLogin, "5, 11, left, center");
+		add(btnLogin, "3, 13, center, center");
 
 	}
 
