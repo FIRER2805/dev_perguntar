@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -134,7 +135,7 @@ public class TelaPergunta extends JPanel {
 		add(lblNewLabel, "3, 15, left, bottom");
 		
 		scrollPaneArvores = new JScrollPane();
-		add(scrollPaneArvores, "3, 17, 3, 1, fill, fill");
+//		add(scrollPaneArvores, "3, 17, 3, 1, fill, fill");
 		
 		limparTabela();
 		
@@ -190,11 +191,26 @@ public class TelaPergunta extends JPanel {
 	
 	public void mostrarPergutas()
 	{
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Respostas");
 		arvoresResposta = (ArrayList<DefaultMutableTreeNode>) respostaDAO.montaArvoresResposta(idPergunta);
 		 for(DefaultMutableTreeNode arvore : arvoresResposta)
 		 {
-			 scrollPaneArvores.add(new JTree(arvore));
+//			 scrollPaneArvores.add(new JTree(arvore));
+			 root.add(arvore);
 		 }
+		 
+		 
+		 
+		 DefaultTreeModel treeModel = new DefaultTreeModel(root);
+
+			JTree tree = new JTree(treeModel);
+			JScrollPane scrollPane = new JScrollPane(tree);
+			add(scrollPane, "3, 17, 3, 1, fill, fill");
+//			frame.getContentPane().add(scrollPane);
+		 
+		 
+		 
+		 
 	}
 	
 	
