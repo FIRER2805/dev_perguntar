@@ -21,13 +21,14 @@ public class Janela {
 	private JMenuBar menuBar;
 	private JMenuItem mntmHome;
 	private JMenuItem mntmPesquisa;
+	private JMenuItem mntmPesquisarUsuario;
 	private JMenuItem mntmCriarPergunta;
 	private JMenu mnConfig;
-	private JMenuItem mntmSair;
 	private JMenuItem mntmCadastrar;
 	private JMenuItem mntmLogin;
-	private Usuario usuarioLogado;
 	private JMenuItem mntmPerfil;
+	private JMenuItem mntmSair;
+	private Usuario usuarioLogado;
 	private view.TelaCadastro telaCadastro = new TelaCadastro();
 	private TelaCriarPergunta telaCriacaoDePergunta = new TelaCriarPergunta();
 	private TelaHome telaHome = new TelaHome();
@@ -35,6 +36,7 @@ public class Janela {
 	private TelaPerfil telaPerfil = new TelaPerfil();
 	private TelaPergunta telaPergunta = new TelaPergunta();
 	private TelaPesquisa telaPesquisa = new TelaPesquisa();
+	private TelaPesquisaUsuario telaPesquisaUsuario = new TelaPesquisaUsuario();
 
 	/**
 	 * Launch the application.
@@ -131,6 +133,18 @@ public class Janela {
 
 			}
 		});
+		
+		mntmPesquisarUsuario = new JMenuItem("Pesquisar Usuario");
+		mntmPesquisarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				telaPesquisaUsuario.setVisible(true);
+				frame.setContentPane(new JScrollPane(telaPesquisaUsuario));
+				frame.revalidate();
+				
+			}
+		});
+		menuBar.add(mntmPesquisarUsuario);
 
 		mntmCriarPergunta = new JMenuItem("Criar pergunta");
 		mntmCriarPergunta.setVisible(false);
@@ -145,6 +159,8 @@ public class Janela {
 
 			}
 		});
+		
+		
 		menuBar.add(mntmCriarPergunta);
 
 		telaCriacaoDePergunta.getBtnPostarPergunta().addActionListener(new ActionListener() {

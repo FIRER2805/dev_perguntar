@@ -34,23 +34,41 @@ public class TelaPesquisaUsuario extends JPanel {
 	private JCheckBox chckbxTemPergunta;
 	private JCheckBox chckbxTemResposta;
 	private JCheckBox chckbxTemSolucao;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox;
+	private JComboBox cBTipo;
+	private JComboBox cBSentido;
 	UsuarioController uCont = new UsuarioController();
 
 	public TelaPesquisaUsuario() {
-		setLayout(new FormLayout(
-				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"),
-						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"), },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(116dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(116dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(116dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		JLabel lblTituloPagina = new JLabel("Pesquisar Por Usuario");
 		lblTituloPagina.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -67,19 +85,19 @@ public class TelaPesquisaUsuario extends JPanel {
 		add(chckbxTemPergunta, "4, 12");
 
 		chckbxTemResposta = new JCheckBox("Tem Respostas");
-		add(chckbxTemResposta, "6, 12");
+		add(chckbxTemResposta, "6, 12, center, default");
 
 		chckbxTemSolucao = new JCheckBox("Tem Solução");
-		add(chckbxTemSolucao, "8, 12");
+		add(chckbxTemSolucao, "8, 12, right, default");
 
 		JLabel lblOrdem = new JLabel("Ordenar por :");
 		add(lblOrdem, "4, 14, left, default");
 
-		comboBox_1 = new JComboBox(tipoPesquisa);
-		add(comboBox_1, "6, 14, fill, default");
+		cBTipo = new JComboBox(tipoPesquisa);
+		add(cBTipo, "6, 14, fill, default");
 
-		comboBox = new JComboBox(ordemPesquisa);
-		add(comboBox, "8, 14, fill, default");
+		cBSentido = new JComboBox(ordemPesquisa);
+		add(cBSentido, "8, 14, fill, default");
 
 		table = new JTable();
 		add(table, "4, 18, 5, 1, fill, fill");
@@ -97,16 +115,12 @@ public class TelaPesquisaUsuario extends JPanel {
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 //		usuarios = p.busca();
 
-		for (Usuario p : usuarios) {
+		for (Usuario u : usuarios) {
 
 			Object[] novaLinhaDaTabela = new Object[5];
 
-//			novaLinhaDaTabela[0] = p.getTitulo();
-//			novaLinhaDaTabela[1] = p.getData().format(formatador);
-//			novaLinhaDaTabela[2] = p.getDataResolucao() == null ? "Em Aberto" : "Resolvido";
-//			novaLinhaDaTabela[3] = p.getUsuario().getNome();
-//			novaLinhaDaTabela[4] = p.getCategoria().getNome();
-
+			novaLinhaDaTabela[0] = u.getNome();
+			
 			model.addRow(novaLinhaDaTabela);
 		}
 
@@ -117,7 +131,7 @@ public class TelaPesquisaUsuario extends JPanel {
 		pesquisaUsuario.setTemPergunta(chckbxTemPergunta.isSelected());
 		pesquisaUsuario.setTemresposta(chckbxTemResposta.isSelected());
 		pesquisaUsuario.setTemSolucao(chckbxTemSolucao.isSelected());
-		pesquisaUsuario.setOrdemPesquisa(comboBox.getSelectedItem().toString() +""+ comboBox_1.getSelectedItem().toString());
+		pesquisaUsuario.setOrdemPesquisa(cBSentido.getSelectedItem().toString() +""+ cBTipo.getSelectedItem().toString());
 		
 		if(!uCont.pesquisarUsuario(usuarios, pesquisaUsuario)) {
 			JOptionPane.showMessageDialog(null, "Falha ao Conectar Com o Servidor");
