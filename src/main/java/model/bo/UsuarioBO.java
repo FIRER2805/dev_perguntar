@@ -53,8 +53,11 @@ public class UsuarioBO {
 		return dao.excluir(u.getId());
 	}
 
-	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
+	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) throws DevPerguntarException {
 
-		return dao.pesquisarUsuario(pesquisaUsuario);
+		ArrayList<Usuario> retorno = dao.pesquisarUsuario(pesquisaUsuario);
+		if(retorno == null)
+			throw new DevPerguntarException("Erro ao conectar ao servidor");
+		return retorno;
 	}
 }

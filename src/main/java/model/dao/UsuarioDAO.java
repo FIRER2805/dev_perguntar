@@ -201,77 +201,51 @@ public class UsuarioDAO {
 
 	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
 		
-		String sql = "select "
-				+ "u.nome, "
-				+ "count(p.id) as qtdpergunta, "
-				+ "count(r.id) as qtdresposta, "
-				+ "(select count(r2.id) from resposta r2 where r2.id_usuario = u.id and solucao = 1) as qtdsolucao "
+		ArrayList<Usuario> retorno = new ArrayList<Usuario>();
+		String queryBase = "select u.id"
+				+ ",u.nome"
+				+ ",count(r.id) as qtd_respostas"
+				+ ",(select count(r2.id) from resposta r2 where u.id = r2.id_usuario and r2.solucao = 1) as resposta_solucao"
+				+ " , count(p.id) as qntd_perguntas "
 				+ "from usuario u "
-				+ "left join pergunta p on p.id_usuario = u.id "
 				+ "left join resposta r on r.id_usuario = u.id "
-				+ "group by u.nome, u.id ";
-		
-		String filtro = "";
-		if(pesquisaUsuario.isTemPergunta()) {
-			filtro += "qtdpergunta > 1 ";
+				+ "left join pergunta p on p.id_usuario = u.id "
+				+ "where u.nome like '%" + pesquisaUsuario.getBusca() +"%' "
+				+ "group by u.nome ";
+		if(pesquisaUsuario.temFiltros())
+		{
+			queryBase += pesquisaUsuario.criaFiltro();
 		}
-		if(pesquisaUsuario.isTemresposta()) {
-			if(!filtro.isEmpty()) {
-				filtro += "and ";
-			}
-			filtro += "qtdresposta > 1 ";
-		}
-		if(pesquisaUsuario.isTemSolucao()) {
-			if(!filtro.isEmpty()) {
-				filtro += "and ";
-			}
-			filtro += "qtdsolucao > 1 ";
-		}
-		if(!filtro.isEmpty()) {
-			filtro = "having " + filtro;
-		}
-		filtro = filtro +"order by "+ pesquisaUsuario.getOrdemPesquisa();
-		sql = sql+filtro;
-		
-		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		queryBase += pesquisaUsuario.ordem();
 		Connection conn = Banco.getConnection();
-		Statement pstmt = Banco.getStatement(conn);
-		ResultSet resultado = null;
-		try {
-			resultado = pstmt.executeQuery(sql);
-			while(resultado.next()){
-				
-				Usuario u = new Usuario();
-				u.setNome(resultado.getString(1));
-				u.setNumPergunta(resultado.getInt(2));
-				u.setNumResposta(resultado.getInt(3));
-				u.setNumsolucao(resultado.getInt(4));
-				
-				usuarios.add(u);
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet rs = null;
+		try 
+		{
+			rs = stmt.executeQuery(queryBase);
+			while(rs.next())
+			{
+				Usuario user = new Usuario();
+				user.setId(rs.getInt("id"));
+				user.setNome(rs.getString("nome"));
+				user.setNumPergunta(rs.getInt("qntd_perguntas"));
+				user.setNumResposta(rs.getInt("qtd_respostas"));
+				user.setNumsolucao(rs.getInt("resposta_solucao"));
+				retorno.add(user);
 			}
 		}
-		catch(SQLException e){
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método pesquisarUsuario da classe UsuarioDAO");
 			System.out.println(e.getMessage());
+			retorno = null;
 		}
-		finally{
-			Banco.closeResultSet(resultado);
-			Banco.closeStatement(pstmt);
+		finally 
+		{
+			Banco.closeResultSet(rs);
+			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		
-		
-		return usuarios;
+		return retorno;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

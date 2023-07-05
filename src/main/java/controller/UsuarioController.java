@@ -31,7 +31,7 @@ public class UsuarioController {
 		return bo.excluir(u);
 	}
 
-	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
+	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) throws DevPerguntarException {
 
 		return bo.pesquisarUsuario(pesquisaUsuario);
 	}
