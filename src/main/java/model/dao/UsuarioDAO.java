@@ -206,7 +206,7 @@ public class UsuarioDAO {
 				+ ",case when u.ativo = 1 then u.nome else '[DELETADO]' end as nome "
 				+ " ,u.ativo "
 				+ "from usuario u "
-				+ "where u.nome like '%" + pesquisaUsuario.getBusca() + "%' and u.ativo = 1 ";
+				+ "where u.nome like '%" + pesquisaUsuario.getBusca() +"%' and u.ativo = 1 ";
 		if(pesquisaUsuario.temFiltros())
 		{
 			queryBase += pesquisaUsuario.criaFiltro();

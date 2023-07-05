@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,10 +29,10 @@ import model.vo.Usuario;
 
 public class TelaPesquisaUsuario extends JPanel {
 	private JTextField txtBarraBusca;
-	private String[] tipoPesquisa = { "Nome", "Pergunta", "Resposta", "Solução" };
+	private String[] tipoPesquisa = { "Nome", "Pergunta", "Resposta", "Solucao" };
 	private String[] ordemPesquisa = { "Crescente", "Decrescente" };
 	private PesquisaUsuario pesquisaUsuario = new PesquisaUsuario();
-	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
+	private String[] nomesColunas = { "Nome", "Num. de Pergunta", "Num. de Resposta", "Num. de Solução"};
 	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	private JTable table;
 	private JCheckBox chckbxTemPergunta;
@@ -40,6 +41,7 @@ public class TelaPesquisaUsuario extends JPanel {
 	private JComboBox cBTipo;
 	private JComboBox cBSentido;
 	UsuarioController uCont = new UsuarioController();
+	private JButton btnGerarExcel;
 
 	public TelaPesquisaUsuario() {
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -71,6 +73,8 @@ public class TelaPesquisaUsuario extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 
 		JLabel lblTituloPagina = new JLabel("Pesquisar Por Usuario");
@@ -82,6 +86,12 @@ public class TelaPesquisaUsuario extends JPanel {
 		txtBarraBusca.setColumns(10);
 
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				atualizarTable();
+				btnGerarExcel.setVisible(true);
+			}
+		});
 		add(btnBuscar, "8, 8");
 		btnBuscar.addActionListener(new ActionListener() 
 		{
@@ -89,27 +99,51 @@ public class TelaPesquisaUsuario extends JPanel {
 				buscar();
 			}
 		});
+		
+		btnGerarExcel = new JButton("Gerar Excel");
+		btnGerarExcel.setVisible(false);
+		btnGerarExcel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+
+				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+					String resultado;
+					try {
+						resultado = uCont.gerarPlanilha(usuarios, caminhoEscolhido);
+						JOptionPane.showMessageDialog(null, resultado);
+					} catch (DevPerguntarException erro) {
+						JOptionPane.showConfirmDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				
+			}
+		});
+		add(btnGerarExcel, "8, 10");
 
 		chckbxTemPergunta = new JCheckBox("Tem Perguntas");
-		add(chckbxTemPergunta, "4, 12");
+		add(chckbxTemPergunta, "4, 14");
 
 		chckbxTemResposta = new JCheckBox("Tem Respostas");
-		add(chckbxTemResposta, "6, 12, center, default");
+		add(chckbxTemResposta, "6, 14, center, default");
 
 		chckbxTemSolucao = new JCheckBox("Tem Solução");
-		add(chckbxTemSolucao, "8, 12, right, default");
+		add(chckbxTemSolucao, "8, 14, right, default");
 
 		JLabel lblOrdem = new JLabel("Ordenar por :");
-		add(lblOrdem, "4, 14, left, default");
+		add(lblOrdem, "4, 16, left, default");
 
 		cBTipo = new JComboBox(tipoPesquisa);
-		add(cBTipo, "6, 14, fill, default");
+		add(cBTipo, "6, 16, fill, default");
 
 		cBSentido = new JComboBox(ordemPesquisa);
-		add(cBSentido, "8, 14, fill, default");
+		add(cBSentido, "8, 16, fill, default");
 
 		table = new JTable();
-		add(table, "4, 18, 5, 1, fill, fill");
+		add(table, "4, 20, 5, 1, fill, fill");
 		limparTabela();
 	}
 
@@ -122,13 +156,16 @@ public class TelaPesquisaUsuario extends JPanel {
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//		usuarios = p.busca();
+		buscar();
 
 		for (Usuario u : usuarios) {
 
 			Object[] novaLinhaDaTabela = new Object[5];
 
 			novaLinhaDaTabela[0] = u.getNome();
+			novaLinhaDaTabela[1] = u.getNumPergunta();
+			novaLinhaDaTabela[2] = u.getNumResposta();
+			novaLinhaDaTabela[3] = u.getNumsolucao();
 			
 			model.addRow(novaLinhaDaTabela);
 		}
@@ -140,7 +177,11 @@ public class TelaPesquisaUsuario extends JPanel {
 		pesquisaUsuario.setTemPergunta(chckbxTemPergunta.isSelected());
 		pesquisaUsuario.setTemresposta(chckbxTemResposta.isSelected());
 		pesquisaUsuario.setTemSolucao(chckbxTemSolucao.isSelected());
-		pesquisaUsuario.setOrdemPesquisa(cBSentido.getSelectedItem().toString() +""+ cBTipo.getSelectedItem().toString());
+		if(cBSentido.getSelectedItem().toString().equals("Crescente")) {
+			pesquisaUsuario.setOrdemPesquisa(cBTipo.getSelectedItem().toString() + " asc ");
+		}else {
+			pesquisaUsuario.setOrdemPesquisa(cBTipo.getSelectedItem().toString() + " desc ");
+		}
 		
 		try 
 		{
