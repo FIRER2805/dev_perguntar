@@ -44,6 +44,7 @@ public class TelaPerfil extends JPanel {
 	private PerguntaController pCont = new PerguntaController();
 	private JSeparator separator;
 	private JLabel lblNewLabel_4;
+	private JButton btnEditar;
 
 	/**
 	 * Create the panel.
@@ -142,6 +143,18 @@ public class TelaPerfil extends JPanel {
 			}
 		});
 		add(btnExcluir, "3, 25, left, default");
+		
+		btnEditar = new JButton("Editar Pergunta");
+		add(btnEditar, "5, 25");
+		btnEditar.addActionListener(new ActionListener() 
+		{
+
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+			
+		});
 
 		btnVizualizar = new JButton("Vizualizar");
 		add(btnVizualizar, "7, 25, right, default");
