@@ -38,4 +38,9 @@ public class PerguntaBO {
 	public ArrayList<Pergunta> busca(int idUsuario) {
 		return dao.busca(idUsuario);
 	}
+	
+	public int excluir(Pergunta pergunta)
+	{
+		return dao.excluir(pergunta.getId());
+	}
 }

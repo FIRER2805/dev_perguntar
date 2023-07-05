@@ -49,9 +49,8 @@ public class PerguntaController {
 		
 	}
 
-	public boolean excluir(Pergunta pergunta) {
-		// TODO Auto-generated method stub
-		return false;
+	public int excluir(Pergunta pergunta) {
+		return bo.excluir(pergunta);
 	}
 
 

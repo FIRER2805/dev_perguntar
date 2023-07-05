@@ -132,6 +132,20 @@ public class TelaPergunta extends JPanel {
 		 respostaDAO = new RespostaDAO();
 	}
 
+	
+	
+	public int getIdPergunta() {
+		return idPergunta;
+	}
+
+
+
+	public void setIdPergunta(int idPergunta) {
+		this.idPergunta = idPergunta;
+	}
+
+
+
 	public Pergunta getPergunta() {
 		return pergunta;
 	}
@@ -182,7 +196,7 @@ public class TelaPergunta extends JPanel {
 	public void mostrarPergutas()
 	{
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Respostas");
-		arvoresResposta = (ArrayList<DefaultMutableTreeNode>) respostaDAO.montaArvoresResposta(idPergunta);
+		arvoresResposta = (ArrayList<DefaultMutableTreeNode>) respostaDAO.montaArvoresResposta(pergunta.getId());
 		 for(DefaultMutableTreeNode arvore : arvoresResposta)
 		 {
 //			 scrollPaneArvores.add(new JTree(arvore));
@@ -191,12 +205,12 @@ public class TelaPergunta extends JPanel {
 		 
 		 
 		 
-		 DefaultTreeModel treeModel = new DefaultTreeModel(root);
+		DefaultTreeModel treeModel = new DefaultTreeModel(root);
 
-			JTree tree = new JTree(treeModel);
-			JScrollPane scrollPane = new JScrollPane(tree);
-			add(scrollPane, "3, 17, 3, 1, fill, fill");
-//			frame.getContentPane().add(scrollPane);
+		JTree tree = new JTree(treeModel);
+		JScrollPane scrollPane = new JScrollPane(tree);
+		add(scrollPane, "3, 17, 3, 1, fill, fill");
+//		frame.getContentPane().add(scrollPane);
 		 
 		 
 		 
