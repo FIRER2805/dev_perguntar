@@ -199,24 +199,45 @@ public class UsuarioDAO {
 		return false;
 	}
 
-	public boolean pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
+	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
 		
-		String sqlaaa =  "select * from categoria order by nome asc;";
-		
-		
-		String teste = "select "
-				+ "	u.nome,"
-				+ "	count(p.id) as qtdpergunta,"
-				+ "	count(r.id) as qtdresposta,"
-				+ "	(select count(r2.id) from resposta r2 where r2.id_usuario = u.id and solucao = 1) as qtdsolucao "
-				+ "from usuario "
-				+ "left join pergunta p on p.id_usuario = u.id "
-				+ "left join resposta r on r.id_usuario = u.id "
-				+ "group by u.nome "
-				+ "having qtdpergunta > 1 "
-				+ "and qtdresposta > 1 "
-				+ "and qtdsolucao > 1;";
-		
-		return false;
+		ArrayList<Usuario> retorno = new ArrayList<Usuario>();
+		String queryBase = "select u.id"
+				+ ",case when u.ativo = 1 then u.nome else '[DELETADO]' end as nome "
+				+ " ,u.ativo "
+				+ "from usuario u "
+				+ "where u.nome like '%" + pesquisaUsuario.getBusca() + "%' and u.ativo = 1 ";
+		if(pesquisaUsuario.temFiltros())
+		{
+			queryBase += pesquisaUsuario.criaFiltro();
+		}
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet rs = null;
+		try 
+		{
+			rs = stmt.executeQuery(queryBase);
+			while(rs.next())
+			{
+				Usuario user = new Usuario();
+				user.setId(rs.getInt("id"));
+				user.setNome(rs.getString("nome"));
+				user.setAtivo(rs.getBoolean("ativo"));
+				retorno.add(user);
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método pesquisarUsuario da classe UsuarioDAO");
+			System.out.println(e.getMessage());
+			retorno = null;
+		}
+		finally 
+		{
+			Banco.closeResultSet(rs);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return retorno;
 	}
 }

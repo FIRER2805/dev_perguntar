@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -20,6 +22,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import controller.UsuarioController;
+import model.exception.DevPerguntarException;
 import model.vo.PesquisaUsuario;
 import model.vo.Usuario;
 
@@ -80,6 +83,12 @@ public class TelaPesquisaUsuario extends JPanel {
 
 		JButton btnBuscar = new JButton("Buscar");
 		add(btnBuscar, "8, 8");
+		btnBuscar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) {
+				buscar();
+			}
+		});
 
 		chckbxTemPergunta = new JCheckBox("Tem Perguntas");
 		add(chckbxTemPergunta, "4, 12");
@@ -133,10 +142,15 @@ public class TelaPesquisaUsuario extends JPanel {
 		pesquisaUsuario.setTemSolucao(chckbxTemSolucao.isSelected());
 		pesquisaUsuario.setOrdemPesquisa(cBSentido.getSelectedItem().toString() +""+ cBTipo.getSelectedItem().toString());
 		
-		if(!uCont.pesquisarUsuario(usuarios, pesquisaUsuario)) {
-			JOptionPane.showMessageDialog(null, "Falha ao Conectar Com o Servidor");
+		try 
+		{
+			usuarios = uCont.pesquisarUsuario(pesquisaUsuario);
+			atualizarTable();
 		}
-
+		catch(DevPerguntarException e)
+		{
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 
 }

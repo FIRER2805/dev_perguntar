@@ -5,6 +5,7 @@ public class Usuario {
 	private String nome;
 	private String eMail;
 	private String senha;
+	private boolean ativo;
 	private int numPergunta;
 	private int numResposta;
 	private int numsolucao;
@@ -23,6 +24,16 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+
+	
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 
 	public int getId() {
 		return id;
