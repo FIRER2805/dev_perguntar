@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,13 +26,15 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 
 public class TelaPesquisa extends JPanel {
 
 	private Pesquisa pesquisa = new Pesquisa();
-	private PerguntaController perguntaController = new PerguntaController();
+	private PerguntaController pCont = new PerguntaController();
 	private JButton btnBusca;
 	private CategoriaDAO categoriaDAO = new CategoriaDAO();
 	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
@@ -49,43 +52,24 @@ public class TelaPesquisa extends JPanel {
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JButton btnGerarExcel;
-	
+
 	/**
 	 * Create the panel.
 	 */
 	public TelaPesquisa() {
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("right:default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(150dlu;min):grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default:grow"),},
-			new RowSpec[] {
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("top:default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+		setLayout(new FormLayout(
+				new ColumnSpec[] { ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(150dlu;min):grow"),
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default:grow"), },
+				new RowSpec[] { FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("top:default:grow"),
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, }));
 
 		ArrayList<Categoria> categorias = categoriaDAO.buscarTodas();
 
@@ -106,7 +90,7 @@ public class TelaPesquisa extends JPanel {
 		btnBusca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Categoria categoriaSelecionada = (Categoria) cbxCategorias.getSelectedItem();
-				perguntas = perguntaController.busca(textFDuvida.getText(), categoriaSelecionada.getNome(),
+				perguntas = pCont.busca(textFDuvida.getText(), categoriaSelecionada.getNome(),
 						cbxResolvido.isSelected());
 
 				limparTabela();
@@ -125,7 +109,7 @@ public class TelaPesquisa extends JPanel {
 
 					model.addRow(novaLinhaDaTabela);
 				}
-
+				btnGerarExcel.setVisible(true);
 			}
 		});
 
@@ -151,18 +135,39 @@ public class TelaPesquisa extends JPanel {
 			}
 		};
 		scrollPane.setViewportView(table);
+
+		btnGerarExcel = new JButton("Gerar Excel");
+		btnGerarExcel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
-				btnGerarExcel = new JButton("Gerar Excel");
-				add(btnGerarExcel, "3, 13, 3, 1, left, default");
-		
-				btnVisualizar = new JButton("visualizar");
-				add(btnVisualizar, "13, 13, center, center");
+				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+
+				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+					String resultado;
+					try {
+						resultado = pCont.gerarPlanilha(perguntas, caminhoEscolhido);
+						JOptionPane.showMessageDialog(null, resultado);
+					} catch (DevPerguntarException erro) {
+						JOptionPane.showConfirmDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				
+			}
+		});
+		btnGerarExcel.setVisible(false);
+		add(btnGerarExcel, "3, 13, 3, 1, left, default");
+
+		btnVisualizar = new JButton("visualizar");
+		add(btnVisualizar, "13, 13, center, center");
 		atualizarCampos();
 	}
 
 	public void pesquisar() {
 		Categoria categoria = (Categoria) cbxCategorias.getSelectedItem();
-		perguntaController.busca(textFDuvida.getText(), categoria.getNome(), cbxResolvido.isSelected());
+		pCont.busca(textFDuvida.getText(), categoria.getNome(), cbxResolvido.isSelected());
 	}
 
 	public void atualizarCampos() {

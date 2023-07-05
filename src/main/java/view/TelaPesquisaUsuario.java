@@ -41,7 +41,7 @@ public class TelaPesquisaUsuario extends JPanel {
 	private JComboBox cBTipo;
 	private JComboBox cBSentido;
 	UsuarioController uCont = new UsuarioController();
-	private JButton btnNewButton;
+	private JButton btnGerarExcel;
 
 	public TelaPesquisaUsuario() {
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -89,13 +89,14 @@ public class TelaPesquisaUsuario extends JPanel {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				atualizarTable();
-				btnNewButton.setVisible(true);
+				btnGerarExcel.setVisible(true);
 			}
 		});
 		add(btnBuscar, "8, 8");
 		
-		btnNewButton = new JButton("Gerar Excel");
-		btnNewButton.addActionListener(new ActionListener() {
+		btnGerarExcel = new JButton("Gerar Excel");
+		btnGerarExcel.setVisible(false);
+		btnGerarExcel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
@@ -115,7 +116,7 @@ public class TelaPesquisaUsuario extends JPanel {
 				
 			}
 		});
-		add(btnNewButton, "8, 10");
+		add(btnGerarExcel, "8, 10");
 
 		chckbxTemPergunta = new JCheckBox("Tem Perguntas");
 		add(chckbxTemPergunta, "4, 14");

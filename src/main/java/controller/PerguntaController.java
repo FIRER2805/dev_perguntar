@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.bo.PerguntaBO;
 import model.exception.DevPerguntarException;
+import model.gerador.GeradorPlanilha;
 import model.vo.Pergunta;
 
 public class PerguntaController {
@@ -28,4 +29,42 @@ public class PerguntaController {
 	{
 		return bo.perguntar(pergunta);
 	}
+
+	public String gerarPlanilha(ArrayList<Pergunta> perguntas, String caminhoEscolhido) throws DevPerguntarException {
+		
+		
+		
+		if(perguntas == null || caminhoEscolhido == null || caminhoEscolhido.trim().isEmpty()) {
+			throw new DevPerguntarException("Preencha todos os campos");
+		}
+		
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaPerguntas(perguntas, caminhoEscolhido);
+		
+		
+		
+		
+		
+		
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
