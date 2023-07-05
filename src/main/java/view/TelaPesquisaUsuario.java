@@ -41,7 +41,7 @@ public class TelaPesquisaUsuario extends JPanel {
 	private JComboBox cBTipo;
 	private JComboBox cBSentido;
 	UsuarioController uCont = new UsuarioController();
-	private JButton btnGerarExcel;
+//	private JButton btnGerarExcel;
 
 	public TelaPesquisaUsuario() {
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -86,12 +86,12 @@ public class TelaPesquisaUsuario extends JPanel {
 		txtBarraBusca.setColumns(10);
 
 		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				atualizarTable();
-				btnGerarExcel.setVisible(true);
-			}
-		});
+//		btnBuscar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				atualizarTable();
+//				btnGerarExcel.setVisible(true);
+//			}
+//		});
 		add(btnBuscar, "8, 8");
 		btnBuscar.addActionListener(new ActionListener() 
 		{
@@ -100,29 +100,29 @@ public class TelaPesquisaUsuario extends JPanel {
 			}
 		});
 		
-		btnGerarExcel = new JButton("Gerar Excel");
-		btnGerarExcel.setVisible(false);
-		btnGerarExcel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
-				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
-
-				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
-				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
-					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
-					String resultado;
-					try {
-						resultado = uCont.gerarPlanilha(usuarios, caminhoEscolhido);
-						JOptionPane.showMessageDialog(null, resultado);
-					} catch (DevPerguntarException erro) {
-						JOptionPane.showConfirmDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-					}
-				}
-				
-			}
-		});
-		add(btnGerarExcel, "8, 10");
+//		btnGerarExcel = new JButton("Gerar Excel");
+//		btnGerarExcel.setVisible(false);
+//		btnGerarExcel.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+//				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+//
+//				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+//				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+//					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+//					String resultado;
+//					try {
+//						resultado = uCont.gerarPlanilha(usuarios, caminhoEscolhido);
+//						JOptionPane.showMessageDialog(null, resultado);
+//					} catch (DevPerguntarException erro) {
+//						JOptionPane.showConfirmDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+//					}
+//				}
+//				
+//			}
+//		});
+//		add(btnGerarExcel, "8, 10");
 
 		chckbxTemPergunta = new JCheckBox("Tem Perguntas");
 		add(chckbxTemPergunta, "4, 14");
@@ -156,7 +156,6 @@ public class TelaPesquisaUsuario extends JPanel {
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		buscar();
 
 		for (Usuario u : usuarios) {
 
@@ -177,11 +176,6 @@ public class TelaPesquisaUsuario extends JPanel {
 		pesquisaUsuario.setTemPergunta(chckbxTemPergunta.isSelected());
 		pesquisaUsuario.setTemresposta(chckbxTemResposta.isSelected());
 		pesquisaUsuario.setTemSolucao(chckbxTemSolucao.isSelected());
-		if(cBSentido.getSelectedItem().toString().equals("Crescente")) {
-			pesquisaUsuario.setOrdemPesquisa(cBTipo.getSelectedItem().toString() + " asc ");
-		}else {
-			pesquisaUsuario.setOrdemPesquisa(cBTipo.getSelectedItem().toString() + " desc ");
-		}
 		
 		try 
 		{
