@@ -37,15 +37,14 @@ public class TelaPergunta extends JPanel {
 	private JTextArea textADescricao;
 	private JLabel lblDtCriacao;
 	private JLabel lblDtResolucao;
-	private JTextField textResposta;
 	private JLabel lblSuaResposta;
 	private JButton btnPublicar;
-	private JLabel lblNewLabel;
 	private ArrayList<Resposta> respostas;
 	private String[] nomesColunas = {"respostas"};
 	private RespostaDAO respostaDAO;
 	private ArrayList<DefaultMutableTreeNode> arvoresResposta;
 	private JScrollPane scrollPaneArvores;
+	private JTextArea textResposta;
 
 	/**
 	 * Create the panel.
@@ -68,12 +67,12 @@ public class TelaPergunta extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
+				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("14px"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("136px:grow"),
@@ -85,36 +84,30 @@ public class TelaPergunta extends JPanel {
 		add(lblAutor, "3, 3, left, top");
 
 		lblCategoria = new JLabel("Categoria : ");
-		add(lblCategoria, "5, 3, fill, center");
+		add(lblCategoria, "5, 3, right, center");
 
 		lblTitulo = new JLabel("Titulo : ");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblTitulo, "3, 5, fill, top");
 
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "3, 7, 3, 1, fill, fill");
-
 		textADescricao = new JTextArea();
 		textADescricao.setEnabled(false);
-		scrollPane.setViewportView(textADescricao);
+		add(textADescricao, "3, 7, 3, 1, fill, fill");
 
 		lblDtCriacao = new JLabel("Data de Criação :");
 		add(lblDtCriacao, "3, 9, fill, fill");
 
 		lblDtResolucao = new JLabel("data resolucao");
-		add(lblDtResolucao, "5, 9, fill, fill");
-		
-		textResposta = new JTextField();
-		add(textResposta, "3, 13, 3, 1, fill, fill");
-		textResposta.setColumns(10);
-		
-		
+		add(lblDtResolucao, "5, 9, right, fill");
 		
 		lblSuaResposta = new JLabel("Sua Resposta:");
 		add(lblSuaResposta, "3, 11, left, fill");
 		
+		textResposta = new JTextArea();
+		add(textResposta, "3, 13, 3, 1, fill, fill");
+		
 		btnPublicar = new JButton("Publicar");
-		add(btnPublicar, "5, 15, left, top");
+		add(btnPublicar, "3, 15, 3, 1, center, center");
 		
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -130,9 +123,6 @@ public class TelaPergunta extends JPanel {
 				}
 				//preencherTabela();
 		}});
-		
-		lblNewLabel = new JLabel("Respostas");
-		add(lblNewLabel, "3, 15, left, bottom");
 		
 		scrollPaneArvores = new JScrollPane();
 //		add(scrollPaneArvores, "3, 17, 3, 1, fill, fill");
