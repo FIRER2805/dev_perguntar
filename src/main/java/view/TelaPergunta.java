@@ -46,6 +46,8 @@ public class TelaPergunta extends JPanel {
 	private ArrayList<DefaultMutableTreeNode> arvoresResposta;
 	private JScrollPane scrollPaneArvores;
 	private JTextArea textResposta;
+	private JScrollPane scrollPane;
+	private JTree tree;
 
 	/**
 	 * Create the panel.
@@ -54,7 +56,7 @@ public class TelaPergunta extends JPanel {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(175dlu;min)"),
+				ColumnSpec.decode("max(175dlu;min):grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(175dlu;min)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -110,6 +112,12 @@ public class TelaPergunta extends JPanel {
 		btnPublicar = new JButton("Publicar");
 		add(btnPublicar, "3, 15, 3, 1, center, center");
 		
+		scrollPane = new JScrollPane();
+		add(scrollPane, "3, 17, 3, 1, fill, fill");
+		
+		tree = new JTree();
+		scrollPane.setViewportView(tree);
+		
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RespostaController respostaController = new RespostaController();
@@ -122,11 +130,9 @@ public class TelaPergunta extends JPanel {
 				} catch (DevPerguntarException e1) {
 					JOptionPane.showMessageDialog(null,e1.getMessage(), "Erro:",JOptionPane.ERROR_MESSAGE);
 				}
-				//preencherTabela();
 		}});
 		
 		scrollPaneArvores = new JScrollPane();
-//		add(scrollPaneArvores, "3, 17, 3, 1, fill, fill");
 		
 		limparTabela();
 		
@@ -145,7 +151,6 @@ public class TelaPergunta extends JPanel {
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		idPergunta = pergunta.getId();
 		
-		// autor categoria titulo descricao data
 		lblAutor.setText("Autor : " + pergunta.getUsuario().getNome());
 		lblCategoria.setText("Categoria : " + pergunta.getCategoria().getNome());
 		lblTitulo.setText(pergunta.getTitulo());
@@ -158,24 +163,6 @@ public class TelaPergunta extends JPanel {
 		}
 	}
 	
-//	public void preencherTabela() {
-//		respostas = respostaDAO.buscarTodos(idPergunta);
-//		
-//		limparTabela();
-//		
-//		DefaultTableModel model = (DefaultTableModel) table.getModel();
-//
-//
-//		for (Resposta r : respostas) {
-//
-//			Object[] novaLinhaDaTabela = new Object[1];
-//
-//			novaLinhaDaTabela[0] = r.getConteudo();
-//
-//			model.addRow(novaLinhaDaTabela);
-//		}
-//		
-//	}
 	
 	private void limparTabela() {
 		scrollPaneArvores.removeAll();
@@ -187,20 +174,12 @@ public class TelaPergunta extends JPanel {
 		arvoresResposta = (ArrayList<DefaultMutableTreeNode>) respostaDAO.montaArvoresResposta(idPergunta);
 		 for(DefaultMutableTreeNode arvore : arvoresResposta)
 		 {
-//			 scrollPaneArvores.add(new JTree(arvore));
 			 root.add(arvore);
 		 }
 		 
-		 
-		 
-		 DefaultTreeModel treeModel = new DefaultTreeModel(root);
 
-			JTree tree = new JTree(treeModel);
-			JScrollPane scrollPane = new JScrollPane(tree);
-			add(scrollPane, "3, 17, 3, 1, fill, fill");
-//			frame.getContentPane().add(scrollPane);
-		 
-		 
+			tree.setModel(new DefaultTreeModel(root));
+			
 		 
 		 
 	}
