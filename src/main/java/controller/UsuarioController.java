@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.bo.UsuarioBO;
 import model.exception.DevPerguntarException;
-import model.vo.Pergunta;
+import model.gerador.GeradorPlanilha;
 import model.vo.PesquisaUsuario;
 import model.vo.Usuario;
 
@@ -31,8 +31,17 @@ public class UsuarioController {
 		return bo.excluir(u);
 	}
 
-	public boolean pesquisarUsuario(ArrayList<Usuario> usuarios, PesquisaUsuario pesquisaUsuario) {
+	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
 
 		return bo.pesquisarUsuario(pesquisaUsuario);
+	}
+
+	public String gerarPlanilha(ArrayList<Usuario> usuarios, String caminhoEscolhido) throws DevPerguntarException {
+		if(usuarios == null || caminhoEscolhido == null || caminhoEscolhido.trim().isEmpty()) {
+			throw new DevPerguntarException("Preencha todos os campos");
+		}
+		
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaUsuarios(usuarios, caminhoEscolhido);
 	}
 }

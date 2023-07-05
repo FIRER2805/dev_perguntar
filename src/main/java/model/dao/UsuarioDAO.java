@@ -193,24 +193,79 @@ public class UsuarioDAO {
 		return false;
 	}
 
-	public boolean pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
+	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
 		
-		String sqlaaa =  "select * from categoria order by nome asc;";
-		
-		
-		String teste = "select "
-				+ "	u.nome,"
-				+ "	count(p.id) as qtdpergunta,"
-				+ "	count(r.id) as qtdresposta,"
-				+ "	(select count(r2.id) from resposta r2 where r2.id_usuario = u.id and solucao = 1) as qtdsolucao "
-				+ "from usuario "
+		String sql = "select "
+				+ "u.nome, "
+				+ "count(p.id) as qtdpergunta, "
+				+ "count(r.id) as qtdresposta, "
+				+ "(select count(r2.id) from resposta r2 where r2.id_usuario = u.id and solucao = 1) as qtdsolucao "
+				+ "from usuario u "
 				+ "left join pergunta p on p.id_usuario = u.id "
 				+ "left join resposta r on r.id_usuario = u.id "
-				+ "group by u.nome "
-				+ "having qtdpergunta > 1 "
-				+ "and qtdresposta > 1 "
-				+ "and qtdsolucao > 1;";
+				+ "group by u.nome, u.id ";
 		
-		return false;
+		String filtro = "";
+		if(pesquisaUsuario.isTemPergunta()) {
+			filtro += "qtdpergunta > 1 ";
+		}
+		if(!filtro.isEmpty()) {
+			filtro += "and ";
+		}
+		if(pesquisaUsuario.isTemresposta()) {
+			filtro += "qtdresposta > 1 ";
+		}
+		if(!filtro.isEmpty()) {
+			filtro += "and ";
+		}
+		if(pesquisaUsuario.isTemSolucao()) {
+			filtro += "qtdsolucao > 1 ";
+		}
+		if(!filtro.isEmpty()) {
+			filtro = "having" + filtro;
+		}
+		filtro = filtro +"order by "+ pesquisaUsuario.getOrdemPesquisa();
+		sql = sql+filtro;
+		
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		Connection conn = Banco.getConnection();
+		Statement pstmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		try {
+			resultado = pstmt.executeQuery(sql);
+			while(resultado.next()){
+				
+				Usuario u = new Usuario();
+				u.setNome(resultado.getString(1));
+				u.setNumPergunta(resultado.getInt(2));
+				u.setNumResposta(resultado.getInt(3));
+				u.setNumsolucao(resultado.getInt(4));
+				
+				usuarios.add(u);
+			}
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		finally{
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(pstmt);
+			Banco.closeConnection(conn);
+		}
+		
+		
+		return usuarios;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -53,7 +53,7 @@ public class UsuarioBO {
 		return dao.excluir(u.getId());
 	}
 
-	public boolean pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
+	public ArrayList<Usuario> pesquisarUsuario(PesquisaUsuario pesquisaUsuario) {
 
 		return dao.pesquisarUsuario(pesquisaUsuario);
 	}

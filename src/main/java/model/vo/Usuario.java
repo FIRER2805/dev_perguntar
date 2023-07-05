@@ -49,6 +49,36 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
+	public int getNumPergunta() {
+		return numPergunta;
+	}
+
+
+	public void setNumPergunta(int numPergunta) {
+		this.numPergunta = numPergunta;
+	}
+
+
+	public int getNumResposta() {
+		return numResposta;
+	}
+
+
+	public void setNumResposta(int numResposta) {
+		this.numResposta = numResposta;
+	}
+
+
+	public int getNumsolucao() {
+		return numsolucao;
+	}
+
+
+	public void setNumsolucao(int numsolucao) {
+		this.numsolucao = numsolucao;
+	}
+
+
 	@Override
 	public String toString()
 	{
