@@ -215,20 +215,20 @@ public class UsuarioDAO {
 		if(pesquisaUsuario.isTemPergunta()) {
 			filtro += "qtdpergunta > 1 ";
 		}
-		if(!filtro.isEmpty()) {
-			filtro += "and ";
-		}
 		if(pesquisaUsuario.isTemresposta()) {
+			if(!filtro.isEmpty()) {
+				filtro += "and ";
+			}
 			filtro += "qtdresposta > 1 ";
 		}
-		if(!filtro.isEmpty()) {
-			filtro += "and ";
-		}
 		if(pesquisaUsuario.isTemSolucao()) {
+			if(!filtro.isEmpty()) {
+				filtro += "and ";
+			}
 			filtro += "qtdsolucao > 1 ";
 		}
 		if(!filtro.isEmpty()) {
-			filtro = "having" + filtro;
+			filtro = "having " + filtro;
 		}
 		filtro = filtro +"order by "+ pesquisaUsuario.getOrdemPesquisa();
 		sql = sql+filtro;
