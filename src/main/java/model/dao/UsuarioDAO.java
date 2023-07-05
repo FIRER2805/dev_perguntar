@@ -157,8 +157,10 @@ public class UsuarioDAO {
 	{
 		Usuario retorno = null;
 		String sql =  "select * from usuario where e_mail = ? and senha = ?";
+		String sql2 = "update usuario set ativo = 1 where id = ?;";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
+		PreparedStatement pStmt2 = Banco.getPreparedStmt(conn, sql2);
 		ResultSet rs = null;
 		try {
 			pStmt.setString(1, u.geteMail());
@@ -170,6 +172,8 @@ public class UsuarioDAO {
 				u.setNome(rs.getString(2));
 				u.seteMail(rs.getString(3));
 				u.setSenha(rs.getString(4));
+				pStmt2.setInt(1, u.getId());
+				pStmt2.executeUpdate();
 				retorno = u;
 			}
 		}
@@ -180,7 +184,9 @@ public class UsuarioDAO {
 		}
 		finally 
 		{
+			Banco.closeResultSet(rs);
 			Banco.closeStatement(pStmt);
+			Banco.closeStatement(pStmt2);
 			Banco.closeConnection(conn);
 		}
 		return retorno;
