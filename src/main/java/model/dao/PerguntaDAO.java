@@ -175,14 +175,15 @@ public class PerguntaDAO {
 	
 	public int atualizar(Pergunta p)
 	{
-		String sql =  "update pergunta set titulo = ?, conteudo = ? where id = ?";
+		String sql =  "update pergunta set titulo = ?, conteudo = ?, id_categoria = ? where id = ?";
 		int registrosAfetados = 0;
 		Connection conn = Banco.getConnection();
 		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
 		try {
 			pStmt.setString(1, p.getTitulo());
 			pStmt.setString(2, p.getConteudo());
-			pStmt.setInt(3, p.getId());
+			pStmt.setInt(3, p.getCategoria().getId());
+			pStmt.setInt(4, p.getId());
 			registrosAfetados = pStmt.executeUpdate();
 		}
 		catch(SQLException e)

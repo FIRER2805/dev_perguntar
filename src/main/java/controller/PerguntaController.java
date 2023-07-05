@@ -32,23 +32,19 @@ public class PerguntaController {
 
 	public String gerarPlanilha(ArrayList<Pergunta> perguntas, String caminhoEscolhido) throws DevPerguntarException {
 		
-		
-		
 		if(perguntas == null || caminhoEscolhido == null || caminhoEscolhido.trim().isEmpty()) {
 			throw new DevPerguntarException("Preencha todos os campos");
 		}
 		
 		GeradorPlanilha gerador = new GeradorPlanilha();
 		return gerador.gerarPlanilhaPerguntas(perguntas, caminhoEscolhido);
-		
-		
-		
-		
-		
-		
-		
 	}
 
+	public int atualizar(Pergunta pergunta)
+	{
+		return bo.atualizar(pergunta);
+	}
+	
 	public int excluir(Pergunta pergunta) {
 		return bo.excluir(pergunta);
 	}

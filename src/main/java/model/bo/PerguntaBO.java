@@ -43,4 +43,8 @@ public class PerguntaBO {
 	{
 		return dao.excluir(pergunta.getId());
 	}
+
+	public int atualizar(Pergunta pergunta) {
+		return dao.atualizar(pergunta);
+	}
 }
