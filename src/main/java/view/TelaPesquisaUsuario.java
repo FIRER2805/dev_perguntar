@@ -178,7 +178,7 @@ public class TelaPesquisaUsuario extends JPanel {
 		}
 		
 		usuarios = uCont.pesquisarUsuario(pesquisaUsuario);
-		if(usuarios.isEmpty()) {
+		if(usuarios == null) {
 			JOptionPane.showMessageDialog(null, "Falha ao Conectar Com o Servidor");
 		}
 
