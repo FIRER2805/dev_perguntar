@@ -3,6 +3,7 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -91,7 +92,7 @@ public class TelaPergunta extends JPanel {
 		add(lblTitulo, "3, 5, fill, top");
 
 		textADescricao = new JTextArea();
-		textADescricao.setEnabled(false);
+		textADescricao.setEditable(false);
 		add(textADescricao, "3, 7, 3, 1, fill, fill");
 
 		lblDtCriacao = new JLabel("Data de Criação :");
@@ -155,14 +156,15 @@ public class TelaPergunta extends JPanel {
 	}
 
 	public void atualizarCampos(Pergunta pergunta) {
+		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		idPergunta = pergunta.getId();
 		
 		// autor categoria titulo descricao data
 		lblAutor.setText("Autor : " + pergunta.getUsuario().getNome());
 		lblCategoria.setText("Categoria : " + pergunta.getCategoria().getNome());
 		lblTitulo.setText(pergunta.getTitulo());
-		textADescricao.setText(pergunta.getConteudo());
-		lblDtCriacao.setText("Data de Criação : " + pergunta.getData().toString());
+		textADescricao.setText(pergunta.getData().format(formatador));
+		lblDtCriacao.setText("Data de Criação : " + pergunta.getData().format(formatador));
 		if(pergunta.getDataResolucao() == null) {
 			lblDtResolucao.setText("");
 		}else {
