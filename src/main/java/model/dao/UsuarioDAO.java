@@ -216,6 +216,7 @@ public class UsuarioDAO {
 		{
 			queryBase += pesquisaUsuario.criaFiltro();
 		}
+		queryBase += pesquisaUsuario.ordem();
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet rs = null;

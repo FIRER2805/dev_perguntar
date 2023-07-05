@@ -176,7 +176,8 @@ public class TelaPesquisaUsuario extends JPanel {
 		pesquisaUsuario.setTemPergunta(chckbxTemPergunta.isSelected());
 		pesquisaUsuario.setTemresposta(chckbxTemResposta.isSelected());
 		pesquisaUsuario.setTemSolucao(chckbxTemSolucao.isSelected());
-		
+		pesquisaUsuario.setCampoOrdem((String) cBTipo.getSelectedItem());
+		pesquisaUsuario.setOrdemPesquisa((String) cBSentido.getSelectedItem());
 		try 
 		{
 			usuarios = uCont.pesquisarUsuario(pesquisaUsuario);
