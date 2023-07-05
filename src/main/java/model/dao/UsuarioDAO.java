@@ -203,10 +203,15 @@ public class UsuarioDAO {
 		
 		ArrayList<Usuario> retorno = new ArrayList<Usuario>();
 		String queryBase = "select u.id"
-				+ ",case when u.ativo = 1 then u.nome else '[DELETADO]' end as nome "
-				+ " ,u.ativo "
+				+ ",u.nome"
+				+ ",count(r.id) as qtd_respostas"
+				+ ",(select count(r2.id) from resposta r2 where u.id = r2.id_usuario and r2.solucao = 1) as resposta_solucao"
+				+ " , count(p.id) as qntd_perguntas "
 				+ "from usuario u "
-				+ "where u.nome like '%" + pesquisaUsuario.getBusca() +"%' and u.ativo = 1 ";
+				+ "left join resposta r on r.id_usuario = u.id "
+				+ "left join pergunta p on p.id_usuario = u.id "
+				+ "where u.nome like '%" + pesquisaUsuario.getBusca() +"%' "
+				+ "group by u.nome ";
 		if(pesquisaUsuario.temFiltros())
 		{
 			queryBase += pesquisaUsuario.criaFiltro();
@@ -222,7 +227,9 @@ public class UsuarioDAO {
 				Usuario user = new Usuario();
 				user.setId(rs.getInt("id"));
 				user.setNome(rs.getString("nome"));
-				user.setAtivo(rs.getBoolean("ativo"));
+				user.setNumPergunta(rs.getInt("qntd_perguntas"));
+				user.setNumResposta(rs.getInt("qtd_respostas"));
+				user.setNumsolucao(rs.getInt("resposta_solucao"));
 				retorno.add(user);
 			}
 		}
