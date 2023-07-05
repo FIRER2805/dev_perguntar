@@ -93,8 +93,14 @@ public class TelaPesquisaUsuario extends JPanel {
 			}
 		});
 		add(btnBuscar, "8, 8");
+		btnBuscar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) {
+				buscar();
+			}
+		});
 		
-		btnGerarExcel = new JButton("Gerar Excel");
+		btnGerarExcel = new JButton("Gerar relatório");
 		btnGerarExcel.setVisible(false);
 		btnGerarExcel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,7 +156,6 @@ public class TelaPesquisaUsuario extends JPanel {
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		buscar();
 
 		for (Usuario u : usuarios) {
 
@@ -171,17 +176,17 @@ public class TelaPesquisaUsuario extends JPanel {
 		pesquisaUsuario.setTemPergunta(chckbxTemPergunta.isSelected());
 		pesquisaUsuario.setTemresposta(chckbxTemResposta.isSelected());
 		pesquisaUsuario.setTemSolucao(chckbxTemSolucao.isSelected());
-		if(cBSentido.getSelectedItem().toString().equals("Crescente")) {
-			pesquisaUsuario.setOrdemPesquisa(cBTipo.getSelectedItem().toString() + " asc ");
-		}else {
-			pesquisaUsuario.setOrdemPesquisa(cBTipo.getSelectedItem().toString() + " desc ");
+		pesquisaUsuario.setCampoOrdem((String) cBTipo.getSelectedItem());
+		pesquisaUsuario.setOrdemPesquisa((String) cBSentido.getSelectedItem());
+		try 
+		{
+			usuarios = uCont.pesquisarUsuario(pesquisaUsuario);
+			atualizarTable();
 		}
-		
-		usuarios = uCont.pesquisarUsuario(pesquisaUsuario);
-		if(usuarios == null) {
-			JOptionPane.showMessageDialog(null, "Falha ao Conectar Com o Servidor");
+		catch(DevPerguntarException e)
+		{
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
-
 	}
 
 }
