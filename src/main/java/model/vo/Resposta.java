@@ -39,4 +39,10 @@ public class Resposta {
 	public void setIdPergunta(int idPergunta) {
 		this.idPergunta = idPergunta;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return this.getConteudo();
+	}
 }

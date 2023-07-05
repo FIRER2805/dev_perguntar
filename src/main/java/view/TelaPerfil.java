@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -25,7 +26,6 @@ import controller.UsuarioController;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Usuario;
-import javax.swing.JSeparator;
 
 public class TelaPerfil extends JPanel {
 	private Usuario userLogado = new Usuario();
@@ -146,19 +146,14 @@ public class TelaPerfil extends JPanel {
 		
 		btnEditar = new JButton("Editar Pergunta");
 		add(btnEditar, "5, 25");
-		btnEditar.addActionListener(new ActionListener() 
-		{
-
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}
-			
-		});
 
 		btnVizualizar = new JButton("Vizualizar");
 		add(btnVizualizar, "7, 25, right, default");
 		limparTabela();
+	}
+	
+	public JButton getBtnEditar() {
+		return btnEditar;
 	}
 
 	public JButton getBtnVizualizar() {

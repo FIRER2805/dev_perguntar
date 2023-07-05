@@ -141,6 +141,12 @@ public class TelaEdicaoPergunta extends JPanel {
 		}
 	}
 	
+	public void setaCampos()
+	{
+		textFieldTitulo.setText(this.pergunta.getTitulo());
+		textAreaConteudo.setText(this.pergunta.getConteudo());
+	}
+	
 	private void validaCampos(Pergunta pergunta) throws DevPerguntarException
 	{
 		String mensagem = "";
@@ -158,6 +164,7 @@ public class TelaEdicaoPergunta extends JPanel {
 		novaPergunta.setTitulo(textFieldTitulo.getText());
 		novaPergunta.setConteudo(textAreaConteudo.getText());
 		novaPergunta.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
+		novaPergunta.setId(this.pergunta.getId());
 		return novaPergunta;
 	}
 }

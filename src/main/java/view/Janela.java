@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import model.exception.DevPerguntarException;
+import model.vo.Pergunta;
 import model.vo.Usuario;
 
 public class Janela {
@@ -37,6 +37,7 @@ public class Janela {
 	private TelaPergunta telaPergunta = new TelaPergunta();
 	private TelaPesquisa telaPesquisa = new TelaPesquisa();
 	private TelaPesquisaUsuario telaPesquisaUsuario = new TelaPesquisaUsuario();
+	private TelaEdicaoPergunta telaEdicaoPergunta = new TelaEdicaoPergunta();
 
 	/**
 	 * Launch the application.
@@ -250,6 +251,25 @@ public class Janela {
 				}
 				
 			}
+		});
+		
+		telaPerfil.getBtnEditar().addActionListener(new ActionListener() 
+		{
+
+			public void actionPerformed(ActionEvent e) {
+				try {
+					telaEdicaoPergunta.setPergunta(telaPerfil.resgatarPergunta());
+					telaEdicaoPergunta.setaCampos();
+					telaEdicaoPergunta.setVisible(true);
+					frame.setContentPane(telaEdicaoPergunta);
+					frame.revalidate();
+				} catch (DevPerguntarException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Falha ao Efetuar Cadastro",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+			
 		});
 
 		mntmCadastrar = new JMenuItem("Cadastrar");

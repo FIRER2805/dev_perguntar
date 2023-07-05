@@ -154,7 +154,7 @@ public class TelaPergunta extends JPanel {
 		lblAutor.setText("Autor : " + pergunta.getUsuario().getNome());
 		lblCategoria.setText("Categoria : " + pergunta.getCategoria().getNome());
 		lblTitulo.setText(pergunta.getTitulo());
-		textADescricao.setText(pergunta.getData().format(formatador));
+		textADescricao.setText(pergunta.getConteudo());
 		lblDtCriacao.setText("Data de Criação : " + pergunta.getData().format(formatador));
 		if(pergunta.getDataResolucao() == null) {
 			lblDtResolucao.setText("");
