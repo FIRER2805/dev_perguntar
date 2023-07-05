@@ -92,7 +92,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					telaPergunta.atualizarCampos(telaHome.resgatarPergunta()/*, usuarioLogado*/);
+					telaPergunta.atualizarCampos(telaHome.resgatarPergunta());
 					telaPergunta.setPergunta(telaHome.resgatarPergunta());
 					telaPergunta.setVisible(true);
 					frame.setContentPane(new JScrollPane(telaPergunta));

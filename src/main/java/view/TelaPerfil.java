@@ -281,7 +281,7 @@ public class TelaPerfil extends JPanel {
 
 	public void excluirPerguntaButao(Pergunta pergunta) {
 		PerguntaController pCont = new PerguntaController();	
-		if(pCont.excluir(pergunta)) {
+		if(pCont.excluir(pergunta) > 0) {
 			JOptionPane.showMessageDialog(null, "Pergunta Excluida com Sucesso");
 		}else {
 			JOptionPane.showMessageDialog(null, "Falha ao tentar excluir pergunta");
