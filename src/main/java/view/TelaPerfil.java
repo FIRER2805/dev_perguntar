@@ -35,7 +35,6 @@ public class TelaPerfil extends JPanel {
 	private JTextField txtNome;
 	private JTextField txtEmail;
 	private JPasswordField pFSenha;
-	private boolean edicaoComSenha = false;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton btnExcluir;
@@ -131,11 +130,26 @@ public class TelaPerfil extends JPanel {
 		scrollPane.setViewportView(table);
 
 		btnExcluir = new JButton("Excluir Pergunta");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					excluirPerguntaButao(resgatarPergunta());
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção!", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		});
 		add(btnExcluir, "3, 25, left, default");
 
 		btnVizualizar = new JButton("Vizualizar");
 		add(btnVizualizar, "7, 25, right, default");
 		limparTabela();
+	}
+
+	public JButton getBtnVizualizar() {
+		return btnVizualizar;
 	}
 
 	public JButton getBtnSalvarEdicao() {
@@ -265,12 +279,13 @@ public class TelaPerfil extends JPanel {
 
 	}
 
-	public void excluirPerguntaButao() {
-
-//		PerguntaController pCont = new PerguntaController();	
-//		Pergunta p = new Pergunta();
-//		//TODO criar metodo Excluir
-////		pCont.excluir(p);
+	public void excluirPerguntaButao(Pergunta pergunta) {
+		PerguntaController pCont = new PerguntaController();	
+		if(pCont.excluir(pergunta)) {
+			JOptionPane.showMessageDialog(null, "Pergunta Excluida com Sucesso");
+		}else {
+			JOptionPane.showMessageDialog(null, "Falha ao tentar excluir pergunta");
+		}
 	}
 
 }

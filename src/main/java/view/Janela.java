@@ -233,6 +233,24 @@ public class Janela {
 
 			}
 		});
+		
+		telaPerfil.getBtnVizualizar().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					telaPergunta.atualizarCampos(telaPerfil.resgatarPergunta()/*, usuarioLogado*/);
+					telaPergunta.setPergunta(telaPerfil.resgatarPergunta());
+					telaPergunta.setVisible(true);
+					frame.setContentPane(new JScrollPane(telaPergunta));
+					telaPergunta.mostrarPergutas();
+					frame.revalidate();
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		});
 
 		mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
