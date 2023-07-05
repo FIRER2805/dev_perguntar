@@ -140,7 +140,6 @@ public class TelaPesquisa extends JPanel {
 
 		cbxCategorias = new JComboBox(categoriaDAO.buscarTodas().toArray());
 		cbxCategorias.setBackground(SystemColor.activeCaption);
-		cbxCategorias.setSelectedIndex(-1);
 		add(cbxCategorias, "13, 9, right, default");
 
 		JScrollPane scrollPane = new JScrollPane();

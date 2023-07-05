@@ -33,6 +33,6 @@ public class UsuarioController {
 
 	public boolean pesquisarUsuario(ArrayList<Usuario> usuarios, PesquisaUsuario pesquisaUsuario) {
 
-		return bo.pesquisarUsuario(usuarios, pesquisaUsuario);
+		return bo.pesquisarUsuario(pesquisaUsuario);
 	}
 }
