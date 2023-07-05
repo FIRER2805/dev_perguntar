@@ -44,4 +44,27 @@ public class UsuarioController {
 		GeradorPlanilha gerador = new GeradorPlanilha();
 		return gerador.gerarPlanilhaUsuarios(usuarios, caminhoEscolhido);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
