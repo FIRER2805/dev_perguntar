@@ -48,6 +48,9 @@ public class TelaPergunta extends JPanel {
 	private JTextArea textResposta;
 	private JScrollPane scrollPane;
 	private JTree tree;
+	private JButton btnRespondeResposta;
+	private JButton btnResolucao;
+	private JTextArea textArea;
 
 	/**
 	 * Create the panel.
@@ -56,7 +59,7 @@ public class TelaPergunta extends JPanel {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("default:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(175dlu;min):grow"),
+				ColumnSpec.decode("max(175dlu;min)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(175dlu;min)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -78,7 +81,15 @@ public class TelaPergunta extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("136px:grow"),
+				RowSpec.decode("83px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:grow"),}));
 
@@ -117,6 +128,16 @@ public class TelaPergunta extends JPanel {
 		
 		tree = new JTree();
 		scrollPane.setViewportView(tree);
+		
+		btnResolucao = new JButton("Marcar Como Resolução");
+		add(btnResolucao, "3, 19, 3, 1, center, default");
+		
+		textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		add(textArea, "3, 23, 3, 1, fill, fill");
+		
+		btnRespondeResposta = new JButton("Responde a Pergunta");
+		add(btnRespondeResposta, "3, 25, 3, 1, center, default");
 		
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
