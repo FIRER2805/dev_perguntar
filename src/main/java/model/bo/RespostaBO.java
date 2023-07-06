@@ -17,6 +17,11 @@ public class RespostaBO {
 			throw new DevPerguntarException("a respota deve conter pelo menos 1 caractere");
 		return  respostaDAO.inserir(resposta);
 	}
+	
+	public int inserirNaResposta(Resposta resposta, int idRespostaPai)
+	{
+		return respostaDAO.inserirNaResposta(resposta, idRespostaPai);
+	}
 
 	public List<DefaultMutableTreeNode> consultarPorIdPergunta(int idPergunta) {
 		return respostaDAO.montaArvoresResposta(idPergunta);

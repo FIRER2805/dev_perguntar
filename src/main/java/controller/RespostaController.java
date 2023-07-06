@@ -16,6 +16,11 @@ public class RespostaController {
 		return respostaBO.inserir(resposta);
 	}
 	
+	public int inserirNaResposta(Resposta resposta, int idRespostaPai)
+	{
+		return respostaBO.inserirNaResposta(resposta, idRespostaPai);
+	}
+	
 	public List<DefaultMutableTreeNode> consultarPorIdPergunta(int idPergunta)
 	{
 		return respostaBO.consultarPorIdPergunta(idPergunta);

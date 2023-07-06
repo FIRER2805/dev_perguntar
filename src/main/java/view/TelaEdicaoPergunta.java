@@ -1,6 +1,9 @@
 package view;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +18,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import controller.CategoriaController;
 import controller.PerguntaController;
 import model.exception.DevPerguntarException;
 import model.vo.Categoria;
@@ -28,81 +32,61 @@ public class TelaEdicaoPergunta extends JPanel {
 	private PerguntaController controller;
 	private JComboBox comboBoxCategoria;
 	private JTextArea textAreaConteudo;
+	private JButton btnSalvarEdicao;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaEdicaoPergunta() {
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(14dlu;default)"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		
+		setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(14dlu;default)"), },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
+
 		JLabel lblNewLabel = new JLabel("Edição de pergunta");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblNewLabel, "12, 4, center, default");
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Título:");
 		add(lblNewLabel_1, "8, 8");
-		
+
 		textFieldTitulo = new JTextField();
 		add(textFieldTitulo, "12, 8, fill, default");
 		textFieldTitulo.setColumns(10);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("Categoria:");
 		add(lblNewLabel_3, "16, 8, left, default");
-		
-		comboBoxCategoria = new JComboBox();
+
+		CategoriaController categoriaController = new CategoriaController();
+		ArrayList<Categoria> categorias = categoriaController.buscaTodas();
+		comboBoxCategoria = new JComboBox(categorias.toArray());
 		add(comboBoxCategoria, "18, 8, 7, 1, fill, default");
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Conteudo:");
 		add(lblNewLabel_2, "8, 10");
-		
+
 		textAreaConteudo = new JTextArea();
 		add(textAreaConteudo, "12, 10, fill, fill");
-		
-		JButton btnNewButton = new JButton("Salvar Edição");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		add(btnNewButton, "12, 14, default, center");
-		
+
+		btnSalvarEdicao = new JButton("Salvar Edição");
+		btnSalvarEdicao.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnSalvarEdicao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				atualizaPergunta();
+			}
+		});
+		add(btnSalvarEdicao, "12, 14, default, center");
+
 		controller = new PerguntaController();
 
 	}
@@ -122,44 +106,37 @@ public class TelaEdicaoPergunta extends JPanel {
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
 	}
-	
-	public void atualizaPergunta()
-	{
+
+	public void atualizaPergunta() {
 		try {
 			Pergunta novaPergunta = geraPerguntaAtualizada();
 			validaCampos(novaPergunta);
-			if(controller.atualizar(geraPerguntaAtualizada()) > 0)
-			{
+			if (controller.atualizar(novaPergunta) > 0) {
 				JOptionPane.showMessageDialog(null, "Pergunta atualizada com sucesso!");
-			}
-			else 
-			{
+			} else {
 				JOptionPane.showMessageDialog(null, "Ocorreu algum erro ao atualizar a pergunta");
 			}
 		} catch (DevPerguntarException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
-	
-	public void setaCampos()
-	{
+
+	public void setaCampos() {
 		textFieldTitulo.setText(this.pergunta.getTitulo());
 		textAreaConteudo.setText(this.pergunta.getConteudo());
 	}
-	
-	private void validaCampos(Pergunta pergunta) throws DevPerguntarException
-	{
+
+	private void validaCampos(Pergunta pergunta) throws DevPerguntarException {
 		String mensagem = "";
-		if(pergunta.getTitulo().isBlank())
+		if (pergunta.getTitulo().isBlank())
 			mensagem += "O título é obrigatório!\n";
-		if(pergunta.getConteudo().trim().isEmpty())
+		if (pergunta.getConteudo().isBlank())
 			mensagem += "O conteudo é obrigatório!\n";
-		if(mensagem.isBlank())
+		if (!mensagem.isBlank())
 			throw new DevPerguntarException(mensagem);
 	}
-	
-	private Pergunta geraPerguntaAtualizada()
-	{
+
+	private Pergunta geraPerguntaAtualizada() {
 		Pergunta novaPergunta = new Pergunta();
 		novaPergunta.setTitulo(textFieldTitulo.getText());
 		novaPergunta.setConteudo(textAreaConteudo.getText());

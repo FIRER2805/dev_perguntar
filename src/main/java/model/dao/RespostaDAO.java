@@ -46,6 +46,37 @@ public class RespostaDAO {
 		return chave;
 	}
 	
+	public int inserirNaResposta(Resposta r, int idRespostaPai)
+	{
+		int chave = 0;
+		ResultSet chaves = null;
+		String sql = "insert into resposta(conteudo, id_pergunta, solucao, id_resposta) values(?, ?, ?, ?);";
+		Connection c = Banco.getConnection();
+		PreparedStatement ps = Banco.getPreparedStmtPK(c, sql);
+		try {
+			ps.setString(1, r.getConteudo());
+			ps.setInt(2, r.getIdPergunta());
+			ps.setBoolean(3, r.isSolucao());
+			ps.setInt(4,idRespostaPai);
+			ps.executeUpdate();
+			chaves = ps.getGeneratedKeys();
+			
+			if(chaves.next())
+			{
+				chave = chaves.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally 
+		{
+			Banco.closeResultSet(chaves);
+			Banco.closeStatement(ps);
+			Banco.closeConnection(c);
+		}
+		return chave;
+	}
+	
 	// cria as root e colocam elas numa lista
 	public List<DefaultMutableTreeNode> montaArvoresResposta(int idPergunta)
 	{
