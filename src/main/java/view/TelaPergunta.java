@@ -49,8 +49,8 @@ public class TelaPergunta extends JPanel {
 	private ArrayList<DefaultMutableTreeNode> arvoresResposta;
 	private JScrollPane scrollPaneArvores;
 	private JTextArea textResposta;
-	private JScrollPane scrollPane;
-	private JTree tree;
+	private JScrollPane scrollPane = new JScrollPane();
+	private JTree tree = new JTree();
 	private JButton btnRespondeResposta;
 	private JButton btnResolucao;
 	private JTextArea txtResponderResposta;
@@ -80,6 +80,23 @@ public class TelaPergunta extends JPanel {
 						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
 						RowSpec.decode("default:grow"), }));
+
+		add(scrollPane, "3, 17, 3, 1, fill, fill");
+		scrollPane.setViewportView(tree);
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				TreePath path = e.getNewLeadSelectionPath();
+
+				if (path != null) {
+					DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+					if (!selectedNode.getUserObject().equals("Respostas")) {
+						ultimaRespostaSelecionada = (Resposta) selectedNode.getUserObject();
+
+					}
+
+				}
+			}
+		});
 
 		lblAutor = new JLabel("Autor :");
 		lblAutor.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -111,17 +128,23 @@ public class TelaPergunta extends JPanel {
 		btnPublicar = new JButton("Publicar");
 		add(btnPublicar, "3, 15, 3, 1, center, center");
 
-		scrollPane = new JScrollPane();
-		add(scrollPane, "3, 17, 3, 1, fill, fill");
-
-		tree = new JTree();
-		scrollPane.setViewportView(tree);
-
 		btnResolucao = new JButton("Marcar Como Resolução");
 		btnResolucao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Resposta resposta = new Resposta();
-				JOptionPane.showMessageDialog(null, resposta.getConteudo() + "Hoello");
+				int num = 0;
+				try {
+					validarSelecao();
+					num = rCont.marcarRespostaComoSolucao(ultimaRespostaSelecionada);
+					if (num > 0) {
+						JOptionPane.showMessageDialog(null, "Resposta Marcada Como Resolucao");
+					} else {
+						JOptionPane.showMessageDialog(null, "Falha");
+					}
+					mostrarPergutas();
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Falha", JOptionPane.WARNING_MESSAGE);
+
+				}
 
 			}
 		});
@@ -131,12 +154,21 @@ public class TelaPergunta extends JPanel {
 		txtResponderResposta.setLineWrap(true);
 		add(txtResponderResposta, "3, 23, 3, 1, fill, fill");
 
-		btnRespondeResposta = new JButton("Responde a Pergunta");
+		btnRespondeResposta = new JButton("Responde a Resposta");
 		btnRespondeResposta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Resposta resposta = responderResposta();
-				rCont.inserirNaResposta(resposta, ultimaRespostaSelecionada.getId());
-				mostrarPergutas();
+				try {
+					validarSelecao();
+					Resposta resposta = responderResposta();
+					validarCamposParaResponderResposta();
+					if (rCont.inserirNaResposta(resposta, ultimaRespostaSelecionada.getId()) > 0) {
+						JOptionPane.showMessageDialog(null, "Resposta Efetuada!");
+						ultimaRespostaSelecionada = null;
+						mostrarPergutas();
+					}
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+				}
 
 			}
 		});
@@ -146,15 +178,17 @@ public class TelaPergunta extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				RespostaController respostaController = new RespostaController();
 				Resposta resposta = new Resposta();
-				resposta.setConteudo(textResposta.getText());
-				resposta.setIdPergunta(pergunta.getId());
-				resposta.setSolucao(false);
 				try {
+					resposta.setConteudo(textResposta.getText());
+					resposta.setIdPergunta(pergunta.getId());
+					resposta.setSolucao(false);
 					respostaController.inserir(resposta);
-				} catch (DevPerguntarException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
+					textResposta.setText("");
+					JOptionPane.showMessageDialog(null, "Resposta Efetuada!");
+					mostrarPergutas();
+				} catch (DevPerguntarException erro) {
+					JOptionPane.showMessageDialog(null, erro.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
 				}
-				mostrarPergutas();
 			}
 		});
 
@@ -163,19 +197,6 @@ public class TelaPergunta extends JPanel {
 		limparTabela();
 
 		respostaDAO = new RespostaDAO();
-
-		tree.addTreeSelectionListener(new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent e) {
-				TreePath path = e.getNewLeadSelectionPath();
-
-				if (path != null) {
-					DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-
-					ultimaRespostaSelecionada = (Resposta) selectedNode.getUserObject();
-
-				}
-			}
-		});
 
 	}
 
@@ -218,7 +239,10 @@ public class TelaPergunta extends JPanel {
 
 	}
 
-	public Resposta responderResposta() {
+	public Resposta responderResposta() throws DevPerguntarException {
+		if (txtResponderResposta.getText().isBlank()) {
+			throw new DevPerguntarException("Preencha o Campo de Resposta");
+		}
 		Resposta r = new Resposta();
 		r.setConteudo(txtResponderResposta.getText());
 		r.setIdPergunta(idPergunta);
@@ -226,30 +250,16 @@ public class TelaPergunta extends JPanel {
 		return r;
 	}
 
-//	public void resgatREspostaJepeto() {
-//		
-//		 tree.addTreeSelectionListener(new TreeSelectionListener() {
-//			    public void valueChanged(TreeSelectionEvent e) {
-//			        // Obtém o caminho do último nó selecionado
-//			        TreePath path = e.getNewLeadSelectionPath();
-//			        
-//			        // Verifica se há um caminho selecionado
-//			        if (path != null) {
-//			            // Obtém o último componente do caminho (o nó selecionado)
-//			            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-//			            
-//			            // Verifica se o nó selecionado é um nó folha
-//			            if (selectedNode.isLeaf()) {
-//			                // Obtém o objeto Pessoa associado ao nó
-//			                 ultimaRespostaSelecionada = (Resposta) selectedNode.getUserObject();
-//			                
-//			                // Faça o que for necessário com o objeto Pessoa
-//			                System.out.println("Pessoa selecionada: " + ultimaRespostaSelecionada.getConteudo());
-//			            }
-//			        }
-//			    }
-//			});
-//		
-//	}
+	public void validarCamposParaResponderResposta() {
+
+	}
+
+	public void validarSelecao() throws DevPerguntarException {
+
+		if (ultimaRespostaSelecionada == null) {
+			throw new DevPerguntarException("Selecione uma Resposta");
+		}
+
+	}
 
 }
