@@ -38,54 +38,69 @@ public class TelaEdicaoPergunta extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaEdicaoPergunta() {
-		setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(14dlu;default)"), },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
-
-		JLabel lblNewLabel = new JLabel("Edição de pergunta");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lblNewLabel, "12, 4, center, default");
-
-		JLabel lblNewLabel_1 = new JLabel("Título:");
-		add(lblNewLabel_1, "8, 8");
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(40dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(80dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(230dlu;min)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
+				
+						JLabel lblNewLabel = new JLabel("Edição de pergunta");
+						lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+						add(lblNewLabel, "4, 4, 5, 1, center, default");
+		
+				JLabel lblNewLabel_1 = new JLabel("Título:");
+				add(lblNewLabel_1, "4, 8, left, default");
 
 		textFieldTitulo = new JTextField();
-		add(textFieldTitulo, "12, 8, fill, default");
+		add(textFieldTitulo, "6, 8, 3, 1, fill, default");
 		textFieldTitulo.setColumns(10);
-
-		JLabel lblNewLabel_3 = new JLabel("Categoria:");
-		add(lblNewLabel_3, "16, 8, left, default");
 
 		CategoriaController categoriaController = new CategoriaController();
 		ArrayList<Categoria> categorias = categoriaController.buscaTodas();
-		comboBoxCategoria = new JComboBox(categorias.toArray());
-		add(comboBoxCategoria, "18, 8, 7, 1, fill, default");
-
-		JLabel lblNewLabel_2 = new JLabel("Conteudo:");
-		add(lblNewLabel_2, "8, 10");
+		
+				JLabel lblNewLabel_2 = new JLabel("Conteudo:");
+				add(lblNewLabel_2, "4, 10, left, default");
 
 		textAreaConteudo = new JTextArea();
-		add(textAreaConteudo, "12, 10, fill, fill");
-
-		btnSalvarEdicao = new JButton("Salvar Edição");
-		btnSalvarEdicao.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnSalvarEdicao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				atualizaPergunta();
-			}
-		});
-		add(btnSalvarEdicao, "12, 14, default, center");
+		textAreaConteudo.setLineWrap(true);
+		add(textAreaConteudo, "6, 10, 3, 1, fill, fill");
+		
+				JLabel lblNewLabel_3 = new JLabel("Categoria:");
+				add(lblNewLabel_3, "4, 12, left, default");
+		
+				btnSalvarEdicao = new JButton("Salvar Edição");
+				btnSalvarEdicao.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				btnSalvarEdicao.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						atualizaPergunta();
+					}
+				});
+				comboBoxCategoria = new JComboBox(categorias.toArray());
+				add(comboBoxCategoria, "6, 12, fill, default");
+				add(btnSalvarEdicao, "4, 16, 5, 1, center, center");
 
 		controller = new PerguntaController();
 
