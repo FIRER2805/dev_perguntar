@@ -30,6 +30,7 @@ import model.dao.RespostaDAO;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Resposta;
+import model.vo.Usuario;
 
 public class TelaPergunta extends JPanel {
 
@@ -208,7 +209,14 @@ public class TelaPergunta extends JPanel {
 		this.pergunta = pergunta;
 	}
 
-	public void atualizarCampos(Pergunta pergunta) {
+	public void atualizarCampos(Pergunta pergunta,  Usuario user) {
+		if(user != null) {
+			if(user.getId() == pergunta.getUsuario().getId()) {
+				btnResolucao.setVisible(true);
+			}
+		}else {
+			btnResolucao.setVisible(false);
+		}
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		idPergunta = pergunta.getId();
 
