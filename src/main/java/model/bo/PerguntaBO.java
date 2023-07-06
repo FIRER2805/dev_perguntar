@@ -47,4 +47,5 @@ public class PerguntaBO {
 	public int atualizar(Pergunta pergunta) {
 		return dao.atualizar(pergunta);
 	}
+	
 }

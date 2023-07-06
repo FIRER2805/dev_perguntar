@@ -190,4 +190,31 @@ public class RespostaDAO {
 		}
 		return registrosAfetados;
 	}
+
+	public int marcarRespostaComoSolucao(Resposta resposta) {
+		String sql =  "update resposta set solucao = 1 where id = ?";
+		String sql2 = "update pergunta set data_resolucao = now() where id = ?";
+		int registrosAfetados = 0;
+		Connection conn = Banco.getConnection();
+		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
+		PreparedStatement pStmt2 = Banco.getPreparedStmt(conn, sql2);
+		try {
+			pStmt.setInt(1, resposta.getId());
+			pStmt2.setInt(1, resposta.getIdPergunta());
+			registrosAfetados = pStmt.executeUpdate();
+			pStmt.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método atualizar da classe PerguntaDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeStatement(pStmt);
+			Banco.closeStatement(pStmt2);
+			Banco.closeConnection(conn);
+		}
+		return registrosAfetados;
+	}
 }

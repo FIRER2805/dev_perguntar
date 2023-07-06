@@ -241,4 +241,27 @@ public class PerguntaDAO {
 		
 		return pergunta;
 	}
+	
+	public int marcarPerguntaComoSolucao(int idPergunta)
+	{
+		String sql =  "update pergunta set solucao = 1 where id = ?";
+		int registrosAfetados = 0;
+		Connection conn = Banco.getConnection();
+		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
+		try {
+			pStmt.setInt(1, idPergunta);
+			registrosAfetados = pStmt.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro no método atualizar da classe PerguntaDAO");
+			System.out.println(e.getMessage());
+		}
+		finally 
+		{
+			Banco.closeStatement(pStmt);
+			Banco.closeConnection(conn);
+		}
+		return registrosAfetados;
+	}
 }

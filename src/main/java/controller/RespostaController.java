@@ -25,4 +25,9 @@ public class RespostaController {
 	{
 		return respostaBO.consultarPorIdPergunta(idPergunta);
 	}
+	
+	public int marcarRespostaComoSolucao(Resposta resposta)
+	{
+		return respostaBO.marcarRespostaComoSolucao(resposta);
+	}
 }

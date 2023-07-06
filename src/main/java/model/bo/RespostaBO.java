@@ -26,4 +26,9 @@ public class RespostaBO {
 	public List<DefaultMutableTreeNode> consultarPorIdPergunta(int idPergunta) {
 		return respostaDAO.montaArvoresResposta(idPergunta);
 	}
+
+	public int marcarRespostaComoSolucao(Resposta resposta) {
+
+		return respostaDAO.marcarRespostaComoSolucao(resposta);
+	}
 }
