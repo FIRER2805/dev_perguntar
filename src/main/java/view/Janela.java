@@ -93,7 +93,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					telaPergunta.atualizarCampos(telaHome.resgatarPergunta());
+					telaPergunta.atualizarCampos(telaHome.resgatarPergunta(), usuarioLogado);
 					telaPergunta.setPergunta(telaHome.resgatarPergunta());
 					telaPergunta.setVisible(true);
 					frame.setContentPane(new JScrollPane(telaPergunta));
@@ -124,7 +124,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					telaPergunta.atualizarCampos(telaPesquisa.resgatarPergunta()/*, usuarioLogado*/);
+					telaPergunta.atualizarCampos(telaPesquisa.resgatarPergunta(), usuarioLogado);
 					telaPergunta.setVisible(true);
 					frame.setContentPane(telaPergunta);
 					frame.revalidate();
@@ -240,7 +240,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					telaPergunta.atualizarCampos(telaPerfil.resgatarPergunta()/*, usuarioLogado*/);
+					telaPergunta.atualizarCampos(telaPerfil.resgatarPergunta(), usuarioLogado);
 					telaPergunta.setPergunta(telaPerfil.resgatarPergunta());
 					telaPergunta.setVisible(true);
 					frame.setContentPane(new JScrollPane(telaPergunta));

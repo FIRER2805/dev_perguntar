@@ -53,11 +53,11 @@ public class TelaPerfil extends JPanel {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("right:default:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(75dlu;min)"),
+				ColumnSpec.decode("max(80dlu;min)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(137dlu;min)"),
+				ColumnSpec.decode("max(135dlu;min)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("center:max(137dlu;min)"),
+				ColumnSpec.decode("center:max(135dlu;min)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("left:default:grow"),},
 			new RowSpec[] {
@@ -145,7 +145,7 @@ public class TelaPerfil extends JPanel {
 		add(btnExcluir, "3, 25, left, default");
 		
 		btnEditar = new JButton("Editar Pergunta");
-		add(btnEditar, "5, 25");
+		add(btnEditar, "5, 25, right, default");
 
 		btnVizualizar = new JButton("Vizualizar");
 		add(btnVizualizar, "7, 25, right, default");
