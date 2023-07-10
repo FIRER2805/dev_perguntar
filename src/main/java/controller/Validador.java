@@ -10,4 +10,9 @@ public abstract class Validador {
 	{
 		return senha.matches("[a-zA-Z0-9]{1,}");
 	}
+	
+	public static boolean validarNome(String nome)
+	{
+		return nome.matches("[a-zA-Z0-9]{1,}");
+	}
 }

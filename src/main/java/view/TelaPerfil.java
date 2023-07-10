@@ -23,6 +23,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.PerguntaController;
 import controller.UsuarioController;
+import controller.Validador;
 import model.exception.DevPerguntarException;
 import model.vo.Pergunta;
 import model.vo.Usuario;
@@ -222,16 +223,29 @@ public class TelaPerfil extends JPanel {
 
 	public void validarCampos() throws DevPerguntarException {
 		String alerta = "";
-		if (txtNome.getText().trim().isEmpty()) {
-			alerta += "Insira um Usuario Desejado\n";
+		String senha = new String(pFSenha.getPassword());
+		if (txtNome.getText().isBlank()) {
+			alerta += "Campo nome é obrigatório\n";
 		}
-		if (txtEmail.getText().trim().isEmpty()) {
-			alerta += "Insira Seu E-mail Desejado\n";
+		else if(!Validador.validarNome(txtNome.getText().trim())) 
+		{
+			alerta += "O nome só pode conter letras e numeros\n";
 		}
-		if (pFSenha.getPassword().toString().trim().isEmpty()) {
-			alerta += "Insira Sua Senha Atual ou Umas Nova\n";
+		if (txtEmail.getText().isBlank()) {
+			alerta += "Campo e-mail é obrigatório\n";
 		}
-
+		else if(!Validador.validaEmail(txtEmail.getText().trim()))
+		{
+			alerta += "e-mail inválido\n";
+		}
+		if (senha.isBlank()) {
+			alerta += "Campo senha é obrigatório\n";
+		}
+		else if(!Validador.validaSenha(senha.trim()))
+		{
+			alerta += "A senha só pode conter letras e numeros\n";
+		}
+		
 		if (!alerta.isEmpty()) {
 			alerta = "Causa : \n" + alerta;
 			throw new DevPerguntarException(alerta);

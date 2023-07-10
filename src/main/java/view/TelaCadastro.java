@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 
 import controller.PerguntaController;
 import controller.UsuarioController;
+import controller.Validador;
 import model.exception.DevPerguntarException;
 import model.vo.Categoria;
 import model.vo.Pergunta;
@@ -131,11 +132,23 @@ public class TelaCadastro extends JPanel {
 		if (u.getNome().trim().isEmpty()) {
 			alerta += "Campo nome é obrigatório\n";
 		}
+		else if(!Validador.validarNome(u.getNome().trim())) 
+		{
+			alerta += "O nome só pode conter letras e numeros\n";
+		}
 		if (u.geteMail().trim().isEmpty()) {
 			alerta += "Campo e-mail é obrigatório\n";
 		}
+		else if(!Validador.validaEmail(u.geteMail().trim()))
+		{
+			alerta += "e-mail inválido\n";
+		}
 		if (u.getSenha().trim().isEmpty()) {
-			alerta += "Campo senha é obrigatório";
+			alerta += "Campo senha é obrigatório\n";
+		}
+		else if(!Validador.validaSenha(u.getSenha()))
+		{
+			alerta += "A senha só pode conter letras e numeros\n";
 		}
 
 		// lançar a exception
