@@ -173,7 +173,7 @@ public class Janela {
 			}
 		});
 
-		mnConfig = new JMenu("Usuario");
+		mnConfig = new JMenu("Usuário");
 		menuBar.add(mnConfig);
 
 		mntmLogin = new JMenuItem("Login");

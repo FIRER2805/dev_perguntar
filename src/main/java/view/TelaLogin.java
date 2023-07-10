@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.UsuarioController;
+import controller.Validador;
 import model.exception.DevPerguntarException;
 import model.vo.Usuario;
 import com.jgoodies.forms.layout.FormLayout;
@@ -32,41 +33,29 @@ public class TelaLogin extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaLogin() {
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("right:default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(150dlu;min)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default:grow"),},
-			new RowSpec[] {
-				RowSpec.decode("bottom:default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("top:default:grow"),}));
-		
-				JLabel lblEmail = new JLabel("Email");
-				lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				add(lblEmail, "3, 3, center, center");
+		setLayout(new FormLayout(
+				new ColumnSpec[] { ColumnSpec.decode("right:default:grow"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("max(150dlu;min)"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("left:default:grow"), },
+				new RowSpec[] { RowSpec.decode("bottom:default:grow"), FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("top:default:grow"), }));
+
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblEmail, "3, 3, center, center");
 
 		textEmail = new JTextField();
 		textEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		add(textEmail, "3, 5, fill, center");
 		textEmail.setColumns(15);
-		
-				JLabel lblSenha = new JLabel("Senha");
-				lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				add(lblSenha, "3, 7, center, center");
+
+		JLabel lblSenha = new JLabel("Senha");
+		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblSenha, "3, 7, center, center");
 
 		pFSenha = new JPasswordField();
 		pFSenha.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -103,9 +92,14 @@ public class TelaLogin extends JPanel {
 		String alerta = "";
 		if (u.geteMail().trim().isEmpty()) {
 			alerta += "Campo e-mail é obrigatório\n";
+		} else if (!Validador.validaEmail(u.geteMail())) {
+			alerta += "email inválido\n";
 		}
+
 		if (u.getSenha().trim().isEmpty()) {
-			alerta += "Campo senha é obrigatório";
+			alerta += "Campo senha é obrigatório\n";
+		} else if (!Validador.validaSenha(u.getSenha())) {
+			alerta += "senha inválida\n";
 		}
 
 		// lançar a exception

@@ -26,7 +26,7 @@ public class TelaHome extends JPanel {
 	private JTable table;
 	private PerguntaController p = new PerguntaController();
 	private JButton btnVizualizar;
-	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuario", "Categoria" };
+	private String[] nomesColunas = { "Titulo ", "DT-Criação", "Status", "Usuário", "Categoria" };
 	private ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
 
 	public JButton getBtnVizualizar() {
@@ -58,7 +58,7 @@ public class TelaHome extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				new RowSpec(RowSpec.CENTER, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("40dlu", false), Sizes.constant("50dlu", false)), 1),}));
 
-		JLabel lblTitulo = new JLabel("Duvidas Recentes");
+		JLabel lblTitulo = new JLabel("Dúvidas Recentes");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblTitulo, "4, 4, center, default");
 
@@ -72,7 +72,7 @@ public class TelaHome extends JPanel {
 		};
 		scrollPane.setViewportView(table);
 
-		btnVizualizar = new JButton("Vizualizar");
+		btnVizualizar = new JButton("Visualizar");
 		add(btnVizualizar, "4, 10, center, center");
 
 		atualizarTable();
