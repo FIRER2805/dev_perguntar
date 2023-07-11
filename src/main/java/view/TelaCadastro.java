@@ -129,12 +129,12 @@ public class TelaCadastro extends JPanel {
 
 	public void validaCampos(Usuario u) throws DevPerguntarException {
 		String alerta = "";
-		if (u.getNome().trim().isEmpty()) {
+		if (u.getNome().isBlank()) {
 			alerta += "Campo nome é obrigatório\n";
 		}
 		else if(!Validador.validarNome(u.getNome().trim())) 
 		{
-			alerta += "O nome só pode conter letras e numeros\n";
+			alerta += "O nome só pode conter letras, numeros e deve conter pelo menos 3 caracteres\n";
 		}
 		if (u.geteMail().trim().isEmpty()) {
 			alerta += "Campo e-mail é obrigatório\n";
@@ -148,7 +148,7 @@ public class TelaCadastro extends JPanel {
 		}
 		else if(!Validador.validaSenha(u.getSenha()))
 		{
-			alerta += "A senha só pode conter letras e numeros\n";
+			alerta += "A senha só pode conter letras, numeros e deve conter pelo menos 6 caracteres\n";
 		}
 
 		// lançar a exception

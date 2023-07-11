@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -102,7 +103,7 @@ public class TelaPesquisa extends JPanel {
 					Object[] novaLinhaDaTabela = new Object[5];
 
 					novaLinhaDaTabela[0] = p.getTitulo();
-					novaLinhaDaTabela[1] = p.getData();
+					novaLinhaDaTabela[1] = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(p.getData());
 					novaLinhaDaTabela[2] = p.getDataResolucao() == null ? "Em Aberto" : "Resolvido";
 					novaLinhaDaTabela[3] = p.getUsuario().getNome();
 					novaLinhaDaTabela[4] = p.getCategoria().getNome();

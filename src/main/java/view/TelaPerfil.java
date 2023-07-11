@@ -3,6 +3,7 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -229,7 +230,7 @@ public class TelaPerfil extends JPanel {
 		}
 		else if(!Validador.validarNome(txtNome.getText().trim())) 
 		{
-			alerta += "O nome só pode conter letras e numeros\n";
+			alerta += "O nome só pode conter letras, numeros e pelo menos 3 caracteres\n";
 		}
 		if (txtEmail.getText().isBlank()) {
 			alerta += "Campo e-mail é obrigatório\n";
@@ -243,7 +244,7 @@ public class TelaPerfil extends JPanel {
 		}
 		else if(!Validador.validaSenha(senha.trim()))
 		{
-			alerta += "A senha só pode conter letras e numeros\n";
+			alerta += "A senha só pode conter letras, numeros e pelo menos 6 caracteres\n";
 		}
 		
 		if (!alerta.isEmpty()) {
@@ -276,7 +277,7 @@ public class TelaPerfil extends JPanel {
 			Object[] novaLinhaDaTabela = new Object[5];
 
 			novaLinhaDaTabela[0] = p.getTitulo();
-			novaLinhaDaTabela[1] = p.getData();
+			novaLinhaDaTabela[1] = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(p.getData());
 			novaLinhaDaTabela[2] = p.getDataResolucao() == null ? "Em Aberto" : "Resolvido";
 			novaLinhaDaTabela[3] = p.getUsuario().getNome();
 			novaLinhaDaTabela[4] = p.getCategoria().getNome();

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Banco;
+import model.exception.DevPerguntarException;
 import model.vo.PesquisaUsuario;
 import model.vo.Usuario;
 
@@ -153,10 +154,10 @@ public class UsuarioDAO {
 		return retorno;
 	}
 	
-	public Usuario login(Usuario u)
+	public Usuario login(Usuario u) throws DevPerguntarException
 	{
 		Usuario retorno = null;
-		String sql =  "select * from usuario where e_mail = ? and senha = ?";
+		String sql =  "select * from usuario where e_mail = ?";
 		String sql2 = "update usuario set ativo = 1 where id = ?;";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pStmt = Banco.getPreparedStmt(conn, sql);
@@ -164,10 +165,13 @@ public class UsuarioDAO {
 		ResultSet rs = null;
 		try {
 			pStmt.setString(1, u.geteMail());
-			pStmt.setString(2, u.getSenha());
 			rs = pStmt.executeQuery();
 			if(rs.next())
 			{
+				if(!u.getSenha().equals(rs.getString(4)))
+				{
+					throw new DevPerguntarException("Senha incorreta!");
+				}
 				u.setId(rs.getInt(1));
 				u.setNome(rs.getString(2));
 				u.seteMail(rs.getString(3));

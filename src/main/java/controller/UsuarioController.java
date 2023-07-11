@@ -16,7 +16,7 @@ public class UsuarioController {
 		return bo.cadastrar(u);
 	}
 	
-	public Usuario login(Usuario u)
+	public Usuario login(Usuario u) throws DevPerguntarException
 	{
 		return bo.login(u);
 	}

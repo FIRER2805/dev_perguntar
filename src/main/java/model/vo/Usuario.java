@@ -1,5 +1,7 @@
 package model.vo;
 
+import model.bo.TrataTexto;
+
 public class Usuario {
 	private int id;
 	private String nome;
@@ -13,6 +15,9 @@ public class Usuario {
 	public Usuario() {
 		super();
 		this.id = 0;
+		this.nome = "";
+		this.eMail = "";
+		this.senha = "";
 	}
 	
 	
@@ -23,9 +28,6 @@ public class Usuario {
 		this.eMail = eMail;
 		this.senha = senha;
 	}
-
-
-	
 	
 	public boolean isAtivo() {
 		return ativo;
@@ -45,7 +47,8 @@ public class Usuario {
 		return nome;
 	}
 	public void setNome(String nome) {
-		this.nome = nome;
+		if(!nome.isBlank())
+		this.nome = TrataTexto.formataTexto(nome);
 	}
 	public String geteMail() {
 		return eMail;

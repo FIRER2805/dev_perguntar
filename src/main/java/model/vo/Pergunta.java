@@ -3,6 +3,7 @@ package model.vo;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import model.bo.TrataTexto;
 import model.vo.Arvores.ArvoreRespostas;
 
 public class Pergunta {
@@ -14,6 +15,13 @@ public class Pergunta {
 	private Usuario usuario;
 	private Categoria categoria;
 	private List<ArvoreRespostas> respostas;
+	
+	public Pergunta()
+	{
+		super();
+		this.titulo = "";
+		this.conteudo = "";
+	}
 	
 	public void setDataResolucao(LocalDateTime dataResolucao) {
 		this.dataResolucao = dataResolucao;
@@ -28,13 +36,15 @@ public class Pergunta {
 		return titulo;
 	}
 	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+		if(!titulo.isBlank())
+		this.titulo = TrataTexto.formataTexto(titulo);
 	}
 	public String getConteudo() {
 		return conteudo;
 	}
 	public void setConteudo(String conteudo) {
-		this.conteudo = conteudo;
+		if(!conteudo.isBlank())
+		this.conteudo = TrataTexto.formataTexto(conteudo);
 	}
 	public LocalDateTime getData() {
 		return data;

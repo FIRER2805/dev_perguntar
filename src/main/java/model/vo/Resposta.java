@@ -1,11 +1,19 @@
 package model.vo;
 
+import model.bo.TrataTexto;
+
 public class Resposta {
 	private int id;
 	private Resposta respostaPai;
 	private String conteudo;
 	private int idPergunta;
 	private boolean solucao;
+	
+	public Resposta()
+	{
+		super();
+		this.conteudo = "";
+	}
 
 	public Resposta getRespostaPai() {
 		return respostaPai;
@@ -36,7 +44,8 @@ public class Resposta {
 	}
 
 	public void setConteudo(String conteudo) {
-		this.conteudo = conteudo;
+		if(!conteudo.isBlank())
+		this.conteudo = TrataTexto.formataTexto(conteudo);
 	}
 
 	public int getIdPergunta() {

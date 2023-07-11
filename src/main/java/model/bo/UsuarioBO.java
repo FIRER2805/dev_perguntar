@@ -37,7 +37,7 @@ public class UsuarioBO {
 		}
 	}
 	
-	public Usuario login(Usuario u)
+	public Usuario login(Usuario u) throws DevPerguntarException
 	{
 		return dao.login(u);
 	}

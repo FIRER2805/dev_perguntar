@@ -8,11 +8,11 @@ public abstract class Validador {
 	
 	public static boolean validaSenha(String senha)
 	{
-		return senha.matches("[a-zA-Z0-9]{1,}");
+		return senha.matches("[a-zA-Z0-9]{6,}");
 	}
 	
 	public static boolean validarNome(String nome)
 	{
-		return nome.matches("[a-zA-Z0-9]{1,}");
+		return nome.matches("[a-zA-Z0-9]{3,}");
 	}
 }

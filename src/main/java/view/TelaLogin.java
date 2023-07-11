@@ -77,7 +77,7 @@ public class TelaLogin extends JPanel {
 		usuario = controller.login(usuario);
 
 		if (usuario == null || usuario.getId() < 0) {
-			throw new DevPerguntarException("Usuario ou Senha Invalido(s)");
+			throw new DevPerguntarException("E-mail inexistente!");
 		}
 
 		return usuario;

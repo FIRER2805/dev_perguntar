@@ -19,7 +19,9 @@ public class GeradorPlanilha {
 	public String gerarPlanilhaPerguntas(List<Pergunta> perguntas, String destinoArquivo) {
 		HSSFWorkbook arquivoExcel = new HSSFWorkbook();
 		HSSFSheet abaPlanilha = arquivoExcel.createSheet("Perguntas");
-		HSSFRow linhaCabecalho = abaPlanilha.createRow(0);
+		HSSFRow titulo = abaPlanilha.createRow(0);
+		titulo.createCell(0).setCellValue("Relatório de Perguntas");
+		HSSFRow linhaCabecalho = abaPlanilha.createRow(1);
 		linhaCabecalho.createCell(0).setCellValue("Titulo");
 		linhaCabecalho.createCell(1).setCellValue("DT-Criação");
 		linhaCabecalho.createCell(2).setCellValue("Status");
@@ -27,7 +29,7 @@ public class GeradorPlanilha {
 		linhaCabecalho.createCell(4).setCellValue("Categoria");
 		
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		int contadorLinhas = 1;
+		int contadorLinhas = 2;
 		for(Pergunta p: perguntas) {
 			HSSFRow novaLinha = abaPlanilha.createRow(contadorLinhas);
 			novaLinha.createCell(0).setCellValue(p.getTitulo());
@@ -43,15 +45,17 @@ public class GeradorPlanilha {
 	
 	public String gerarPlanilhaUsuarios(List<Usuario> usuarios, String destinoArquivo) {
 		HSSFWorkbook arquivoExcel = new HSSFWorkbook();
-		HSSFSheet abaPlanilha = arquivoExcel.createSheet("Perguntas");
-		HSSFRow linhaCabecalho = abaPlanilha.createRow(0);
+		HSSFSheet abaPlanilha = arquivoExcel.createSheet("Usuários");
+		HSSFRow titulo = abaPlanilha.createRow(0);
+		titulo.createCell(0).setCellValue("Relatório de Usuários");
+		HSSFRow linhaCabecalho = abaPlanilha.createRow(1);
 		linhaCabecalho.createCell(0).setCellValue("nome");
 		linhaCabecalho.createCell(1).setCellValue("num.Perguntas");
 		linhaCabecalho.createCell(2).setCellValue("num.Respostas");
 		linhaCabecalho.createCell(3).setCellValue("num.Soluções");
 		
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		int contadorLinhas = 1;
+		int contadorLinhas = 2;
 		for(Usuario u: usuarios) {
 			HSSFRow novaLinha = abaPlanilha.createRow(contadorLinhas);
 			novaLinha.createCell(0).setCellValue(u.getNome());
